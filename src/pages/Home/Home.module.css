@@ -1,0 +1,5 @@
+.contG {
+  display: grid;
+  place-content: center;
+  background-color: red;
+}
