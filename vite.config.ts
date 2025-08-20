@@ -1,7 +1,17 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-})
+  define: {
+    global: "globalThis",
+  },
+  resolve: {
+    alias: {
+      crypto: "node:crypto", // fuerza a Vite a usar el crypto nativo
+    },
+  },
+  optimizeDeps: {
+    force: true,
+  },
+});
