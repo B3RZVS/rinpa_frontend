@@ -3,7 +3,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { GiCroissant } from "react-icons/gi";
 import { useAuth } from "../../hooks/useAuth";
 import Button from "../../../components/Generales/Button/ButtonComponent";
 import Input from "../../../components/Generales/Input/InputComponent";

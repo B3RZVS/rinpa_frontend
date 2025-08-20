@@ -24,7 +24,7 @@
   align-items: center;
   padding: 2rem;
   width: 25vw;
-  min-height: 500px;
+  min-height: 400px;
   text-align: center;
   background-color: var(--color-primary-light);
 }
