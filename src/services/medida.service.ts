@@ -8,7 +8,7 @@ const medidaGetAll = async () => {
     console.log(response.data);
     return response.data;
   } catch (error) {
-    console.error("Error en LogIn:", error); // TODO: REMOVE_DEBUG
+    console.error("al obtener las medidas", error); // TODO: REMOVE_DEBUG
     throw error;
   }
 };
