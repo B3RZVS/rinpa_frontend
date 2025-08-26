@@ -1,0 +1,42 @@
+/* Rediseñando layout para mobile-first */
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--color-neutral-light);
+}
+
+.mainContent {
+  flex: 1;
+  /* Sin margin-left por defecto, mobile-first */
+  transition: all 0.3s ease;
+}
+
+.content {
+  /* Padding optimizado para mobile */
+  padding: 1rem;
+  min-height: calc(100vh - 140px); /* Ajustado para navbar mobile */
+}
+
+/* Desktop styles como enhancement */
+@media (min-width: 769px) {
+  .home {
+    flex-direction: row;
+  }
+
+  .mainContent {
+    margin-left: 280px;
+  }
+
+  .content {
+    padding: 2rem;
+    min-height: calc(100vh - 80px);
+  }
+}
+
+/* Tablet responsive */
+@media (min-width: 481px) and (max-width: 768px) {
+  .content {
+    padding: 1.5rem;
+  }
+}

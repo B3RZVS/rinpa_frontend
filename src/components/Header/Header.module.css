@@ -1,0 +1,118 @@
+/* Rediseñando header para mobile-first con mejor responsive */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: white;
+  border-bottom: 1px solid var(--color-neutral-medium);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 70px;
+  position: relative;
+  z-index: 100;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Menu button visible por defecto en mobile-first */
+.menuButton {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  color: var(--color-primary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menuButton:hover {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  /* Truncar texto largo en móviles */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--color-neutral-dark);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iconButton:hover {
+  background-color: var(--color-neutral-medium);
+  color: var(--color-primary);
+}
+
+/* Tablet responsive */
+@media (min-width: 481px) and (max-width: 768px) {
+  .header {
+    padding: 1rem 1.5rem;
+    height: 75px;
+  }
+
+  .title {
+    font-size: 1.2rem;
+    max-width: 300px;
+  }
+
+  .right {
+    gap: 0.75rem;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .header {
+    padding: 1rem 2rem;
+    height: 80px;
+  }
+
+  /* Ocultar menu button en desktop ya que usamos sidebar */
+  .menuButton {
+    display: none;
+  }
+
+  .title {
+    font-size: 1.5rem;
+    max-width: none;
+  }
+
+  .right {
+    gap: 1rem;
+  }
+
+  .iconButton {
+    font-size: 1.2rem;
+  }
+}

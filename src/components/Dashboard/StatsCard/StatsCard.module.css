@@ -1,0 +1,44 @@
+.card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card.primary {
+  border-left-color: var(--color-primary);
+}
+
+.card.secondary {
+  border-left-color: var(--color-secondary);
+}
+
+.card.accent {
+  border-left-color: var(--color-accent);
+}
+
+.title {
+  font-size: 0.9rem;
+  color: var(--color-neutral-dark);
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+
+.value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-neutral-dark);
+  margin-bottom: 0.5rem;
+}
+
+.change {
+  font-size: 0.8rem;
+  color: var(--color-secondary);
+  font-weight: 500;
+}
