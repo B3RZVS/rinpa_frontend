@@ -1,5 +1,5 @@
 export const urls = {
-  Medida: "/medidas/",
+  Medida: "/medida/",
   Unidad: "/unidad/",
   // packagings: "/products/packagings/",
   // productos: "/products/products/",

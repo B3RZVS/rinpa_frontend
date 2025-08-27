@@ -9,7 +9,8 @@ import { ToasterProvider } from "./contexts/toasterContext/ToasterProvider";
 import Home from "./pages/Home/Home";
 import LoginPage from "./user/pages/Login/LoginPage";
 import { UserProvider } from "./user/contexts/userContext/UserProvider";
-
+//PROVIDERS
+import { MedidaProvider } from "./contexts/medidaContext/MedidaProvider";
 function App() {
   const router = createBrowserRouter([
     { path: "/login", element: <LoginPage /> },
@@ -31,7 +32,9 @@ function App() {
   return (
     <ToasterProvider>
       <UserProvider>
-        <RouterProvider router={router} />
+        <MedidaProvider>
+          <RouterProvider router={router} />
+        </MedidaProvider>
       </UserProvider>
     </ToasterProvider>
   );

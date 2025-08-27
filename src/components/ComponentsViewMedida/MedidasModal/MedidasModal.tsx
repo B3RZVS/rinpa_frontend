@@ -1,14 +1,17 @@
-import type React from "react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX } from "react-icons/fi";
-import type { MedidainterfaceResponse } from "../../../interface/medida.interface";
+import type {
+  CreateMedidaInterface,
+  MedidainterfaceResponse,
+} from "../../../interface/medida.interface";
 import styles from "./MedidasModal.module.css";
+import { useMedida } from "../../../hook/hookContexts/useMedida";
 
 interface MedidasModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (medida: Omit<MedidainterfaceResponse, "id">) => void;
+  onSave: (medida: CreateMedidaInterface) => void;
   medida?: MedidainterfaceResponse | null;
 }
 
@@ -18,50 +21,39 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
   onSave,
   medida,
 }) => {
-  const [formData, setFormData] = useState({
-    cantidad: "",
-    unidad: "",
+  const [formData, setFormData] = useState<CreateMedidaInterface>({
+    cantidad: null,
+    unidadId: null,
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const { unidades, getUnidades } = useMedida();
+
+  useEffect(() => {
+    getUnidades();
+  }, []);
 
   useEffect(() => {
     if (medida) {
       setFormData({
-        cantidad: medida.cantidad,
-        unidad: medida.unidad,
-      });
-    } else {
-      setFormData({
-        cantidad: "",
-        unidad: "",
+        cantidad: Number(medida.cantidad),
+        unidadId: medida.unidadId,
       });
     }
     setErrors({});
   }, [medida, isOpen]);
 
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-
-    if (!formData.cantidad.trim()) {
-      newErrors.cantidad = "La cantidad es requerida";
-    }
-
-    if (!formData.unidad.trim()) {
-      newErrors.unidad = "La unidad es requerida";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const resetForm = () => {
+    setFormData({ cantidad: null, unidadId: null });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
-      onSave(formData);
-    }
+    onSave(formData);
+    onClose();
+    resetForm();
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = (field: string, value: number) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: "" }));
@@ -98,13 +90,15 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
               <div className={styles.formGroup}>
                 <label className={styles.label}>Cantidad</label>
                 <input
-                  type="text"
+                  type="number"
                   className={styles.input}
-                  value={formData.cantidad}
+                  value={formData.cantidad ?? ""}
                   onChange={(e) =>
-                    handleInputChange("cantidad", e.target.value)
+                    handleInputChange("cantidad", Number(e.target.value))
                   }
                   placeholder="Ej: 500, 1, 250"
+                  min={0}
+                  required
                 />
                 {errors.cantidad && (
                   <span className={styles.error}>{errors.cantidad}</span>
@@ -113,13 +107,21 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
 
               <div className={styles.formGroup}>
                 <label className={styles.label}>Unidad</label>
-                <input
-                  type="text"
+                <select
                   className={styles.input}
-                  value={formData.unidad}
-                  onChange={(e) => handleInputChange("unidad", e.target.value)}
-                  placeholder="Ej: ml, litro, gr, kg, unidades"
-                />
+                  value={formData.unidadId ?? ""}
+                  onChange={(e) =>
+                    handleInputChange("unidadId", Number(e.target.value))
+                  }
+                  required
+                >
+                  <option value="">Selecciona una unidad</option>
+                  {unidades.map((unidad) => (
+                    <option key={unidad.id} value={unidad.id}>
+                      {unidad.nombre}
+                    </option>
+                  ))}
+                </select>
                 {errors.unidad && (
                   <span className={styles.error}>{errors.unidad}</span>
                 )}

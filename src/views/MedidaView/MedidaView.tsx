@@ -1,125 +1,31 @@
-import type React from "react";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiPlus, FiSearch, FiPackage } from "react-icons/fi";
-import type { PaginationData } from "../../interface/pagination.interface";
-import type { MedidainterfaceResponse } from "../../interface/medida.interface";
 import MedidasTable from "../../components/ComponentsViewMedida/MedidasTable/MedidasTable";
 import MedidasModal from "../../components/ComponentsViewMedida/MedidasModal/MedidasModal";
 import ConfirmModal from "../../components/Common/ConfirmationModal/ConfirmationModal";
-import Pagination from "../../components/Common/Pagination/Pagination";
 import styles from "./MedidaView.module.css";
+import { useMedida } from "../../hook/hookContexts/useMedida";
+import { useMedidasUI } from "../../hook/hookUI/useMedidasUI";
 
 const MedidasView: React.FC = () => {
-  const [medidas, setMedidas] = useState<MedidainterfaceResponse[]>([]);
-  const [filteredMedidas, setFilteredMedidas] = useState<
-    MedidainterfaceResponse[]
-  >([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [selectedMedida, setSelectedMedida] =
-    useState<MedidainterfaceResponse | null>(null);
-  const [medidaToDelete, setMedidaToDelete] =
-    useState<MedidainterfaceResponse | null>(null);
-  const [pagination, setPagination] = useState<PaginationData>({
-    currentPage: 1,
-    totalPages: 1,
-    totalItems: 0,
-    itemsPerPage: 10,
-  });
+  const { getMedidas, medidas, loading } = useMedida();
 
-  // Simulación de datos - reemplazar con API real
-  useEffect(() => {
-    const fetchMedidas = async () => {
-      setLoading(true);
-      // Simular delay de API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      const mockData: MedidainterfaceResponse[] = [
-        { id: 1, cantidad: "500", unidad: "ml" },
-        { id: 2, cantidad: "1", unidad: "litro" },
-        { id: 3, cantidad: "250", unidad: "gr" },
-        { id: 4, cantidad: "1", unidad: "kg" },
-        { id: 5, cantidad: "100", unidad: "unidades" },
-      ];
-
-      setMedidas(mockData);
-      setFilteredMedidas(mockData);
-      setPagination((prev) => ({
-        ...prev,
-        totalItems: mockData.length,
-        totalPages: Math.ceil(mockData.length / prev.itemsPerPage),
-      }));
-      setLoading(false);
-    };
-
-    fetchMedidas();
-  }, []);
-
-  useEffect(() => {
-    const filtered = medidas.filter(
-      (medida) =>
-        medida.cantidad.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        medida.unidad.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredMedidas(filtered);
-    setPagination((prev) => ({
-      ...prev,
-      totalItems: filtered.length,
-      totalPages: Math.ceil(filtered.length / prev.itemsPerPage),
-      currentPage: 1,
-    }));
-  }, [searchTerm, medidas]);
-
-  const handleAdd = () => {
-    setSelectedMedida(null);
-    setIsModalOpen(true);
-  };
-
-  const handleEdit = (medida: MedidainterfaceResponse) => {
-    setSelectedMedida(medida);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = (medida: MedidainterfaceResponse) => {
-    setMedidaToDelete(medida);
-    setIsConfirmModalOpen(true);
-  };
-
-  const confirmDelete = () => {
-    if (medidaToDelete) {
-      setMedidas((prev) => prev.filter((m) => m.id !== medidaToDelete.id));
-      setMedidaToDelete(null);
-      setIsConfirmModalOpen(false);
-    }
-  };
-
-  const handleSave = (medidaData: Omit<MedidainterfaceResponse, "id">) => {
-    if (selectedMedida) {
-      // Editar
-      setMedidas((prev) =>
-        prev.map((m) =>
-          m.id === selectedMedida.id ? { ...selectedMedida, ...medidaData } : m
-        )
-      );
-    } else {
-      // Crear
-      const newMedida: MedidainterfaceResponse = {
-        id: Math.max(...medidas.map((m) => m.id), 0) + 1,
-        ...medidaData,
-      };
-      setMedidas((prev) => [...prev, newMedida]);
-    }
-    setIsModalOpen(false);
-  };
-
-  const getCurrentPageData = () => {
-    const startIndex = (pagination.currentPage - 1) * pagination.itemsPerPage;
-    const endIndex = startIndex + pagination.itemsPerPage;
-    return filteredMedidas.slice(startIndex, endIndex);
-  };
+  const {
+    filteredMedidas,
+    searchTerm,
+    setSearchTerm,
+    isModalOpen,
+    setIsModalOpen,
+    isConfirmModalOpen,
+    setIsConfirmModalOpen,
+    selectedMedida,
+    medidaToDelete,
+    handleAdd,
+    handleEdit,
+    handleDelete,
+    confirmDelete,
+    confirmateAccion,
+  } = useMedidasUI(medidas, getMedidas);
 
   return (
     <motion.div
@@ -195,15 +101,9 @@ const MedidasView: React.FC = () => {
         ) : (
           <>
             <MedidasTable
-              medidas={getCurrentPageData()}
+              medidas={medidas}
               onEdit={handleEdit}
               onDelete={handleDelete}
-            />
-            <Pagination
-              pagination={pagination}
-              onPageChange={(page) =>
-                setPagination((prev) => ({ ...prev, currentPage: page }))
-              }
             />
           </>
         )}
@@ -212,7 +112,7 @@ const MedidasView: React.FC = () => {
       <MedidasModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSave={handleSave}
+        onSave={confirmateAccion}
         medida={selectedMedida}
       />
 
@@ -221,7 +121,7 @@ const MedidasView: React.FC = () => {
         onClose={() => setIsConfirmModalOpen(false)}
         onConfirm={confirmDelete}
         title="Eliminar Medida"
-        message={`¿Estás seguro de que deseas eliminar la medida "${medidaToDelete?.cantidad} ${medidaToDelete?.unidad}"?`}
+        message={`¿Estás seguro de que deseas eliminar la medida "${medidaToDelete?.cantidad} ${medidaToDelete?.unidadSimbolo}"?`}
       />
     </motion.div>
   );
