@@ -5,7 +5,7 @@ import { LoginService } from "../../services/Login/LoginService";
 import type { LoginPayload } from "../../services/Login/LoginService";
 import type { Role } from "../../../utils/ProtectedRoute";
 // import { roleLandingRoutes } from "../../services/roleLandingRoutes";
-import { useToaster } from "../../../hook/useToaster";
+import { useToaster } from "../../../hook/hookUI/useToaster";
 import AuthService from "../../services/auth/AuthService";
 
 interface UserProviderProps {

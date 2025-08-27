@@ -3,12 +3,19 @@
   border-collapse: collapse;
   margin-bottom: 1rem;
 }
-
+.table tr {
+  display: flex;
+}
 .table th,
 .table td {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 1rem;
   text-align: left;
   border-bottom: 1px solid var(--color-neutral-medium);
+  border-right: 1px solid rgba(0, 0, 0, 0.282);
+  flex: 1;
 }
 
 .table th {

@@ -20,7 +20,7 @@ const MedidasTable: React.FC<MedidasTableProps> = ({
       <table className={styles.table}>
         <thead>
           <tr>
-            <th>ID</th>
+            <th style={{ maxWidth: "30px" }}>ID</th>
             <th>Cantidad</th>
             <th>Unidad</th>
             <th>Acciones</th>
@@ -34,9 +34,9 @@ const MedidasTable: React.FC<MedidasTableProps> = ({
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
             >
-              <td>{medida.id}</td>
+              <td style={{ maxWidth: "30px" }}>{medida.id}</td>
               <td>{medida.cantidad}</td>
-              <td>{medida.unidad}</td>
+              <td>{medida.unidadSimbolo}</td>
               <td>
                 <div className={styles.actionsCell}>
                   <motion.button
