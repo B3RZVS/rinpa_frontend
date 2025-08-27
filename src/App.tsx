@@ -11,6 +11,7 @@ import LoginPage from "./user/pages/Login/LoginPage";
 import { UserProvider } from "./user/contexts/userContext/UserProvider";
 //PROVIDERS
 import { MedidaProvider } from "./contexts/medidaContext/MedidaProvider";
+import { TipoProductoProvider } from "./contexts/tipoProductoContext/TipoProductoProvider";
 function App() {
   const router = createBrowserRouter([
     { path: "/login", element: <LoginPage /> },
@@ -33,7 +34,9 @@ function App() {
     <ToasterProvider>
       <UserProvider>
         <MedidaProvider>
-          <RouterProvider router={router} />
+          <TipoProductoProvider>
+            <RouterProvider router={router} />
+          </TipoProductoProvider>
         </MedidaProvider>
       </UserProvider>
     </ToasterProvider>

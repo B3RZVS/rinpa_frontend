@@ -2,22 +2,31 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiPlus, FiSearch, FiTag } from "react-icons/fi";
-import type { TipoProductoInterfaceResponse } from "../../interface/tipoProducto.interface";
+import type {
+  CreateTipoProductoInterface,
+  TipoProductoInterfaceResponse,
+} from "../../interface/tipoProducto.interface";
 import type { PaginationData } from "../../interface/pagination.interface";
 import TipoProductoTable from "../../components/ComponentsViewTipoProducto/TipoProductoTable/TipoProductoTable";
 import TipoProductoModal from "../../components/ComponentsViewTipoProducto/TipoProductoModal/TipoProductoModal";
 import ConfirmModal from "../../components/Common/ConfirmationModal/ConfirmationModal";
 import Pagination from "../../components/Common/Pagination/Pagination";
 import styles from "./TipoProductoView.module.css";
+import { useTipoProducto } from "../../hook/hookContexts/useTipoProducto";
 
 const TipoProductoView: React.FC = () => {
-  const [tipoProductos, setTipoProductos] = useState<
-    TipoProductoInterfaceResponse[]
-  >([]);
+  const {
+    getTipoProductos,
+    tipoProductos,
+    loading,
+    registerTipoProducto,
+    deleteTipoProducto,
+    updateTipoProducto,
+  } = useTipoProducto();
   const [filteredTipoProductos, setFilteredTipoProductos] = useState<
     TipoProductoInterfaceResponse[]
   >([]);
-  const [loading, setLoading] = useState(true);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
@@ -34,32 +43,7 @@ const TipoProductoView: React.FC = () => {
 
   // Simulación de datos - reemplazar con API real
   useEffect(() => {
-    const fetchTipoProductos = async () => {
-      setLoading(true);
-      // Simular delay de API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      const mockData: TipoProductoInterfaceResponse[] = [
-        { id: 1, nombre: "Bebidas" },
-        { id: 2, nombre: "Alimentos" },
-        { id: 3, nombre: "Limpieza" },
-        { id: 4, nombre: "Cuidado Personal" },
-        { id: 5, nombre: "Electrónicos" },
-        { id: 6, nombre: "Ropa" },
-        { id: 7, nombre: "Hogar" },
-      ];
-
-      setTipoProductos(mockData);
-      setFilteredTipoProductos(mockData);
-      setPagination((prev) => ({
-        ...prev,
-        totalItems: mockData.length,
-        totalPages: Math.ceil(mockData.length / prev.itemsPerPage),
-      }));
-      setLoading(false);
-    };
-
-    fetchTipoProductos();
+    getTipoProductos();
   }, []);
 
   useEffect(() => {
@@ -91,42 +75,18 @@ const TipoProductoView: React.FC = () => {
   };
 
   const confirmDelete = () => {
-    if (tipoProductoToDelete) {
-      setTipoProductos((prev) =>
-        prev.filter((t) => t.id !== tipoProductoToDelete.id)
-      );
-      setTipoProductoToDelete(null);
-      setIsConfirmModalOpen(false);
-    }
+    if (tipoProductoToDelete) deleteTipoProducto(tipoProductoToDelete?.id);
+    setIsConfirmModalOpen(false);
   };
 
-  const handleSave = (
-    tipoProductoData: Omit<TipoProductoInterfaceResponse, "id">
-  ) => {
+  const handleSave = (tipoProductoData: CreateTipoProductoInterface) => {
     if (selectedTipoProducto) {
-      // Editar
-      setTipoProductos((prev) =>
-        prev.map((t) =>
-          t.id === selectedTipoProducto.id
-            ? { ...selectedTipoProducto, ...tipoProductoData }
-            : t
-        )
-      );
+      const dataUpdate = { ...tipoProductoData, id: selectedTipoProducto.id };
+      updateTipoProducto(dataUpdate);
     } else {
-      // Crear
-      const newTipoProducto: TipoProductoInterfaceResponse = {
-        id: Math.max(...tipoProductos.map((t) => t.id), 0) + 1,
-        ...tipoProductoData,
-      };
-      setTipoProductos((prev) => [...prev, newTipoProducto]);
+      registerTipoProducto(tipoProductoData);
     }
     setIsModalOpen(false);
-  };
-
-  const getCurrentPageData = () => {
-    const startIndex = (pagination.currentPage - 1) * pagination.itemsPerPage;
-    const endIndex = startIndex + pagination.itemsPerPage;
-    return filteredTipoProductos.slice(startIndex, endIndex);
   };
 
   return (
@@ -203,7 +163,7 @@ const TipoProductoView: React.FC = () => {
         ) : (
           <>
             <TipoProductoTable
-              tipoProductos={getCurrentPageData()}
+              tipoProductos={tipoProductos}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />

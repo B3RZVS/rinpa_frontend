@@ -2,13 +2,13 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX } from "react-icons/fi";
-import type { TipoProductoInterfaceResponse } from "../../../interface/tipoProducto.interface";
+import type { CreateTipoProductoInterface, TipoProductoInterfaceResponse } from "../../../interface/tipoProducto.interface";
 import styles from "./TipoProductoModal.module.css";
 
 interface TipoProductoModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (tipoProducto: Omit<TipoProductoInterfaceResponse, "id">) => void;
+  onSave: (tipoProducto: CreateTipoProductoInterface) => void;
   tipoProducto?: TipoProductoInterfaceResponse | null;
 }
 
