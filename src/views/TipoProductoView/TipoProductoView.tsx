@@ -1,93 +1,31 @@
-import type React from "react";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiPlus, FiSearch, FiTag } from "react-icons/fi";
-import type {
-  CreateTipoProductoInterface,
-  TipoProductoInterfaceResponse,
-} from "../../interface/tipoProducto.interface";
-import type { PaginationData } from "../../interface/pagination.interface";
+
 import TipoProductoTable from "../../components/ComponentsViewTipoProducto/TipoProductoTable/TipoProductoTable";
 import TipoProductoModal from "../../components/ComponentsViewTipoProducto/TipoProductoModal/TipoProductoModal";
 import ConfirmModal from "../../components/Common/ConfirmationModal/ConfirmationModal";
-import Pagination from "../../components/Common/Pagination/Pagination";
 import styles from "./TipoProductoView.module.css";
 import { useTipoProducto } from "../../hook/hookContexts/useTipoProducto";
-
+import { useTipoProductoUI } from "../../hook/hookUI/useTipoProductoUI";
 const TipoProductoView: React.FC = () => {
+  const { tipoProductos, loading } = useTipoProducto();
+
   const {
-    getTipoProductos,
-    tipoProductos,
-    loading,
-    registerTipoProducto,
-    deleteTipoProducto,
-    updateTipoProducto,
-  } = useTipoProducto();
-  const [filteredTipoProductos, setFilteredTipoProductos] = useState<
-    TipoProductoInterfaceResponse[]
-  >([]);
-
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [selectedTipoProducto, setSelectedTipoProducto] =
-    useState<TipoProductoInterfaceResponse | null>(null);
-  const [tipoProductoToDelete, setTipoProductoToDelete] =
-    useState<TipoProductoInterfaceResponse | null>(null);
-  const [pagination, setPagination] = useState<PaginationData>({
-    currentPage: 1,
-    totalPages: 1,
-    totalItems: 0,
-    itemsPerPage: 10,
-  });
-
-  // Simulación de datos - reemplazar con API real
-  useEffect(() => {
-    getTipoProductos();
-  }, []);
-
-  useEffect(() => {
-    const filtered = tipoProductos.filter((tipo) =>
-      tipo.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredTipoProductos(filtered);
-    setPagination((prev) => ({
-      ...prev,
-      totalItems: filtered.length,
-      totalPages: Math.ceil(filtered.length / prev.itemsPerPage),
-      currentPage: 1,
-    }));
-  }, [searchTerm, tipoProductos]);
-
-  const handleAdd = () => {
-    setSelectedTipoProducto(null);
-    setIsModalOpen(true);
-  };
-
-  const handleEdit = (tipoProducto: TipoProductoInterfaceResponse) => {
-    setSelectedTipoProducto(tipoProducto);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = (tipoProducto: TipoProductoInterfaceResponse) => {
-    setTipoProductoToDelete(tipoProducto);
-    setIsConfirmModalOpen(true);
-  };
-
-  const confirmDelete = () => {
-    if (tipoProductoToDelete) deleteTipoProducto(tipoProductoToDelete?.id);
-    setIsConfirmModalOpen(false);
-  };
-
-  const handleSave = (tipoProductoData: CreateTipoProductoInterface) => {
-    if (selectedTipoProducto) {
-      const dataUpdate = { ...tipoProductoData, id: selectedTipoProducto.id };
-      updateTipoProducto(dataUpdate);
-    } else {
-      registerTipoProducto(tipoProductoData);
-    }
-    setIsModalOpen(false);
-  };
+    confirmDelete,
+    filteredTipoProductos,
+    handleAdd,
+    handleDelete,
+    handleEdit,
+    handleSave,
+    isConfirmModalOpen,
+    isModalOpen,
+    searchTerm,
+    selectedTipoProducto,
+    setIsConfirmModalOpen,
+    setIsModalOpen,
+    setSearchTerm,
+    tipoProductoToDelete,
+  } = useTipoProductoUI();
 
   return (
     <motion.div
@@ -166,12 +104,6 @@ const TipoProductoView: React.FC = () => {
               tipoProductos={tipoProductos}
               onEdit={handleEdit}
               onDelete={handleDelete}
-            />
-            <Pagination
-              pagination={pagination}
-              onPageChange={(page) =>
-                setPagination((prev) => ({ ...prev, currentPage: page }))
-              }
             />
           </>
         )}
