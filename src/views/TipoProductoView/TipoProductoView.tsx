@@ -1,133 +1,31 @@
-import type React from "react";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiPlus, FiSearch, FiTag } from "react-icons/fi";
-import type { TipoProductoInterfaceResponse } from "../../interface/tipoProducto.interface";
-import type { PaginationData } from "../../interface/pagination.interface";
+
 import TipoProductoTable from "../../components/ComponentsViewTipoProducto/TipoProductoTable/TipoProductoTable";
 import TipoProductoModal from "../../components/ComponentsViewTipoProducto/TipoProductoModal/TipoProductoModal";
 import ConfirmModal from "../../components/Common/ConfirmationModal/ConfirmationModal";
-import Pagination from "../../components/Common/Pagination/Pagination";
 import styles from "./TipoProductoView.module.css";
-
+import { useTipoProducto } from "../../hook/hookContexts/useTipoProducto";
+import { useTipoProductoUI } from "../../hook/hookUI/useTipoProductoUI";
 const TipoProductoView: React.FC = () => {
-  const [tipoProductos, setTipoProductos] = useState<
-    TipoProductoInterfaceResponse[]
-  >([]);
-  const [filteredTipoProductos, setFilteredTipoProductos] = useState<
-    TipoProductoInterfaceResponse[]
-  >([]);
-  const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
-  const [selectedTipoProducto, setSelectedTipoProducto] =
-    useState<TipoProductoInterfaceResponse | null>(null);
-  const [tipoProductoToDelete, setTipoProductoToDelete] =
-    useState<TipoProductoInterfaceResponse | null>(null);
-  const [pagination, setPagination] = useState<PaginationData>({
-    currentPage: 1,
-    totalPages: 1,
-    totalItems: 0,
-    itemsPerPage: 10,
-  });
+  const { tipoProductos, loading } = useTipoProducto();
 
-  // Simulación de datos - reemplazar con API real
-  useEffect(() => {
-    const fetchTipoProductos = async () => {
-      setLoading(true);
-      // Simular delay de API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      const mockData: TipoProductoInterfaceResponse[] = [
-        { id: 1, nombre: "Bebidas" },
-        { id: 2, nombre: "Alimentos" },
-        { id: 3, nombre: "Limpieza" },
-        { id: 4, nombre: "Cuidado Personal" },
-        { id: 5, nombre: "Electrónicos" },
-        { id: 6, nombre: "Ropa" },
-        { id: 7, nombre: "Hogar" },
-      ];
-
-      setTipoProductos(mockData);
-      setFilteredTipoProductos(mockData);
-      setPagination((prev) => ({
-        ...prev,
-        totalItems: mockData.length,
-        totalPages: Math.ceil(mockData.length / prev.itemsPerPage),
-      }));
-      setLoading(false);
-    };
-
-    fetchTipoProductos();
-  }, []);
-
-  useEffect(() => {
-    const filtered = tipoProductos.filter((tipo) =>
-      tipo.nombre.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredTipoProductos(filtered);
-    setPagination((prev) => ({
-      ...prev,
-      totalItems: filtered.length,
-      totalPages: Math.ceil(filtered.length / prev.itemsPerPage),
-      currentPage: 1,
-    }));
-  }, [searchTerm, tipoProductos]);
-
-  const handleAdd = () => {
-    setSelectedTipoProducto(null);
-    setIsModalOpen(true);
-  };
-
-  const handleEdit = (tipoProducto: TipoProductoInterfaceResponse) => {
-    setSelectedTipoProducto(tipoProducto);
-    setIsModalOpen(true);
-  };
-
-  const handleDelete = (tipoProducto: TipoProductoInterfaceResponse) => {
-    setTipoProductoToDelete(tipoProducto);
-    setIsConfirmModalOpen(true);
-  };
-
-  const confirmDelete = () => {
-    if (tipoProductoToDelete) {
-      setTipoProductos((prev) =>
-        prev.filter((t) => t.id !== tipoProductoToDelete.id)
-      );
-      setTipoProductoToDelete(null);
-      setIsConfirmModalOpen(false);
-    }
-  };
-
-  const handleSave = (
-    tipoProductoData: Omit<TipoProductoInterfaceResponse, "id">
-  ) => {
-    if (selectedTipoProducto) {
-      // Editar
-      setTipoProductos((prev) =>
-        prev.map((t) =>
-          t.id === selectedTipoProducto.id
-            ? { ...selectedTipoProducto, ...tipoProductoData }
-            : t
-        )
-      );
-    } else {
-      // Crear
-      const newTipoProducto: TipoProductoInterfaceResponse = {
-        id: Math.max(...tipoProductos.map((t) => t.id), 0) + 1,
-        ...tipoProductoData,
-      };
-      setTipoProductos((prev) => [...prev, newTipoProducto]);
-    }
-    setIsModalOpen(false);
-  };
-
-  const getCurrentPageData = () => {
-    const startIndex = (pagination.currentPage - 1) * pagination.itemsPerPage;
-    const endIndex = startIndex + pagination.itemsPerPage;
-    return filteredTipoProductos.slice(startIndex, endIndex);
-  };
+  const {
+    confirmDelete,
+    filteredTipoProductos,
+    handleAdd,
+    handleDelete,
+    handleEdit,
+    handleSave,
+    isConfirmModalOpen,
+    isModalOpen,
+    searchTerm,
+    selectedTipoProducto,
+    setIsConfirmModalOpen,
+    setIsModalOpen,
+    setSearchTerm,
+    tipoProductoToDelete,
+  } = useTipoProductoUI();
 
   return (
     <motion.div
@@ -203,15 +101,9 @@ const TipoProductoView: React.FC = () => {
         ) : (
           <>
             <TipoProductoTable
-              tipoProductos={getCurrentPageData()}
+              tipoProductos={tipoProductos}
               onEdit={handleEdit}
               onDelete={handleDelete}
-            />
-            <Pagination
-              pagination={pagination}
-              onPageChange={(page) =>
-                setPagination((prev) => ({ ...prev, currentPage: page }))
-              }
             />
           </>
         )}
