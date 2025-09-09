@@ -10,7 +10,7 @@ export interface CreateMedidaInterface {
   unidadId: number | null;
 }
 
-export interface UpdateMedidaInterfece {
+export interface UpdateMedidaInterface {
   id: number;
   cantidad: number | null;
   unidadId: number | null;
