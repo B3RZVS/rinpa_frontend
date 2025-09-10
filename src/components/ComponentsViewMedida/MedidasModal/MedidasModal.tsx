@@ -54,10 +54,19 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
     return Object.keys(newErrors).length === 0;
   };
 
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   if (validateForm()) {
+  //     onSave(formData);
+  //   }
+  // };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      onSave(formData);
+      const result = onSave(formData); // onSave devuelve string de error o undefined
+      if (typeof result === "string") {
+        setErrors((prev) => ({ ...prev, general: result }));
+      }
     }
   };
 
@@ -108,6 +117,10 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
                 />
                 {errors.cantidad && (
                   <span className={styles.error}>{errors.cantidad}</span>
+                )}
+                {/* Mensaje de error general */}
+                {errors.general && (
+                  <span className={styles.error}>{errors.general}</span>
                 )}
               </div>
 
