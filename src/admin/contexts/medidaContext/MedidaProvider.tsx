@@ -4,7 +4,7 @@ import type { MedidaContextType } from "./MedidaContext.type";
 import type {
   CreateMedidaInterface,
   MedidainterfaceResponse,
-  UpdateMedidaInterfece,
+  UpdateMedidaInterface,
 } from "../../interface/medida.interface";
 import { MedidaService } from "../../services/medida.service";
 import { useToaster } from "../../../shared/hooks/useToaster";
@@ -78,7 +78,7 @@ export const MedidaProvider: React.FC<MedidaProviderProps> = ({ children }) => {
     }
   };
 
-  const updateMedida = async (data: UpdateMedidaInterfece) => {
+  const updateMedida = async (data: UpdateMedidaInterface) => {
     setLoading(true);
     try {
       await MedidaService.updateMedida(data);

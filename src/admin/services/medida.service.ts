@@ -1,6 +1,6 @@
 import type {
   CreateMedidaInterface,
-  UpdateMedidaInterfece,
+  UpdateMedidaInterface,
 } from "../interface/medida.interface";
 import api from "../../utils/api";
 import { urls } from "../../utils/urls";
@@ -25,7 +25,7 @@ const createMedida = async (data: CreateMedidaInterface) => {
     throw error;
   }
 };
-const updateMedida = async (data: UpdateMedidaInterfece) => {
+const updateMedida = async (data: UpdateMedidaInterface) => {
   try {
     const response = await api.put(urls.Medida, data);
 

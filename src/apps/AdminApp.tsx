@@ -6,7 +6,7 @@ import Home from "../admin/pages/Home/Home";
 //PROVIDERS
 import { MedidaProvider } from "../admin/contexts/medidaContext/MedidaProvider";
 import { TipoProductoProvider } from "../admin/contexts/tipoProductoContext/TipoProductoProvider";
-
+import { ClienteProvider } from "../admin/contexts/clienteContext/ClienteProvider";
 function AdminApp() {
   return (
     <Routes>
@@ -16,7 +16,9 @@ function AdminApp() {
           <ProtectedRoute allowedRoles={["admin"]}>
             <MedidaProvider>
               <TipoProductoProvider>
-                <Home />
+                <ClienteProvider>
+                  <Home />
+                </ClienteProvider>
               </TipoProductoProvider>
             </MedidaProvider>
           </ProtectedRoute>
