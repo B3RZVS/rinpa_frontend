@@ -10,7 +10,7 @@ interface HeaderProps {
 }
 
 const viewTitles: Record<ViewType, string> = {
-  dashboard: "Dashboard",
+  dashboard: "",
   medida: "Gestión de Medida",
   "tipo-producto": "Gestión de Tipo Producto",
   producto: "Gestión de Producto",

@@ -12,6 +12,7 @@ import {
   FiX,
 } from "react-icons/fi";
 import type { ViewType } from "../../pages/Home/Home";
+import logo from "/logo/RinpaLogo.jpeg";
 import styles from "./MobileNavbar.module.css";
 
 interface MobileNavbarProps {
@@ -66,8 +67,13 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
         transition={{ duration: 0.3 }}
       >
         <div className={styles.header}>
-          <motion.div className={styles.logo} whileHover={{ scale: 1.05 }}>
-            <h1>RINPA</h1>
+          <motion.div
+            className={styles.logo}
+            initial={{ y: -200 }}
+            animate={{ y: 0 }}
+            transition={{ duration: 1 }}
+          >
+            <img src={logo} alt="Logo" />
           </motion.div>
         </div>
 
@@ -127,7 +133,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
               transition={{ type: "spring", damping: 25, stiffness: 500 }}
             >
               <div className={styles.mobileMenuHeader}>
-                <h2>RINPA Admin</h2>
+                <img src={logo} alt="Logo" />
                 <button
                   className={styles.closeButton}
                   onClick={onToggleMobileMenu}
