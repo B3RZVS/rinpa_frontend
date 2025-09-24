@@ -1,40 +1,37 @@
 import {
-  createBrowserRouter,
   Navigate,
-  RouterProvider,
+  Route,
+  BrowserRouter as Router,
+  Routes,
 } from "react-router-dom";
-import ProtectedRoute from "./utils/ProtectedRoute";
-import { ToasterProvider } from "./contexts/toasterContext/ToasterProvider";
-//PAGES
-import Home from "./pages/Home/Home";
-import LoginPage from "./user/pages/Login/LoginPage";
 import { UserProvider } from "./user/contexts/userContext/UserProvider";
+import { ToasterProvider } from "./shared/contexts/toasterContext/ToasterProvider";
+import { ConfirmationProvider } from "./shared/contexts/confirmationContext/ConfirmationProvider";
+import AppShell from "./AppShell";
+import LoginPage from "./user/pages/Login/LoginPage";
+import ScrollToTop from "./shared/components/ScrollToTop/ScrollToTop";
+import Unauthorized from "./shared/components/Unauthorized/Unauthorized";
 
-function App() {
-  const router = createBrowserRouter([
-    { path: "/login", element: <LoginPage /> },
-    {
-      path: "/",
-      element: <Navigate to="/login" />, // Redirige a /home
-    },
-    {
-      path: "/",
-      element: <ProtectedRoute allowedRoles={["admin"]} />,
-      children: [
-        { path: "/home", element: <Home /> },
-        // { path: "/ingredientes", element: <IngredientesView /> },
-        // { path: "/packagings", element: <PackagingsView /> },
-        // { path: "/productos", element: <ProductosView /> },
-      ],
-    },
-  ]);
+const App: React.FC = () => {
   return (
-    <ToasterProvider>
-      <UserProvider>
-        <RouterProvider router={router} />
-      </UserProvider>
-    </ToasterProvider>
+    <Router>
+      <ToasterProvider>
+        <UserProvider>
+          <ConfirmationProvider>
+            <div>
+              <ScrollToTop />
+              <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/*" element={<AppShell />} />
+                <Route path="/" element={<Navigate to="/login" replace />} />
+                <Route path="/unauthorized" element={<Unauthorized />} />
+              </Routes>
+            </div>
+          </ConfirmationProvider>
+        </UserProvider>
+      </ToasterProvider>
+    </Router>
   );
-}
+};
 
 export default App;

@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useAuth } from "../../hooks/useAuth";
-import Button from "../../../components/Generales/Button/ButtonComponent";
-import Input from "../../../components/Generales/Input/InputComponent";
-import Card from "../../../components/Generales/Card/CardComponent";
+import Button from "../../../shared/components/Generales/Button/ButtonComponent";
+import Input from "../../../shared/components/Generales/Input/InputComponent";
+import Card from "../../../shared/components/Generales/Card/CardComponent";
 import styles from "./Login.module.css";
 
 const LoginPage: React.FC = () => {
