@@ -2,7 +2,10 @@ import type React from "react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FiX } from "react-icons/fi";
-import type { CreateTipoProductoInterface, TipoProductoInterfaceResponse } from "../../../interface/tipoProducto.interface";
+import type {
+  CreateTipoProductoInterface,
+  TipoProductoInterfaceResponse,
+} from "../../../interface/tipoProducto.interface";
 import styles from "./TipoProductoModal.module.css";
 
 interface TipoProductoModalProps {
@@ -99,7 +102,7 @@ const TipoProductoModal: React.FC<TipoProductoModalProps> = ({
                   className={styles.input}
                   value={formData.nombre}
                   onChange={(e) => handleInputChange("nombre", e.target.value)}
-                  placeholder="Ej: Bebidas, Alimentos, Limpieza"
+                  placeholder="Ingrese el nombre del tipo Producto"
                 />
                 {errors.nombre && (
                   <span className={styles.error}>{errors.nombre}</span>

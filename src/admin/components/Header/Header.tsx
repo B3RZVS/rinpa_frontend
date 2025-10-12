@@ -13,7 +13,7 @@ const viewTitles: Record<ViewType, string> = {
   dashboard: "",
   medida: "Gestión de Medida",
   "tipo-producto": "Gestión de Tipo Producto",
-  producto: "Gestión de Producto",
+  producto: "Gestión de Productos",
   cliente: "Gestión de Cliente",
   "realizar-entrega": "Realizar Entrega",
   "ver-entregas": "Ver Entregas",
