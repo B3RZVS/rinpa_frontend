@@ -51,7 +51,6 @@ export const TipoProductoProvider: React.FC<TipoProductoProviderProps> = ({
         position: "top-center",
       });
     } catch (error: AxiosError | any) {
-      console.error(error);
       showToast({
         title: `Error: ${
           error.response?.data?.message || "al crear tipo producto."
