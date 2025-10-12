@@ -3,5 +3,7 @@ export const urls = {
   Unidad: "/unidad/",
   TipoProducto: "/tipo-producto/",
   Cliente: "/cliente/",
+  PrecioNafta: "/precioNafta/",
   Producto: "/producto/",
+
 };
