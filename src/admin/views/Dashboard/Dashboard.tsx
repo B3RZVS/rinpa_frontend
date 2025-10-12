@@ -4,8 +4,15 @@ import StatsCard from "../../components/Dashboard/StatsCard/StatsCard";
 import QuickActions from "../../components/Dashboard/QuickActions/QuickActions";
 import RecentActivity from "../../components/Dashboard/RecentActivity/RecentActivity";
 import styles from "./Dashboard.module.css";
-
+import { usePrecioNafta } from "../../hook/hookContexts/usePrecioNafta";
+import { useEffect } from "react";
 const Dashboard: React.FC = () => {
+  const { getPreciosNafta, preciosNafta } = usePrecioNafta();
+  useEffect(() => {
+    if (preciosNafta.length <= 0) getPreciosNafta();
+  }, []);
+
+  const precioActual = preciosNafta.find((p) => p.fechaFin === null);
   return (
     <motion.div
       className={styles.dashboard}
@@ -34,9 +41,8 @@ const Dashboard: React.FC = () => {
           color="accent"
         />
         <StatsCard
-          title="Precio Nafta"
-          value="$890"
-          change="+2%"
+          title="Precio Nafta Actual"
+          value={precioActual ? `$${precioActual.precio}` : ""}
           color="primary"
         />
       </div>

@@ -1,0 +1,122 @@
+.card {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary) 0%,
+    var(--color-primary-light) 100%
+  );
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 8px 24px rgba(1, 52, 100, 0.2);
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 200px;
+  height: 200px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.badge {
+  display: inline-block;
+  background-color: var(--color-accent);
+  color: var(--color-neutral-dark);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.3);
+}
+
+.iconContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.icon {
+  font-size: 3rem;
+  color: white;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.precioContainer {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.precioLabel {
+  display: block;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.precio {
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.fechaContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.calendarIcon {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+.fechaInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fechaLabel {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.fecha {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .card {
+    padding: 2.5rem 2rem;
+  }
+
+  .precio {
+    font-size: 3rem;
+  }
+
+  .icon {
+    font-size: 3.5rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .card {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+}

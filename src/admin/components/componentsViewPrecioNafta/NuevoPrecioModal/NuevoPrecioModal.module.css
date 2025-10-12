@@ -1,0 +1,219 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.modal {
+  position: absolute;
+  top: 35%;
+  left: 40%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 450px;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 1001;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.title {
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  color: var(--color-neutral-dark);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  background: var(--color-neutral-light);
+}
+
+.precioActualInfo {
+  background: var(--color-neutral-light);
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.precioActualValor {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  color: var(--color-neutral-dark);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 1rem;
+  color: var(--color-neutral-dark);
+  opacity: 0.5;
+  font-size: 1.1rem;
+}
+
+.input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 2.75rem;
+  border: 2px solid var(--color-neutral-medium);
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 52, 100, 0.1);
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.diferencia {
+  padding: 1rem;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.aumento {
+  background-color: rgba(255, 0, 0, 0.1);
+  color: #d32f2f;
+}
+
+.disminucion {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #388e3c;
+}
+
+.diferenciaLabel {
+  font-size: 0.95rem;
+}
+
+.diferenciaValor {
+  font-size: 1.25rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.cancelButton,
+.submitButton {
+  flex: 1;
+  padding: 0.875rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.cancelButton {
+  background: var(--color-neutral-light);
+  color: var(--color-neutral-dark);
+}
+
+.cancelButton:hover {
+  background: var(--color-neutral-medium);
+}
+
+.submitButton {
+  background: var(--color-secondary);
+  color: white;
+}
+
+.submitButton:hover {
+  background: var(--color-secondary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(62, 179, 113, 0.3);
+}
+
+.submitButton:active {
+  transform: translateY(0);
+}
+
+/* Tablet y Desktop */
+@media (max-width: 768px) {
+  .overlay {
+    display: grid;
+    place-content: center;
+    width: 100%;
+    overflow: hidden;
+  }
+  .modal {
+    padding: 1rem;
+  }
+  .modal {
+    top: 20%;
+    left: 1%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+  }
+  .title {
+    font-size: 1.5rem;
+  }
+}

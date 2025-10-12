@@ -7,6 +7,7 @@ import Home from "../admin/pages/Home/Home";
 import { MedidaProvider } from "../admin/contexts/medidaContext/MedidaProvider";
 import { TipoProductoProvider } from "../admin/contexts/tipoProductoContext/TipoProductoProvider";
 import { ClienteProvider } from "../admin/contexts/clienteContext/ClienteProvider";
+import { PrecioNaftaProvider } from "../admin/contexts/precioNaftaContext/PrecioNaftaProvider";
 function AdminApp() {
   return (
     <Routes>
@@ -17,7 +18,9 @@ function AdminApp() {
             <MedidaProvider>
               <TipoProductoProvider>
                 <ClienteProvider>
-                  <Home />
+                  <PrecioNaftaProvider>
+                    <Home />
+                  </PrecioNaftaProvider>
                 </ClienteProvider>
               </TipoProductoProvider>
             </MedidaProvider>

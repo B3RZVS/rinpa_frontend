@@ -5,7 +5,7 @@ import styles from "./StatsCard.module.css";
 interface StatsCardProps {
   title: string;
   value: string;
-  change: string;
+  change?: string;
   color: "primary" | "secondary" | "accent";
 }
 
