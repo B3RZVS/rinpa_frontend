@@ -13,14 +13,17 @@ import type {
   EntregaInterfaceResponse,
   UpdateEntregaInterface,
 } from "../../interface/entrega.interface";
+import { usePrecioNafta } from "../../hook/hookContexts/usePrecioNafta";
+import { useEntrega } from "../../hook/hookContexts/useEntrega";
 
 const RealizarEntregaView: React.FC = () => {
   const navigate = useNavigate();
+  const { registerEntrega, loading } = useEntrega();
+  const { preciosNafta, getPreciosNafta } = usePrecioNafta();
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode") || "create";
   const entregaId = searchParams.get("id");
 
-  const [loading, setLoading] = useState(false);
   const [selectedCliente, setSelectedCliente] =
     useState<ClienteInterfaceResponse | null>(null);
   const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
@@ -29,10 +32,13 @@ const RealizarEntregaView: React.FC = () => {
     []
   );
   const [showDetalleForm, setShowDetalleForm] = useState(false);
+  useEffect(() => {
+    if (preciosNafta.length <= 0) getPreciosNafta();
+  }, []);
 
+  const precioActual = preciosNafta.find((p) => p.fechaFin === null);
   useEffect(() => {
     if (mode === "edit" && entregaId) {
-      setLoading(true);
       // TODO: Reemplazar con llamada real a la API
       setTimeout(() => {
         // Datos de ejemplo
@@ -40,8 +46,10 @@ const RealizarEntregaView: React.FC = () => {
           id: Number.parseInt(entregaId),
           clienteId: 1,
           clienteNombre: "Juan Pérez",
+          clienteApellido: "saez",
           usuarioId: 1,
           usuarioNombre: "Admin",
+          usuarioApellido: "super",
           fecha: new Date("2024-01-15"),
           precioNafta: 850,
           litrosGastados: 15,
@@ -56,14 +64,9 @@ const RealizarEntregaView: React.FC = () => {
         // });
         setFecha(new Date(entregaData.fecha).toISOString().split("T")[0]);
         setLitrosGastados(entregaData.litrosGastados.toString());
-        setLoading(false);
       }, 500);
     }
   }, [mode, entregaId]);
-
-  const handleVolver = () => {
-    navigate("/home?view=ver-entregas");
-  };
 
   const handleAgregarDetalle = (detalle: CreateDetalleProductoInterface) => {
     setDetalles([...detalles, detalle]);
@@ -90,41 +93,29 @@ const RealizarEntregaView: React.FC = () => {
       return;
     }
 
-    setLoading(true);
-
-    if (mode === "create") {
+    if (mode === "create" && precioActual) {
       const nuevaEntrega: CreateEntregaInterface = {
         clienteId: selectedCliente.id,
-        // TODO: Obtener usuarioId del localStorage
-        usuarioId: 1, // Reemplazar con: Number(localStorage.getItem('usuarioId'))
-        // TODO: Obtener precioNaftaId del localStorage o API
-        precioNaftaId: 1, // Reemplazar con: Number(localStorage.getItem('precioNaftaId'))
+        usuarioId: Number(localStorage.getItem("idUser")),
+        precioNaftaId: precioActual?.id,
         litrosGastados: Number.parseFloat(litrosGastados),
         fecha: new Date(fecha),
         detalles: detalles,
       };
-
+      registerEntrega(nuevaEntrega);
       console.log("Crear entrega:", nuevaEntrega);
       // TODO: Llamar a la API para crear la entrega
-      setTimeout(() => {
-        setLoading(false);
-        navigate("/home?view=ver-entregas");
-      }, 1000);
     } else {
-      const entregaActualizada: UpdateEntregaInterface = {
-        clienteId: selectedCliente.id,
-        // TODO: Obtener precioNafta actual
-        precioNafta: 850, // Reemplazar con el precio actual
-        litrosGastados: Number.parseFloat(litrosGastados),
-        fecha: new Date(fecha),
-      };
-
-      console.log("Actualizar entrega:", entregaActualizada);
-      // TODO: Llamar a la API para actualizar la entrega
-      setTimeout(() => {
-        setLoading(false);
-        navigate("/home?view=ver-entregas");
-      }, 1000);
+      if (precioActual) {
+        const entregaActualizada: UpdateEntregaInterface = {
+          clienteId: selectedCliente.id,
+          // TODO: Obtener precioNafta actual
+          precioNafta: precioActual?.id, // Reemplazar con el precio actual
+          litrosGastados: Number.parseFloat(litrosGastados),
+          fecha: new Date(fecha),
+        };
+        console.log("Actualizar entrega:", entregaActualizada);
+      }
     }
   };
 
@@ -137,10 +128,6 @@ const RealizarEntregaView: React.FC = () => {
     >
       {/* Header */}
       <div className={styles.header}>
-        <button className={styles.backButton} onClick={handleVolver}>
-          <FiArrowLeft />
-          <span>Volver</span>
-        </button>
         <h2>{mode === "create" ? "Nueva Entrega" : "Editar Entrega"}</h2>
       </div>
 

@@ -57,7 +57,9 @@ const EntregaCard: React.FC<EntregaCardProps> = ({
         <div className={styles.clienteInfo}>
           <FiUser className={styles.icon} />
           <div>
-            <h3>{entrega.clienteNombre}</h3>
+            <h3>
+              {entrega.clienteNombre} {entrega.clienteApellido}
+            </h3>
             <span className={styles.entregaId}>Entrega #{entrega.id}</span>
           </div>
         </div>

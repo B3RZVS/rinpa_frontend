@@ -67,7 +67,7 @@
 }
 
 .formGroup {
-  margin-bottom: 1.25rem;
+  padding-bottom: 20px;
 }
 
 .formGroup:last-child {
@@ -83,7 +83,7 @@
 }
 
 .input {
-  width: 100%;
+  width: 80%;
   padding: 0.875rem 1rem;
   border: 2px solid var(--color-neutral-medium);
   border-radius: 12px;
@@ -100,7 +100,7 @@
 
 .formRow {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1rf 1rf;
   gap: 1rem;
 }
 

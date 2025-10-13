@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FiSearch, FiUser, FiChevronDown, FiX } from "react-icons/fi";
 import type { ClienteInterfaceResponse } from "../../../interface/cliente.interface";
 import styles from "./ClienteSelector.module.css";
-
+import { useCliente } from "../../../hook/hookContexts/useCliente";
 interface ClienteSelectorProps {
   selectedCliente: ClienteInterfaceResponse | null;
   onSelectCliente: (cliente: ClienteInterfaceResponse | null) => void;
@@ -13,74 +13,13 @@ const ClienteSelector: React.FC<ClienteSelectorProps> = ({
   selectedCliente,
   onSelectCliente,
 }) => {
+  const { clientes, getClientes, loading } = useCliente();
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [clientes, setClientes] = useState<ClienteInterfaceResponse[]>([]);
-  const [loading, setLoading] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // TODO: Reemplazar con llamada real a la API
-    setLoading(true);
-    setTimeout(() => {
-      setClientes([
-        {
-          id: 1,
-          nombre: "Juan Pérez",
-          apellido: "gonzalez",
-          direccion: "Av. Siempreviva 123",
-          telefono: "123-456-7890",
-          email: "ramiroberruezo",
-          descripcion: "hola",
-        },
-        {
-          id: 2,
-          nombre: "María González",
-          apellido: "gonzalez",
-          direccion: "Calle Falsa 456",
-          telefono: "098-765-4321",
-          email: "ramiroberruezo",
-          descripcion: "hola",
-        },
-        {
-          id: 3,
-          nombre: "Carlos Rodríguez",
-          apellido: "gonzalez",
-          direccion: "Av. Libertador 789",
-          telefono: "111-222-3333",
-          email: "ramiroberruezo",
-          descripcion: "hola",
-        },
-        {
-          id: 4,
-          nombre: "Ana Martínez",
-          apellido: "gonzalez",
-          direccion: "Calle Principal 321",
-          telefono: "444-555-6666",
-          email: "ramiroberruezo",
-          descripcion: "hola",
-        },
-        {
-          id: 5,
-          nombre: "Pedro Sánchez",
-          apellido: "gonzalez",
-          direccion: "Av. Central 654",
-          telefono: "777-888-9999",
-          email: "ramiroberruezo",
-          descripcion: "hola",
-        },
-        {
-          id: 6,
-          nombre: "Laura Fernández",
-          apellido: "gonzalez",
-          direccion: "Calle Secundaria 987",
-          telefono: "000-111-2222",
-          email: "ramiroberruezo",
-          descripcion: "hola",
-        },
-      ]);
-      setLoading(false);
-    }, 500);
+    if (clientes.length <= 0) getClientes();
   }, []);
 
   useEffect(() => {
@@ -121,7 +60,7 @@ const ClienteSelector: React.FC<ClienteSelectorProps> = ({
             <FiUser className={styles.icon} />
             <div className={styles.clienteDetails}>
               <span className={styles.clienteNombre}>
-                {selectedCliente.nombre}
+                {selectedCliente.nombre} {selectedCliente.apellido}
               </span>
               {selectedCliente.direccion && (
                 <span className={styles.clienteDireccion}>
@@ -197,7 +136,7 @@ const ClienteSelector: React.FC<ClienteSelectorProps> = ({
                     <FiUser className={styles.clienteIcon} />
                     <div className={styles.clienteItemDetails}>
                       <span className={styles.clienteItemNombre}>
-                        {cliente.nombre}
+                        {cliente.nombre} {cliente.apellido}
                       </span>
                       {cliente.direccion && (
                         <span className={styles.clienteItemDireccion}>

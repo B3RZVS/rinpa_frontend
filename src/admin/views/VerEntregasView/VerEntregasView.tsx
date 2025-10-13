@@ -4,60 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { FiPlus, FiSearch, FiFilter } from "react-icons/fi";
 import EntregaCard from "../../components/ComponentsViewEntrega/EntregaCard/EntregaCard";
 import styles from "./VerEntregasView.module.css";
-import type { EntregaInterfaceResponse } from "../../interface/entrega.interface";
-
+import { useEntrega } from "../../hook/hookContexts/useEntrega";
 const VerEntregasView: React.FC = () => {
   const navigate = useNavigate();
-  const [entregas, setEntregas] = useState<EntregaInterfaceResponse[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { entregas, getEntregas, loading } = useEntrega();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
 
   useEffect(() => {
-    // TODO: Reemplazar con llamada real a la API
-    setTimeout(() => {
-      setEntregas([
-        {
-          id: 1,
-          clienteId: 1,
-          clienteNombre: "Juan Pérez",
-          usuarioId: 1,
-          usuarioNombre: "Admin",
-          fecha: new Date("2024-01-15"),
-          precioNafta: 850,
-          litrosGastados: 15,
-          consumoTotal: 12750,
-          detalles: [
-            {
-              id: 1,
-              producto: {
-                id: 1,
-                precio: 5000,
-                descripcion: "Cemento Portland",
-                tipoProducto: "Cemento",
-                medida: "Bolsa 50kg",
-              },
-              cantidad: 10,
-              precioUnitario: 5000,
-              subTotal: 50000,
-            },
-          ],
-        },
-        {
-          id: 2,
-          clienteId: 2,
-          clienteNombre: "María González",
-          usuarioId: 1,
-          usuarioNombre: "Admin",
-          fecha: new Date("2024-01-14"),
-          precioNafta: 850,
-          litrosGastados: 20,
-          consumoTotal: 17000,
-          detalles: [],
-        },
-      ]);
-      setLoading(false);
-    }, 1000);
+    if (entregas.length <= 0) {
+      getEntregas();
+    }
   }, []);
 
   const filteredEntregas = entregas.filter((entrega) =>

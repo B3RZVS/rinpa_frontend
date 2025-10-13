@@ -5,5 +5,6 @@ export const urls = {
   Cliente: "/cliente/",
   PrecioNafta: "/precioNafta/",
   Producto: "/producto/",
-
+  Entrega: "/entrega/",
+  DetalleEntrega: "/detalle-entrega/",
 };

@@ -31,9 +31,9 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
       const userRole = response.user.rol.nombre as Role;
 
       authService.setTokens(response.accessToken, response.refreshToken);
-
       localStorage.setItem("role", response.user.rol.nombre);
       localStorage.setItem("nombreUser", response.user.nombre);
+      localStorage.setItem("idUser", response.user.id);
 
       setIsAuthenticated(true);
       setRole(response.user.rol.nombre);

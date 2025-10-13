@@ -4,7 +4,7 @@ import { FiX, FiPlus, FiSearch } from "react-icons/fi";
 import styles from "./DetalleProductoForm.module.css";
 import type { CreateDetalleProductoInterface } from "../../../interface/detalle.interface";
 import type { ProductoResponseInterface } from "../../../interface/producto.interface";
-
+import { useProducto } from "../../../hook/hookContexts/useProducto";
 interface DetalleProductoFormProps {
   onAdd: (detalle: CreateDetalleProductoInterface) => void;
   onCancel: () => void;
@@ -14,61 +14,24 @@ const DetalleProductoForm: React.FC<DetalleProductoFormProps> = ({
   onAdd,
   onCancel,
 }) => {
-  const [productos, setProductos] = useState<ProductoResponseInterface[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { productos, getProductos, loading } = useProducto();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedProducto, setSelectedProducto] =
     useState<ProductoResponseInterface | null>(null);
   const [cantidad, setCantidad] = useState("");
-  const [precioUnitario, setPrecioUnitario] = useState("");
 
   useEffect(() => {
-    // TODO: Reemplazar con llamada real a la API
-    setLoading(true);
-    setTimeout(() => {
-      setProductos([
-        {
-          id: 1,
-          precio: 5000,
-          descripcion: "Cemento Portland",
-          tipoProducto: "Cemento",
-          medida: "Bolsa 50kg",
-        },
-        {
-          id: 2,
-          precio: 3500,
-          descripcion: "Arena Fina",
-          tipoProducto: "Arena",
-          medida: "m³",
-        },
-        {
-          id: 3,
-          precio: 4200,
-          descripcion: "Ladrillo Común",
-          tipoProducto: "Ladrillo",
-          medida: "Millar",
-        },
-        {
-          id: 4,
-          precio: 8500,
-          descripcion: "Cal Hidratada",
-          tipoProducto: "Cal",
-          medida: "Bolsa 25kg",
-        },
-      ]);
-      setLoading(false);
-    }, 500);
+    if (productos.length <= 0) getProductos();
   }, []);
 
   const filteredProductos = productos.filter(
     (producto) =>
-      producto.descripcion.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      producto.medida.toLowerCase().includes(searchTerm.toLowerCase()) ||
       producto.tipoProducto.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleSelectProducto = (producto: ProductoResponseInterface) => {
     setSelectedProducto(producto);
-    setPrecioUnitario(producto.precio.toString());
     setSearchTerm("");
   };
 
@@ -85,23 +48,18 @@ const DetalleProductoForm: React.FC<DetalleProductoFormProps> = ({
       return;
     }
 
-    if (!precioUnitario || Number.parseFloat(precioUnitario) <= 0) {
-      alert("Debe ingresar un precio válido");
-      return;
-    }
-
     const nuevoDetalle: CreateDetalleProductoInterface = {
       productoId: selectedProducto.id,
       cantidad: Number.parseFloat(cantidad),
-      precioUnitario: Number.parseFloat(precioUnitario),
+      precioUnitario: selectedProducto.precio,
     };
 
     onAdd(nuevoDetalle);
   };
 
   const subTotal =
-    selectedProducto && cantidad && precioUnitario
-      ? Number.parseFloat(cantidad) * Number.parseFloat(precioUnitario)
+    selectedProducto && cantidad
+      ? Number.parseFloat(cantidad) * selectedProducto.precio
       : 0;
 
   return (
@@ -209,11 +167,9 @@ const DetalleProductoForm: React.FC<DetalleProductoFormProps> = ({
             <input
               type="number"
               step="0.01"
-              value={precioUnitario}
-              onChange={(e) => setPrecioUnitario(e.target.value)}
-              placeholder="0.00"
+              value={selectedProducto?.precio}
               className={styles.input}
-              disabled={!selectedProducto}
+              disabled
             />
           </div>
         </div>
@@ -244,7 +200,7 @@ const DetalleProductoForm: React.FC<DetalleProductoFormProps> = ({
           <button
             type="submit"
             className={styles.addButton}
-            disabled={!selectedProducto || !cantidad || !precioUnitario}
+            disabled={!selectedProducto || !cantidad}
           >
             <FiPlus />
             <span>Agregar</span>
