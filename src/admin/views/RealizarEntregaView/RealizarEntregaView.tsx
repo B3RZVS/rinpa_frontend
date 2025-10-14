@@ -34,7 +34,12 @@ const RealizarEntregaView: React.FC = () => {
   useEffect(() => {
     if (preciosNafta.length <= 0) getPreciosNafta();
   }, []);
-
+  const resetForm = () => {
+    setSelectedCliente(null);
+    setFecha(new Date().toISOString().split("T")[0]);
+    setLitrosGastados("");
+    setDetalles([]);
+  };
   const precioActual = preciosNafta.find((p) => p.fechaFin === null);
   useEffect(() => {
     if (mode === "edit" && entregaId) {
@@ -102,7 +107,7 @@ const RealizarEntregaView: React.FC = () => {
         detalles: detalles,
       };
       registerEntrega(nuevaEntrega);
-      console.log("Crear entrega:", nuevaEntrega);
+      resetForm();
       // TODO: Llamar a la API para crear la entrega
     } else {
       if (precioActual) {

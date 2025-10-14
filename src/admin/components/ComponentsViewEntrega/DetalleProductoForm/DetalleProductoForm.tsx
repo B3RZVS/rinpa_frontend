@@ -52,6 +52,7 @@ const DetalleProductoForm: React.FC<DetalleProductoFormProps> = ({
       productoId: selectedProducto.id,
       cantidad: Number.parseFloat(cantidad),
       precioUnitario: selectedProducto.precio,
+      productoNombre: `${selectedProducto.tipoProducto} ${selectedProducto.medida}`,
     };
 
     onAdd(nuevoDetalle);

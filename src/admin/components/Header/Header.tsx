@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ activeView, onToggleMobileMenu }) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <FiBell />
+          {/* <FiBell /> */}
         </motion.button>
 
         <motion.button
@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ activeView, onToggleMobileMenu }) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <FiUser />
+          {/* <FiUser /> */}
         </motion.button>
       </div>
     </motion.header>

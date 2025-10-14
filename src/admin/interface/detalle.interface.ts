@@ -11,4 +11,5 @@ export interface CreateDetalleProductoInterface {
   cantidad: number;
   precioUnitario: number;
   productoId: number;
+  productoNombre: string;
 }

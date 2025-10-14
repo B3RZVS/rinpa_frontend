@@ -12,7 +12,7 @@ interface StatsCardProps {
 const StatsCard: React.FC<StatsCardProps> = ({
   title,
   value,
-  change,
+  // change,
   color,
 }) => {
   return (
@@ -25,7 +25,7 @@ const StatsCard: React.FC<StatsCardProps> = ({
     >
       <h3 className={styles.title}>{title}</h3>
       <div className={styles.value}>{value}</div>
-      <div className={styles.change}>{change}</div>
+      {/* <div className={styles.change}>{change}</div> */}
     </motion.div>
   );
 };

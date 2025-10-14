@@ -53,7 +53,7 @@ const DetalleProductoList: React.FC<DetalleProductoListProps> = ({
               <div className={styles.detalleInfo}>
                 <div className={styles.detalleHeader}>
                   <span className={styles.productoId}>
-                    Producto #{detalle.productoId}
+                    {detalle.productoNombre}
                   </span>
                   <button
                     className={styles.deleteButton}
