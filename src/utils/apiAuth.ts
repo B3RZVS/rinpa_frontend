@@ -1,8 +1,9 @@
 import axios from "axios";
 
 // export const BASE_URL = "https://buendia.backend.systemsbinary.com";
-// export const BASE_URL = "http://rinpa.backend.systemsbinary.com";s
-export const BASE_URL = "http://localhost:8000";
+export const BASE_URL = "https://rinpa.backend.systemsbinary.com";
+
+// export const BASE_URL = "http://localhost:8000";
 
 const apiLogin = axios.create({
   baseURL: BASE_URL,

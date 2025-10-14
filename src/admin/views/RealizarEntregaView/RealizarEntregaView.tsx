@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { FiArrowLeft, FiSave, FiPlus } from "react-icons/fi";
+import { useSearchParams } from "react-router-dom";
+import { FiSave, FiPlus } from "react-icons/fi";
 import ClienteSelector from "../../components/ComponentsViewEntrega/ClienteSelector/ClienteSelector";
 import DetalleProductoForm from "../../components/ComponentsViewEntrega/DetalleProductoForm/DetalleProductoForm";
 import DetalleProductoList from "../../components/ComponentsViewEntrega/DetalleProductoList/DetalleProductoList";
@@ -17,7 +17,6 @@ import { usePrecioNafta } from "../../hook/hookContexts/usePrecioNafta";
 import { useEntrega } from "../../hook/hookContexts/useEntrega";
 
 const RealizarEntregaView: React.FC = () => {
-  const navigate = useNavigate();
   const { registerEntrega, loading } = useEntrega();
   const { preciosNafta, getPreciosNafta } = usePrecioNafta();
   const [searchParams] = useSearchParams();
