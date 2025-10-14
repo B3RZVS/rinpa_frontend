@@ -154,10 +154,11 @@ const DetalleProductoForm: React.FC<DetalleProductoFormProps> = ({
             <label className={styles.label}>Cantidad *</label>
             <input
               type="number"
-              step="0.01"
+              step="1"
               value={cantidad}
               onChange={(e) => setCantidad(e.target.value)}
-              placeholder="0.00"
+              placeholder="0"
+              min={0}
               className={styles.input}
               disabled={!selectedProducto}
             />
