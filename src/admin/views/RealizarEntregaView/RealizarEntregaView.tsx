@@ -164,6 +164,7 @@ const RealizarEntregaView: React.FC = () => {
                 onChange={(e) => setLitrosGastados(e.target.value)}
                 placeholder="0.00"
                 className={styles.input}
+                min={0}
               />
             </div>
           </div>
