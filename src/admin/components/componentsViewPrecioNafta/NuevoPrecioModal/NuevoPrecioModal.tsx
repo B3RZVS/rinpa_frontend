@@ -104,6 +104,7 @@ const NuevoPrecioModal = ({
                     value={precio}
                     onChange={(e) => setPrecio(e.target.value)}
                     placeholder="0.00"
+                    min={0}
                     className={styles.input}
                     autoFocus
                   />
