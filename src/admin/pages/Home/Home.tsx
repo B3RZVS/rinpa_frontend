@@ -8,13 +8,16 @@ import MedidasView from "../../views/MedidaView/MedidaView";
 import TipoProductoView from "../../views/TipoProductoView/TipoProductoView";
 import ProductoView from "../../views/ProductoView/ProductoView";
 import ClienteView from "../../views/ClienteView/ClienteView";
-import RealizarEntregaView from "../../views/RealizarEntregaView/RealizarEntregaView";
+import RealizarEntregaView from "../../views/RealizarEntregaView/CreateEntrega/RealizarEntregaView";
 import VerEntregasView from "../../views/VerEntregasView/VerEntregasView";
 import PrecioNaftaView from "../../views/PrecioNaftaView/PrecioNaftaView";
+import EditEntregaView from "../../views/RealizarEntregaView/EditEntrega/EditarEntregaView";
 import styles from "./Home.module.css";
+import { Route, Routes } from "react-router-dom";
 export type ViewType =
   | "dashboard"
   | "realizar-entrega"
+  | "editar-entrega"
   | "ver-entregas"
   | "precio-nafta"
   | "cliente"
@@ -23,55 +26,36 @@ export type ViewType =
   | "medida";
 
 const Home: React.FC = () => {
-  const [activeView, setActiveView] = useState<ViewType>("dashboard");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const renderView = () => {
-    switch (activeView) {
-      case "dashboard":
-        return <Dashboard />;
-      case "realizar-entrega":
-        return <RealizarEntregaView />;
-      case "ver-entregas":
-        return <VerEntregasView />;
-      case "cliente":
-        return <ClienteView />;
-      case "producto":
-        return <ProductoView />;
-      case "tipo-producto":
-        return <TipoProductoView />;
-      case "precio-nafta":
-        return <PrecioNaftaView />;
-      case "medida":
-        return <MedidasView />;
-      default:
-        return <Dashboard />;
-    }
-  };
 
   return (
     <div className={styles.home}>
       <MobileNavbar
-        activeView={activeView}
-        onViewChange={setActiveView}
         mobileMenuOpen={mobileMenuOpen}
         onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
       />
 
       <div className={styles.mainContent}>
-        <Header
-          activeView={activeView}
-          onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
-        />
+        <Header onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)} />
 
         <motion.main
           className={styles.content}
-          key={activeView}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          {renderView()}
+          <Routes>
+            <Route index element={<Dashboard />} />
+            <Route path="home" element={<Dashboard />} />
+            <Route path="realizar-entrega" element={<RealizarEntregaView />} />
+            <Route path="ver-entregas" element={<VerEntregasView />} />
+            <Route path="editar-entrega/:id" element={<EditEntregaView />} />
+            <Route path="cliente" element={<ClienteView />} />
+            <Route path="producto" element={<ProductoView />} />
+            <Route path="tipo-producto" element={<TipoProductoView />} />
+            <Route path="precio-nafta" element={<PrecioNaftaView />} />
+            <Route path="medida" element={<MedidasView />} />
+          </Routes>
         </motion.main>
       </div>
     </div>

@@ -1,8 +1,7 @@
-import type React from "react";
 import { motion } from "framer-motion";
 import styles from "./RecentActivity.module.css";
 
-const RecentActivity: React.FC = () => {
+const RecentActivity = () => {
   const activities = [
     {
       action: "Nueva entrega registrada",

@@ -1,15 +1,29 @@
-import type React from "react";
 import { motion } from "framer-motion";
 import { FiPlus, FiTruck, FiUsers } from "react-icons/fi";
 import styles from "./QuickActions.module.css";
-
-const QuickActions: React.FC = () => {
+import { useNavigate } from "react-router-dom";
+const QuickActions = () => {
+  const navigate = useNavigate();
   const actions = [
-    { icon: FiPlus, label: "Nuevo Producto", color: "primary" },
-    { icon: FiTruck, label: "Nueva Entrega", color: "secondary" },
-    { icon: FiUsers, label: "Nuevo Cliente", color: "accent" },
+    {
+      icon: FiTruck,
+      label: "Nueva Entrega",
+      color: "secondary",
+      url: "/dashboard/realizar-entrega",
+    },
+    {
+      icon: FiUsers,
+      label: "Nuevo Cliente",
+      color: "accent",
+      url: "/dashboard/cliente",
+    },
+    {
+      icon: FiPlus,
+      label: "Nuevo Producto",
+      color: "primary",
+      url: "/dashboard/producto",
+    },
   ];
-
   return (
     <motion.div
       className={styles.container}
@@ -28,6 +42,7 @@ const QuickActions: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
+            onClick={() => navigate(action.url)}
           >
             <action.icon className={styles.icon} />
             <span>{action.label}</span>

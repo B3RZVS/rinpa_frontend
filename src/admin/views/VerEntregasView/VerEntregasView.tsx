@@ -5,7 +5,8 @@ import { FiPlus, FiSearch, FiFilter } from "react-icons/fi";
 import EntregaCard from "../../components/ComponentsViewEntrega/EntregaCard/EntregaCard";
 import styles from "./VerEntregasView.module.css";
 import { useEntrega } from "../../hook/hookContexts/useEntrega";
-const VerEntregasView: React.FC = () => {
+
+const VerEntregasView = () => {
   const navigate = useNavigate();
   const { entregas, getEntregas, loading } = useEntrega();
   const [searchTerm, setSearchTerm] = useState("");
@@ -26,7 +27,7 @@ const VerEntregasView: React.FC = () => {
   };
 
   const handleEditEntrega = (id: number) => {
-    navigate(`/home?view=realizar-entrega&mode=edit&id=${id}`);
+    navigate(`/dashboard/editar-entrega/${id}`);
   };
 
   return (

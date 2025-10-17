@@ -14,16 +14,15 @@ import {
 import type { ViewType } from "../../pages/Home/Home";
 import logo from "/logo/RinpaLogo.jpeg";
 import styles from "./MobileNavbar.module.css";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface MobileNavbarProps {
-  activeView: ViewType;
-  onViewChange: (view: ViewType) => void;
   mobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
 }
 
 const menuItems = [
-  { id: "dashboard" as ViewType, label: "Dashboard", icon: FiHome },
+  { id: "home" as ViewType, label: "Dashboard", icon: FiHome },
   {
     id: "realizar-entrega" as ViewType,
     label: "Realizar Entrega",
@@ -47,15 +46,12 @@ const menuItems = [
 ];
 
 const MobileNavbar: React.FC<MobileNavbarProps> = ({
-  activeView,
-  onViewChange,
   mobileMenuOpen,
   onToggleMobileMenu,
 }) => {
-  const handleViewChange = (view: ViewType) => {
-    onViewChange(view);
-    onToggleMobileMenu(); // Cerrar menu en mobile después de seleccionar
-  };
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isActive = (view: string) => location.pathname.includes(view);
 
   return (
     <>
@@ -82,9 +78,9 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
             <motion.button
               key={item.id}
               className={`${styles.navItem} ${
-                activeView === item.id ? styles.active : ""
+                isActive(item.id) ? styles.active : ""
               }`}
-              onClick={() => onViewChange(item.id)}
+              onClick={() => navigate(`/dashboard/${item.id}`)}
               whileHover={{ x: 5 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -101,9 +97,12 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
           <motion.button
             key={item.id}
             className={`${styles.mobileNavItem} ${
-              activeView === item.id ? styles.active : ""
+              isActive(item.id) ? styles.active : ""
             }`}
-            onClick={() => onViewChange(item.id)}
+            onClick={() => {
+              navigate(`/dashboard/${item.id}`);
+              onToggleMobileMenu();
+            }}
             whileTap={{ scale: 0.9 }}
           >
             <item.icon className={styles.mobileIcon} />
@@ -147,9 +146,12 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                   <motion.button
                     key={item.id}
                     className={`${styles.mobileMenuItem} ${
-                      activeView === item.id ? styles.active : ""
+                      isActive(item.id) ? styles.active : ""
                     }`}
-                    onClick={() => handleViewChange(item.id)}
+                    onClick={() => {
+                      navigate(`/dashboard/${item.id}`);
+                      onToggleMobileMenu();
+                    }}
                     whileHover={{ x: 10 }}
                     whileTap={{ scale: 0.95 }}
                   >
