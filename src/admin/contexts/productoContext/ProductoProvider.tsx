@@ -41,7 +41,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({
       await ProductoService.createProducto(data);
       await getProductos();
       showToast({
-        title: " producto registrada con éxito.",
+        title: "Producto registrada con éxito.",
         type: "success",
         position: "top-center",
       });
@@ -76,7 +76,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({
       await ProductoService.deleteProducto(id);
       await getProductos();
       showToast({
-        title: " producto eliminado con éxito.",
+        title: "Producto eliminado con éxito.",
         type: "success",
         position: "top-center",
       });

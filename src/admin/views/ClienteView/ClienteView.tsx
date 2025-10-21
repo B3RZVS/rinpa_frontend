@@ -8,6 +8,7 @@ import Pagination from "../../../shared/components/Common/Pagination/Pagination"
 import styles from "./ClienteView.module.css";
 import { useCliente } from "../../hook/hookContexts/useCliente";
 import { useClienteUI } from "../../hook/hookUI/useClienteUI";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 const ClienteView: React.FC = () => {
   const { loading } = useCliente();
   const {
@@ -29,7 +30,9 @@ const ClienteView: React.FC = () => {
     isConfirmModalOpen,
     confirmDelete,
   } = useClienteUI();
-
+  if (loading) {
+    return <LoadingComponent />;
+  }
   return (
     <motion.div
       className={styles.container}

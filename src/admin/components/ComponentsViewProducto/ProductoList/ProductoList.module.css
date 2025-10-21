@@ -1,5 +1,7 @@
 .container {
   width: 100%;
+  height: auto;
+  padding-bottom: 2rem;
 }
 
 .loadingContainer {
@@ -57,6 +59,7 @@
 .productGrid {
   display: grid;
   gap: 1rem;
+  padding-bottom: 3rem;
   grid-template-columns: 1fr;
 }
 

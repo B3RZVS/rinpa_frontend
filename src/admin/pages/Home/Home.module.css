@@ -14,6 +14,7 @@
 
 .content {
   /* Padding optimizado para mobile */
+  position: relative;
   padding: 1rem;
   min-height: calc(100vh - 140px); /* Ajustado para navbar mobile */
 }

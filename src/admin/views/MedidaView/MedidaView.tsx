@@ -6,6 +6,7 @@ import ConfirmModal from "../../../shared/components/Common/ConfirmationModal/Co
 import styles from "./MedidaView.module.css";
 import { useMedida } from "../../hook/hookContexts/useMedida";
 import { useMedidasUI } from "../../hook/hookUI/useMedidasUI";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
 const MedidasView: React.FC = () => {
   const { getMedidas, medidas, loading } = useMedida();
@@ -26,7 +27,9 @@ const MedidasView: React.FC = () => {
     confirmDelete,
     confirmateAccion,
   } = useMedidasUI(medidas, getMedidas);
-
+  if (loading) {
+    return <LoadingComponent />;
+  }
   return (
     <motion.div
       className={styles.container}

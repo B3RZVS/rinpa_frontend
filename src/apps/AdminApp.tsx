@@ -7,10 +7,10 @@ import Home from "../admin/pages/Home/Home";
 import { MedidaProvider } from "../admin/contexts/medidaContext/MedidaProvider";
 import { TipoProductoProvider } from "../admin/contexts/tipoProductoContext/TipoProductoProvider";
 import { ClienteProvider } from "../admin/contexts/clienteContext/ClienteProvider";
-
 import { PrecioNaftaProvider } from "../admin/contexts/precioNaftaContext/PrecioNaftaProvider";
-
 import { ProductoProvider } from "../admin/contexts/productoContext/ProductoProvider";
+import { EntregaProvider } from "../admin/contexts/entregaContext/EntregaProvider";
+import { DetalleEntregaProvider } from "../admin/contexts/detalleEntregaContext/DetalleEntregaProvider";
 
 function AdminApp() {
   return (
@@ -22,13 +22,15 @@ function AdminApp() {
             <MedidaProvider>
               <TipoProductoProvider>
                 <ClienteProvider>
-
                   <ProductoProvider>
                     <PrecioNaftaProvider>
-                      <Home />
-                     </PrecioNaftaProvider>
+                      <EntregaProvider>
+                        <DetalleEntregaProvider>
+                          <Home />
+                        </DetalleEntregaProvider>
+                      </EntregaProvider>
+                    </PrecioNaftaProvider>
                   </ProductoProvider>
-
                 </ClienteProvider>
               </TipoProductoProvider>
             </MedidaProvider>

@@ -1,26 +1,34 @@
 import type React from "react";
 import { motion } from "framer-motion";
-import { FiMenu, FiBell, FiUser } from "react-icons/fi";
-import type { ViewType } from "../../pages/Home/Home";
+import { FiMenu } from "react-icons/fi";
 import styles from "./Header.module.css";
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 
 interface HeaderProps {
-  activeView: ViewType;
   onToggleMobileMenu: () => void;
 }
-
-const viewTitles: Record<ViewType, string> = {
-  dashboard: "",
-  medida: "Gestión de Medida",
-  "tipo-producto": "Gestión de Tipo Producto",
-  producto: "Gestión de Productos",
-  cliente: "Gestión de Cliente",
-  "realizar-entrega": "Realizar Entrega",
-  "ver-entregas": "Ver Entregas",
-  "precio-nafta": "Gestión de Precio de Nafta",
+const viewTitles: Record<string, string> = {
+  "/dashboard": "Dashboard",
+  "/dashboard/realizar-entrega": "Realizar Entrega",
+  "/dashboard/ver-entregas": "Ver Entregas",
+  "/dashboard/editar-entrega": "Editar Entrega",
+  "/dashboard/precio-nafta": "Gestión de Precio de Nafta",
+  "/dashboard/cliente": "Gestión de Cliente",
+  "/dashboard/producto": "Gestión de Producto",
+  "/dashboard/tipo-producto": "Gestión de Tipo de Producto",
+  "/dashboard/medida": "Gestión de Medida",
 };
 
-const Header: React.FC<HeaderProps> = ({ activeView, onToggleMobileMenu }) => {
+const Header: React.FC<HeaderProps> = ({ onToggleMobileMenu }) => {
+  const location = useLocation();
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    const pathBase = location.pathname.replace(/\/\d+$/, "");
+    const newTitle = viewTitles[pathBase] || "Dashboard";
+    setTitle(newTitle);
+  }, [location.pathname]);
   return (
     <motion.header
       className={styles.header}
@@ -32,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ activeView, onToggleMobileMenu }) => {
         <button className={styles.menuButton} onClick={onToggleMobileMenu}>
           <FiMenu />
         </button>
-        <h2 className={styles.title}>{viewTitles[activeView]}</h2>
+        <h2 className={styles.title}>{title}</h2>
       </div>
 
       <div className={styles.right}>
@@ -41,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ activeView, onToggleMobileMenu }) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <FiBell />
+          {/* <FiBell /> */}
         </motion.button>
 
         <motion.button
@@ -49,7 +57,7 @@ const Header: React.FC<HeaderProps> = ({ activeView, onToggleMobileMenu }) => {
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
         >
-          <FiUser />
+          {/* <FiUser /> */}
         </motion.button>
       </div>
     </motion.header>

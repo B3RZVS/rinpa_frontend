@@ -1,0 +1,164 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 1rem;
+  gap: 0.75rem;
+  text-align: center;
+  background: var(--color-neutral-light);
+  border-radius: 12px;
+  border: 2px dashed var(--color-neutral-medium);
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  color: var(--color-neutral-dark);
+  opacity: 0.3;
+}
+
+.empty p {
+  margin: 0;
+  color: var(--color-neutral-dark);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.empty span {
+  color: var(--color-neutral-dark);
+  opacity: 0.6;
+  font-size: 0.875rem;
+}
+
+.detalleItem {
+  background: white;
+  border: 2px solid var(--color-neutral-medium);
+  border-radius: 12px;
+  padding: 1rem;
+  transition: all 0.2s;
+}
+
+.detalleItem:hover {
+  border-color: var(--color-secondary);
+  box-shadow: 0 4px 12px rgba(60, 195, 113, 0.15);
+}
+
+.detalleInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.detalleHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-neutral-medium);
+}
+
+.productoId {
+  font-weight: 600;
+  color: var(--color-primary);
+  font-size: 0.9375rem;
+}
+
+.deleteButton {
+  background: var(--color-neutral-light);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #e74c3c;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.deleteButton:hover {
+  background: #e74c3c;
+  color: white;
+  transform: scale(1.1);
+}
+
+.detalleBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.detalleRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  color: var(--color-neutral-dark);
+  opacity: 0.7;
+  font-size: 0.875rem;
+}
+
+.value {
+  color: var(--color-neutral-dark);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.detalleRow.subtotal {
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--color-neutral-medium);
+  margin-top: 0.25rem;
+}
+
+.detalleRow.subtotal .label,
+.detalleRow.subtotal .value {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--color-primary), #025a9c);
+  border-radius: 12px;
+  margin-top: 0.5rem;
+}
+
+.totalLabel {
+  color: white;
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+
+.totalValue {
+  color: white;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .detalleItem {
+    padding: 1.25rem;
+  }
+
+  .totalLabel {
+    font-size: 1.125rem;
+  }
+
+  .totalValue {
+    font-size: 1.75rem;
+  }
+}
