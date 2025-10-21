@@ -51,7 +51,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const isActive = (view: string) => location.pathname.includes(view);
+  const isActive = (view: string) => location.pathname === `/dashboard/${view}`;
 
   return (
     <>
@@ -101,7 +101,6 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
             }`}
             onClick={() => {
               navigate(`/dashboard/${item.id}`);
-              onToggleMobileMenu();
             }}
             whileTap={{ scale: 0.9 }}
           >

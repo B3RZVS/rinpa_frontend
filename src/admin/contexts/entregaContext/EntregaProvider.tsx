@@ -1,7 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { EntregaContext } from "./EntregaContext";
 import type { EntregaContextType } from "./EntregaContext.type";
-
 import { useToaster } from "../../../shared/hooks/useToaster";
 import { AxiosError } from "axios";
 import { useHandleApiError } from "../../../shared/hooks/useHandleApiError";
@@ -22,15 +21,27 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
   const { handleApiError } = useHandleApiError();
   const { showToast } = useToaster();
   const [loading, setLoading] = useState<boolean>(false);
-  const [entregas, setEntrega] = useState<EntregaInterfaceResponse[]>([]);
+  const [entregas, setEntregas] = useState<EntregaInterfaceResponse[]>([]);
+  const [entrega, setEntrega] = useState<EntregaInterfaceResponse | null>(null);
 
   const getEntregas = async () => {
     setLoading(true);
     try {
       const response = await EntregaService.entregaGetAll();
-      setEntrega(response);
+      setEntregas(response);
     } catch (error) {
       handleApiError(error, "Error al obtener las Entregas.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  const getEntregaById = async (id: number) => {
+    setLoading(true);
+    try {
+      const response = await EntregaService.entregaGetById(id);
+      setEntrega(response);
+    } catch (error) {
+      handleApiError(error, "Error al obtener las Entrega.");
     } finally {
       setLoading(false);
     }
@@ -54,10 +65,10 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
     }
   };
 
-  const updateEntrega = async (data: UpdateEntregaInterface) => {
+  const updateEntrega = async (id: number, data: UpdateEntregaInterface) => {
     setLoading(true);
     try {
-      await EntregaService.updateEntrega(data);
+      await EntregaService.updateEntrega(id, data);
       await getEntregas();
       showToast({
         title: "Entrega modificada con éxito.",
@@ -92,7 +103,9 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
     loading,
     deleteEntrega,
     entregas,
+    entrega,
     getEntregas,
+    getEntregaById,
     registerEntrega,
     updateEntrega,
   };

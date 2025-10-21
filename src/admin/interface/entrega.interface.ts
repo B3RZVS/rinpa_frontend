@@ -27,7 +27,6 @@ export interface CreateEntregaInterface {
 }
 export interface UpdateEntregaInterface {
   clienteId: number;
-  precioNafta: number;
   litrosGastados: number;
   fecha: Date;
 }

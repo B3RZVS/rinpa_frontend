@@ -4,7 +4,6 @@ import { AxiosError } from "axios";
 import { useHandleApiError } from "../../../shared/hooks/useHandleApiError";
 import { DetalleEntregaService } from "../../services/detalleEntrega.service";
 import type { CreateDetalleProductoInterface } from "../../interface/detalle.interface";
-import { useEntrega } from "../../hook/hookContexts/useEntrega";
 import type { DetalleEntregaContextType } from "./DetalleEntregaContext.type";
 import { DetalleEntregaContext } from "./DetalleEntregaContext";
 interface EntregaProviderProps {
@@ -16,7 +15,6 @@ export const DetalleEntregaProvider: React.FC<EntregaProviderProps> = ({
 }) => {
   const { handleApiError } = useHandleApiError();
   const { showToast } = useToaster();
-  const { getEntregas } = useEntrega();
   const [loading, setLoading] = useState<boolean>(false);
 
   const registerDetalleEntrega = async (
@@ -26,7 +24,6 @@ export const DetalleEntregaProvider: React.FC<EntregaProviderProps> = ({
     setLoading(true);
     try {
       await DetalleEntregaService.createDetalleEntrega(data, idEntrega);
-      // await getEntregas();
       showToast({
         title: "Entrega registrada con éxito.",
         type: "success",
@@ -44,7 +41,6 @@ export const DetalleEntregaProvider: React.FC<EntregaProviderProps> = ({
     setLoading(true);
     try {
       await DetalleEntregaService.updateDetalleEntrega(id, cantidad);
-      // await getEntregas();
       showToast({
         title: "Entrega modificada con éxito.",
         type: "success",
@@ -61,9 +57,8 @@ export const DetalleEntregaProvider: React.FC<EntregaProviderProps> = ({
     setLoading(true);
     try {
       await DetalleEntregaService.deleteDetalleEntrega(id);
-      await getEntregas();
       showToast({
-        title: "Entrega eliminado con éxito.",
+        title: "El detalle de la entrega ha sido eliminado con éxito.",
         type: "success",
         position: "top-center",
       });

@@ -7,6 +7,7 @@ import ConfirmModal from "../../../shared/components/Common/ConfirmationModal/Co
 import styles from "./TipoProductoView.module.css";
 import { useTipoProducto } from "../../hook/hookContexts/useTipoProducto";
 import { useTipoProductoUI } from "../../hook/hookUI/useTipoProductoUI";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 const TipoProductoView: React.FC = () => {
   const { tipoProductos, loading } = useTipoProducto();
 
@@ -26,7 +27,9 @@ const TipoProductoView: React.FC = () => {
     setSearchTerm,
     tipoProductoToDelete,
   } = useTipoProductoUI();
-
+  if (loading) {
+    return <LoadingComponent />;
+  }
   return (
     <motion.div
       className={styles.container}

@@ -5,6 +5,7 @@ import PrecioActualCard from "../../components/componentsViewPrecioNafta/PrecioA
 import HistorialPrecios from "../../components/componentsViewPrecioNafta/HistorialPrecios/HistorialPrecios";
 import NuevoPrecioModal from "../../components/componentsViewPrecioNafta/NuevoPrecioModal/NuevoPrecioModal";
 import { usePrecioNafta } from "../../hook/hookContexts/usePrecioNafta";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
 const PrecioNaftaView = () => {
   const { getPreciosNafta, preciosNafta, loading, registerPrecioNafta } =
@@ -23,7 +24,9 @@ const PrecioNaftaView = () => {
     await registerPrecioNafta(data);
     setIsModalOpen(false);
   };
-
+  if (loading) {
+    return <LoadingComponent />;
+  }
   return (
     <motion.div
       className={styles.container}

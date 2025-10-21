@@ -7,6 +7,7 @@ import ProductoModal from "../../components/ComponentsViewProducto/ProductoModal
 import SearchBar from "../../components/ComponentsViewProducto/SearchBar/SearchBar";
 import type { ProductoResponseInterface } from "../../interface/producto.interface";
 import { useProducto } from "../../hook/hookContexts/useProducto";
+import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 const ProductoView: React.FC = () => {
   const { getProductos, productos, loading, registerProducto } = useProducto();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,7 +32,9 @@ const ProductoView: React.FC = () => {
     setIsModalOpen(false);
     setEditingProducto(null);
   };
-
+  if (loading) {
+    return <LoadingComponent />;
+  }
   return (
     <motion.div
       className={styles.container}

@@ -1,79 +1,31 @@
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { FiSave, FiPlus } from "react-icons/fi";
 import ClienteSelector from "../../../components/ComponentsViewEntrega/ClienteSelector/ClienteSelector";
 import DetalleProductoForm from "../../../components/ComponentsViewEntrega/DetalleProductoForm/DetalleProductoForm";
 import DetalleProductoList from "../../../components/ComponentsViewEntrega/DetalleProductoList/DetalleProductoList";
 import styles from "./RealizarEntregaView.module.css";
-import type { ClienteInterfaceResponse } from "../../../interface/cliente.interface";
-import type { CreateDetalleProductoInterface } from "../../../interface/detalle.interface";
-import type { CreateEntregaInterface } from "../../../interface/entrega.interface";
-import { usePrecioNafta } from "../../../hook/hookContexts/usePrecioNafta";
-import { useEntrega } from "../../../hook/hookContexts/useEntrega";
-
+import { useCreateEntrega } from "../../../hook/hookUI/useCreateEntrega";
 const RealizarEntregaView: React.FC = () => {
-  const { registerEntrega, loading } = useEntrega();
-  const { preciosNafta, getPreciosNafta } = usePrecioNafta();
+  const {
+    // Estado
+    selectedCliente,
+    setSelectedCliente,
+    fecha,
+    setFecha,
+    litrosGastados,
+    setLitrosGastados,
+    detalles,
+    showDetalleForm,
+    setShowDetalleForm,
 
-  const [selectedCliente, setSelectedCliente] =
-    useState<ClienteInterfaceResponse | null>(null);
-  const [fecha, setFecha] = useState(new Date().toISOString().split("T")[0]);
-  const [litrosGastados, setLitrosGastados] = useState("");
-  const [detalles, setDetalles] = useState<CreateDetalleProductoInterface[]>(
-    []
-  );
-  const [showDetalleForm, setShowDetalleForm] = useState(false);
-  useEffect(() => {
-    if (preciosNafta.length <= 0) getPreciosNafta();
-  }, []);
-  const resetForm = () => {
-    setSelectedCliente(null);
-    setFecha(new Date().toISOString().split("T")[0]);
-    setLitrosGastados("");
-    setDetalles([]);
-  };
-  const precioActual = preciosNafta.find((p) => p.fechaFin === null);
+    // Acciones
+    handleAgregarDetalle,
+    handleEliminarDetalle,
+    handleGuardar,
 
-  const handleAgregarDetalle = (detalle: CreateDetalleProductoInterface) => {
-    setDetalles([...detalles, detalle]);
-    setShowDetalleForm(false);
-  };
-
-  const handleEliminarDetalle = (index: number) => {
-    setDetalles(detalles.filter((_, i) => i !== index));
-  };
-
-  const handleGuardar = async () => {
-    if (!selectedCliente) {
-      alert("Debe seleccionar un cliente");
-      return;
-    }
-
-    if (!litrosGastados || Number.parseFloat(litrosGastados) <= 0) {
-      alert("Debe ingresar los litros gastados");
-      return;
-    }
-
-    if (detalles.length === 0) {
-      alert("Debe agregar al menos un producto");
-      return;
-    }
-
-    if (precioActual) {
-      const nuevaEntrega: CreateEntregaInterface = {
-        clienteId: selectedCliente.id,
-        usuarioId: Number(localStorage.getItem("idUser")),
-        precioNaftaId: precioActual?.id,
-        litrosGastados: Number.parseFloat(litrosGastados),
-        fecha: new Date(fecha),
-        detalles: detalles,
-      };
-      registerEntrega(nuevaEntrega);
-      resetForm();
-      // TODO: Llamar a la API para crear la entrega
-    }
-  };
-
+    // Datos externos
+    loading,
+  } = useCreateEntrega();
   return (
     <motion.div
       className={styles.container}

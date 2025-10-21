@@ -1,110 +1,37 @@
-import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FiSave, FiPlus } from "react-icons/fi";
-import { useEntrega } from "../../../hook/hookContexts/useEntrega";
-import { usePrecioNafta } from "../../../hook/hookContexts/usePrecioNafta";
-import { useCliente } from "../../../hook/hookContexts/useCliente";
-import { useParams } from "react-router-dom";
 import styles from "./EditarEntregaView.module.css";
-
 import ClienteSelector from "../../../components/ComponentsViewEntrega/ClienteSelector/ClienteSelector";
 import DetalleProductoForm from "../../../components/ComponentsViewEntrega/DetalleProductoForm/DetalleProductoForm";
-// import DetalleProductoList from "../../../components/ComponentsViewEntrega/DetalleProductoList/DetalleProductoList";
-import type {
-  CreateDetalleProductoInterface,
-  DetalleProductoInterfaceResponse,
-} from "../../../interface/detalle.interface";
-import type { ClienteInterfaceResponse } from "../../../interface/cliente.interface";
+import DetalleProductoListEdit from "../../../components/componentsViewEntregaEdit/DetalleProductoListEdit/DetalleProductoListEdit";
+import ConfirmModal from "../../../../shared/components/Common/ConfirmationModal/ConfirmationModal";
+import LoadingComponent from "../../../components/LoadingComponent/LoadingComponent";
+import { useEditEntrega } from "../../../hook/hookUI/useEditEntrega";
 
 const EditEntregaView: React.FC = () => {
-  const { entregas } = useEntrega();
-  const { clientes, getClientes } = useCliente();
-  const { preciosNafta, getPreciosNafta } = usePrecioNafta();
-  const { id } = useParams<{ id: string }>();
-  const entregaId = Number(id);
-
-  // Estados del formulario
-  const [selectedCliente, setSelectedCliente] =
-    useState<ClienteInterfaceResponse | null>(null);
-  const [fecha, setFecha] = useState("");
-  const [litrosGastados, setLitrosGastados] = useState("");
-  const [detalles, setDetalles] = useState<DetalleProductoInterfaceResponse[]>(
-    []
-  );
-  const [showDetalleForm, setShowDetalleForm] = useState(false);
-  const [loading, setLoading] = useState(false);
-  // --- Cargar precios si no están ---
-  useEffect(() => {
-    if (preciosNafta.length <= 0) getPreciosNafta();
-    if (clientes.length <= 0) getClientes();
-  }, []);
-
-  // --- Buscar la entrega en memoria ---
-  useEffect(() => {
-    if (!entregaId || entregas.length === 0) return;
-
-    const entrega = entregas.find((e) => e.id === entregaId);
-    if (!entrega) return;
-
-    const cliente = clientes.find((e) => e.id === entrega.clienteId);
-    if (!cliente) return;
-    setSelectedCliente(cliente);
-    setFecha(new Date(entrega.fecha).toISOString().split("T")[0]);
-    setLitrosGastados(entrega.litrosGastados.toString());
-    setDetalles(entrega.detalles || []);
-  }, [entregaId, entregas]);
-
-  // --- Handlers ---
-  const handleAgregarDetalle = (detalle: CreateDetalleProductoInterface) => {
-    // setDetalles([...detalles, detalle]);
-    console.log(detalle);
-    setShowDetalleForm(false);
-  };
-
-  //   const handleEliminarDetalle = (index: number) => {
-  //     setDetalles(detalles.filter((_, i) => i !== index));
-  //   };
-
-  const handleGuardar = async () => {
-    if (!selectedCliente) {
-      alert("Debe seleccionar un cliente");
-      return;
-    }
-
-    if (!litrosGastados || Number.parseFloat(litrosGastados) <= 0) {
-      alert("Debe ingresar los litros gastados");
-      return;
-    }
-
-    setLoading(true);
-    try {
-      const precioActual = preciosNafta.find((p) => p.fechaFin === null);
-
-      const entregaActualizada = {
-        id: entregaId,
-        clienteId: selectedCliente.id,
-        precioNaftaId: precioActual?.id,
-        litrosGastados: Number.parseFloat(litrosGastados),
-        fecha: new Date(fecha),
-        detalles: detalles,
-      };
-
-      // 🔹 Temporal: simular actualización
-      console.log("Entrega actualizada:", entregaActualizada);
-
-      // 🔹 Futuro: llamará a updateEntrega(entregaActualizada)
-      // await updateEntrega(entregaActualizada);
-
-      alert("Entrega actualizada correctamente");
-    } catch (error) {
-      console.error(error);
-      alert("Error al actualizar la entrega");
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    loading,
+    selectedCliente,
+    setSelectedCliente,
+    fecha,
+    setFecha,
+    litrosGastados,
+    setLitrosGastados,
+    detalles,
+    showDetalleForm,
+    setShowDetalleForm,
+    isConfirmModalOpen,
+    setIsConfirmModalOpen,
+    handleAgregarDetalle,
+    handleEliminarDetalle,
+    handleConfirmarEliminarDetalle,
+    handleGuardar,
+  } = useEditEntrega();
 
   // --- Render ---
+  if (loading) {
+    return <LoadingComponent />;
+  }
   return (
     <motion.div
       className={styles.container}
@@ -175,10 +102,10 @@ const EditEntregaView: React.FC = () => {
             />
           )}
 
-          {/* <DetalleProductoList
+          <DetalleProductoListEdit
             detalles={detalles}
             onDelete={handleEliminarDetalle}
-          /> */}
+          />
         </div>
 
         {/* Botón Guardar */}
@@ -202,6 +129,13 @@ const EditEntregaView: React.FC = () => {
           </button>
         </div>
       </div>
+      <ConfirmModal
+        isOpen={isConfirmModalOpen}
+        onClose={() => setIsConfirmModalOpen(false)}
+        onConfirm={handleConfirmarEliminarDetalle}
+        title="Eliminar Detalle de Entrega"
+        message={`¿Estás seguro de que deseas eliminar el detalle de la Entrega?`}
+      />
     </motion.div>
   );
 };

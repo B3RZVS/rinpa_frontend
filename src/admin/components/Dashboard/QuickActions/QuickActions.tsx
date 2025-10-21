@@ -37,7 +37,7 @@ const QuickActions = () => {
           <motion.button
             key={index}
             className={`${styles.actionButton} ${styles[action.color]}`}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.01 }}
             whileTap={{ scale: 0.95 }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
