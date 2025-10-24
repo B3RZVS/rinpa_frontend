@@ -13,7 +13,6 @@ import styles from "./ProductoModal.module.css";
 import type {
   ProductoResponseInterface,
   CreateProductoInterface,
-  UpdateProductoInterface,
 } from "../../../interface/producto.interface";
 import { useTipoProducto } from "../../../hook/hookContexts/useTipoProducto";
 import { useMedida } from "../../../hook/hookContexts/useMedida";
@@ -154,48 +153,6 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.formGroup}>
               <label className={styles.label}>
-                <FiFileText className={styles.labelIcon} />
-                Descripción
-              </label>
-              <input
-                type="text"
-                value={formData.descripcion}
-                onChange={(e) =>
-                  handleInputChange("descripcion", e.target.value)
-                }
-                className={`${styles.input} ${
-                  errors.descripcion ? styles.inputError : ""
-                }`}
-                placeholder="Ej: Nafta Super 95"
-              />
-              {errors.descripcion && (
-                <span className={styles.errorText}>{errors.descripcion}</span>
-              )}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.label}>
-                <FiDollarSign className={styles.labelIcon} />
-                Precio
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                min={0}
-                value={formData.precio}
-                onChange={(e) => handleInputChange("precio", e.target.value)}
-                className={`${styles.input} ${
-                  errors.precio ? styles.inputError : ""
-                }`}
-                placeholder="0.00"
-              />
-              {errors.precio && (
-                <span className={styles.errorText}>{errors.precio}</span>
-              )}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.label}>
                 <FiType className={styles.labelIcon} />
                 Tipo de Producto
               </label>
@@ -243,6 +200,48 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
               </select>
               {errors.medidaId && (
                 <span className={styles.errorText}>{errors.medidaId}</span>
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.label}>
+                <FiDollarSign className={styles.labelIcon} />
+                Precio
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min={0}
+                value={formData.precio}
+                onChange={(e) => handleInputChange("precio", e.target.value)}
+                className={`${styles.input} ${
+                  errors.precio ? styles.inputError : ""
+                }`}
+                placeholder="0.00"
+              />
+              {errors.precio && (
+                <span className={styles.errorText}>{errors.precio}</span>
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.label}>
+                <FiFileText className={styles.labelIcon} />
+                Descripción
+              </label>
+              <input
+                type="text"
+                value={formData.descripcion}
+                onChange={(e) =>
+                  handleInputChange("descripcion", e.target.value)
+                }
+                className={`${styles.input} ${
+                  errors.descripcion ? styles.inputError : ""
+                }`}
+                placeholder="Ej: Nafta Super 95"
+              />
+              {errors.descripcion && (
+                <span className={styles.errorText}>{errors.descripcion}</span>
               )}
             </div>
 

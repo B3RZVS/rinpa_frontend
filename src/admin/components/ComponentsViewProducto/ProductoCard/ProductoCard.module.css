@@ -51,6 +51,7 @@
   display: flex;
   gap: 0.5rem;
   flex-shrink: 0;
+  justify-content: end;
 }
 
 .editButton,

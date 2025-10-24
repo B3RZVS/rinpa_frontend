@@ -6,7 +6,7 @@ import type { ProductoResponseInterface } from "../../../interface/producto.inte
 interface ProductoCardProps {
   producto: ProductoResponseInterface;
   onEdit: () => void;
-  onDelete?: () => void;
+  onDelete: (producto: ProductoResponseInterface) => void;
 }
 
 const ProductoCard: React.FC<ProductoCardProps> = ({
@@ -33,24 +33,6 @@ const ProductoCard: React.FC<ProductoCardProps> = ({
           <h3 className={styles.productName}>{producto.descripcion}</h3>
           <span className={styles.productType}>{producto.tipoProducto}</span>
         </div>
-        <div className={styles.actions}>
-          <button
-            className={styles.editButton}
-            onClick={onEdit}
-            title="Editar producto"
-          >
-            <FiEdit2 />
-          </button>
-          {onDelete && (
-            <button
-              className={styles.deleteButton}
-              onClick={onDelete}
-              title="Eliminar producto"
-            >
-              <FiTrash2 />
-            </button>
-          )}
-        </div>
       </div>
 
       <div className={styles.cardBody}>
@@ -72,7 +54,23 @@ const ProductoCard: React.FC<ProductoCardProps> = ({
       </div>
 
       <div className={styles.cardFooter}>
-        <span className={styles.productId}>ID: {producto.id}</span>
+        <div className={styles.actions}>
+          <button
+            className={styles.editButton}
+            onClick={onEdit}
+            title="Editar producto"
+          >
+            <FiEdit2 />
+          </button>
+
+          <button
+            className={styles.deleteButton}
+            onClick={() => onDelete(producto)}
+            title="Eliminar producto"
+          >
+            <FiTrash2 />
+          </button>
+        </div>
       </div>
     </motion.div>
   );

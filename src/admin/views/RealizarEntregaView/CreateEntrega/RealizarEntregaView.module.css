@@ -125,14 +125,9 @@
 }
 
 .actions {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
   padding: 1rem;
-  background: white;
-  border-top: 2px solid var(--color-neutral-medium);
   z-index: 10;
+  border-radius: 10px;
 }
 
 .saveButton {
@@ -179,10 +174,10 @@
 }
 
 /* Tablet */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .container {
-    padding: 1.5rem;
-    padding-bottom: 2rem;
+    padding: 0.5rem;
+    padding-bottom: 5rem;
   }
 
   .header {
@@ -200,7 +195,11 @@
   }
 
   .formRow {
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+  .input {
+    width: 87%;
   }
 
   .actions {
