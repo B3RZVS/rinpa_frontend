@@ -2,7 +2,6 @@ import type React from "react";
 import { motion } from "framer-motion";
 import StatsCard from "../../components/Dashboard/StatsCard/StatsCard";
 import QuickActions from "../../components/Dashboard/QuickActions/QuickActions";
-import RecentActivity from "../../components/Dashboard/RecentActivity/RecentActivity";
 import styles from "./Dashboard.module.css";
 import { usePrecioNafta } from "../../hook/hookContexts/usePrecioNafta";
 import { useEffect } from "react";
@@ -20,7 +19,6 @@ const Dashboard: React.FC = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <QuickActions />
       <div className={styles.statsGrid}>
         <StatsCard
           title="Total Productos"
@@ -46,10 +44,7 @@ const Dashboard: React.FC = () => {
           color="primary"
         />
       </div>
-
-      <div className={styles.contentGrid}>
-        <RecentActivity />
-      </div>
+      <QuickActions />
     </motion.div>
   );
 };

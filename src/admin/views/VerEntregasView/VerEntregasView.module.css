@@ -218,3 +218,8 @@
     margin-bottom: 2rem;
   }
 }
+@media (max-width: 730px) {
+  .container {
+    padding-bottom: 5rem;
+  }
+}

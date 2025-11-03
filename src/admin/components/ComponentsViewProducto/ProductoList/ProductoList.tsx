@@ -2,7 +2,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import styles from "./ProductoList.module.css";
 import ProductoCard from "../ProductoCard/ProductoCard";
 import type { ProductoResponseInterface } from "../../../interface/producto.interface";
-
+import { useState } from "react";
+import ConfirmationModal from "../../../../shared/components/ConfirmationModal/ConfirmationModal";
+import { useProducto } from "../../../hook/hookContexts/useProducto";
 interface ProductoListProps {
   searchTerm: string;
   onEditProducto: (producto: ProductoResponseInterface) => void;
@@ -16,6 +18,11 @@ const ProductoList: React.FC<ProductoListProps> = ({
   productos,
   loading,
 }) => {
+  const { deleteProducto } = useProducto();
+  const [productoDelete, setProductoDelete] =
+    useState<ProductoResponseInterface>();
+  const [isOpen, setIsOpen] = useState(false);
+
   const filteredProductos = productos.filter((producto) => {
     const descripcion = producto.descripcion?.toLowerCase() ?? "";
     const tipoProducto = producto.tipoProducto?.toLowerCase() ?? "";
@@ -45,7 +52,17 @@ const ProductoList: React.FC<ProductoListProps> = ({
       </div>
     );
   }
-
+  const onDelete = (producto: ProductoResponseInterface) => {
+    setProductoDelete(producto);
+    setIsOpen(true);
+  };
+  const confirmationDelete = () => {
+    if (productoDelete) {
+      console.log(productoDelete.id);
+      deleteProducto(productoDelete.id);
+    }
+    setIsOpen(false);
+  };
   return (
     <div className={styles.container}>
       <div className={styles.resultsHeader}>
@@ -68,11 +85,21 @@ const ProductoList: React.FC<ProductoListProps> = ({
               <ProductoCard
                 producto={producto}
                 onEdit={() => onEditProducto(producto)}
+                onDelete={onDelete}
               />
             </motion.div>
           ))}
         </AnimatePresence>
       </motion.div>
+      {productoDelete && (
+        <ConfirmationModal
+          isOpen={isOpen}
+          onClose={() => setIsOpen(false)}
+          title={`Desea borrar el producto ${productoDelete.tipoProducto} ${productoDelete.medida}`}
+          onConfirm={confirmationDelete}
+          message="¿Esta seguro que desea borrar el producto?"
+        />
+      )}
     </div>
   );
 };

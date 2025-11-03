@@ -6,7 +6,7 @@ import type { ProductoResponseInterface } from "../../../interface/producto.inte
 interface ProductoCardProps {
   producto: ProductoResponseInterface;
   onEdit: () => void;
-  onDelete?: () => void;
+  onDelete: (producto: ProductoResponseInterface) => void;
 }
 
 const ProductoCard: React.FC<ProductoCardProps> = ({
@@ -30,26 +30,7 @@ const ProductoCard: React.FC<ProductoCardProps> = ({
     >
       <div className={styles.cardHeader}>
         <div className={styles.productInfo}>
-          <h3 className={styles.productName}>{producto.descripcion}</h3>
           <span className={styles.productType}>{producto.tipoProducto}</span>
-        </div>
-        <div className={styles.actions}>
-          <button
-            className={styles.editButton}
-            onClick={onEdit}
-            title="Editar producto"
-          >
-            <FiEdit2 />
-          </button>
-          {onDelete && (
-            <button
-              className={styles.deleteButton}
-              onClick={onDelete}
-              title="Eliminar producto"
-            >
-              <FiTrash2 />
-            </button>
-          )}
         </div>
       </div>
 
@@ -69,10 +50,32 @@ const ProductoCard: React.FC<ProductoCardProps> = ({
           </div>
           <span className={styles.measure}>{producto.medida}</span>
         </div>
+        <div className={styles.measureSection}>
+          <div className={styles.measureLabel}>
+            <FiPackage className={styles.measureIcon} />
+            <span>Descripcion: {producto.descripcion}</span>
+          </div>
+        </div>
       </div>
 
       <div className={styles.cardFooter}>
-        <span className={styles.productId}>ID: {producto.id}</span>
+        <div className={styles.actions}>
+          <button
+            className={styles.editButton}
+            onClick={onEdit}
+            title="Editar producto"
+          >
+            <FiEdit2 />
+          </button>
+
+          <button
+            className={styles.deleteButton}
+            onClick={() => onDelete(producto)}
+            title="Eliminar producto"
+          >
+            <FiTrash2 />
+          </button>
+        </div>
       </div>
     </motion.div>
   );

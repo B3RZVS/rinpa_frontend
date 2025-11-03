@@ -21,12 +21,14 @@ interface ProductoModalProps {
   producto?: ProductoResponseInterface | null;
   onClose: () => void;
   onSave?: (producto: CreateProductoInterface) => void;
+  onSaveEdit?: (producto: UpdateProductoInterface) => void;
 }
 
 const ProductoModal: React.FC<ProductoModalProps> = ({
   producto,
   onClose,
   onSave,
+  onSaveEdit,
 }) => {
   const { getTipoProductos, tipoProductos } = useTipoProducto();
   const { getMedidas, medidas } = useMedida();
@@ -53,18 +55,14 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
       setFormData({
         descripcion: producto.descripcion,
         precio: producto.precio.toString(),
-        tipoProductoId: "1", // Mock - debería obtener el ID real
-        medidaId: "1", // Mock - debería obtener el ID real
+        tipoProductoId: String(producto.tipoProductoId),
+        medidaId: String(producto.medidaId),
       });
     }
   }, [producto]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-
-    if (!formData.descripcion.trim()) {
-      newErrors.descripcion = "La descripción es requerida";
-    }
 
     if (
       !formData.precio ||
@@ -95,19 +93,19 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
 
     try {
       const productData = {
-        descripcion: formData.descripcion.trim(),
+        descripcion:
+          formData.descripcion !== undefined ? formData.descripcion.trim() : "",
         precio: Number(formData.precio),
         tipoProductoId: Number(formData.tipoProductoId),
         medidaId: Number(formData.medidaId),
       };
 
       if (producto) {
-        // Actualizar producto existente
-        // const updateData: UpdateProductoInterface = {
-        //   id: producto.id,
-        //   ...productData,
-        // };
-        // onSave?.(updateData);
+        const updateData: UpdateProductoInterface = {
+          id: producto.id,
+          ...productData,
+        };
+        onSaveEdit?.(updateData);
       } else {
         // Crear nuevo producto
         const createData: CreateProductoInterface = productData;
@@ -152,48 +150,6 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
           </div>
 
           <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.formGroup}>
-              <label className={styles.label}>
-                <FiFileText className={styles.labelIcon} />
-                Descripción
-              </label>
-              <input
-                type="text"
-                value={formData.descripcion}
-                onChange={(e) =>
-                  handleInputChange("descripcion", e.target.value)
-                }
-                className={`${styles.input} ${
-                  errors.descripcion ? styles.inputError : ""
-                }`}
-                placeholder="Ej: Nafta Super 95"
-              />
-              {errors.descripcion && (
-                <span className={styles.errorText}>{errors.descripcion}</span>
-              )}
-            </div>
-
-            <div className={styles.formGroup}>
-              <label className={styles.label}>
-                <FiDollarSign className={styles.labelIcon} />
-                Precio
-              </label>
-              <input
-                type="number"
-                step="0.01"
-                min={0}
-                value={formData.precio}
-                onChange={(e) => handleInputChange("precio", e.target.value)}
-                className={`${styles.input} ${
-                  errors.precio ? styles.inputError : ""
-                }`}
-                placeholder="0.00"
-              />
-              {errors.precio && (
-                <span className={styles.errorText}>{errors.precio}</span>
-              )}
-            </div>
-
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 <FiType className={styles.labelIcon} />
@@ -246,6 +202,48 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
               )}
             </div>
 
+            <div className={styles.formGroup}>
+              <label className={styles.label}>
+                <FiDollarSign className={styles.labelIcon} />
+                Precio
+              </label>
+              <input
+                type="number"
+                step="0.01"
+                min={0}
+                value={formData.precio}
+                onChange={(e) => handleInputChange("precio", e.target.value)}
+                className={`${styles.input} ${
+                  errors.precio ? styles.inputError : ""
+                }`}
+                placeholder="0.00"
+              />
+              {errors.precio && (
+                <span className={styles.errorText}>{errors.precio}</span>
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <label className={styles.label}>
+                <FiFileText className={styles.labelIcon} />
+                Descripción
+              </label>
+              <input
+                type="text"
+                value={formData.descripcion}
+                onChange={(e) =>
+                  handleInputChange("descripcion", e.target.value)
+                }
+                className={`${styles.input} ${
+                  errors.descripcion ? styles.inputError : ""
+                }`}
+                placeholder="Ej: Nafta Super 95"
+              />
+              {errors.descripcion && (
+                <span className={styles.errorText}>{errors.descripcion}</span>
+              )}
+            </div>
+
             <div className={styles.actions}>
               <button
                 type="button"
@@ -261,7 +259,13 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
                 disabled={loading}
               >
                 <FiSave />
-                {loading ? "Guardando..." : "Guardar"}
+                {producto
+                  ? loading
+                    ? "Actualizando..."
+                    : "Actualizar"
+                  : loading
+                  ? "Guardando..."
+                  : "Guardar"}
               </button>
             </div>
           </form>

@@ -24,7 +24,7 @@ const VerEntregasView = () => {
   );
 
   const handleNuevaEntrega = () => {
-    navigate("/home?view=realizar-entrega&mode=create");
+    navigate("/dashboard/realizar-entrega");
   };
 
   const handleEditEntrega = (id: number) => {

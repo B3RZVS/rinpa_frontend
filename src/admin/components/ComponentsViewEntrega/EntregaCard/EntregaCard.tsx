@@ -43,7 +43,6 @@ const EntregaCard: React.FC<EntregaCardProps> = ({
   );
 
   const totalGeneral = totalProductos + entrega.consumoTotal;
-
   return (
     <motion.div
       className={styles.card}

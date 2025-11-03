@@ -22,6 +22,7 @@ const PrecioNaftaView = () => {
   const handleNuevoPrecio = async (precio: number) => {
     const data = { precio: precio };
     await registerPrecioNafta(data);
+    await getPreciosNafta();
     setIsModalOpen(false);
   };
   if (loading) {

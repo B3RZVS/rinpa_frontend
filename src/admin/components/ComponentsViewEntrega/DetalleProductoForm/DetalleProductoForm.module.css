@@ -305,3 +305,13 @@
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+@media (max-width: 730px) {
+  .searchInput {
+    width: 80%;
+  }
+  .formRow {
+    display: flex;
+    flex-direction: column;
+  }
+}

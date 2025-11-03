@@ -16,5 +16,7 @@ export interface ProductoResponseInterface {
   precio: number;
   descripcion: string;
   tipoProducto: string;
+  tipoProductoId: number;
   medida: string;
+  medidaId: number;
 }

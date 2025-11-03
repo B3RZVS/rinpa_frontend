@@ -59,7 +59,7 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({
       await ProductoService.updateProducto(data);
       await getProductos();
       showToast({
-        title: " Producto modificada con éxito.",
+        title: " Producto modificado con éxito.",
         type: "success",
         position: "top-center",
       });

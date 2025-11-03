@@ -44,7 +44,7 @@ export const PrecioNaftaProvider: React.FC<PrecioNaftaProviderProps> = ({
     setLoading(true);
     try {
       await PrecioNaftaService.createPrecioNafta(data);
-      await getPreciosNafta();
+
       showToast({
         title: "Precio de nafta registrado con éxito.",
         type: "success",
