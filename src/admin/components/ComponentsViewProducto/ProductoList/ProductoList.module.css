@@ -57,10 +57,11 @@
 }
 
 .productGrid {
-  display: grid;
-  gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 5rem !important;
   padding-bottom: 3rem;
-  grid-template-columns: 1fr;
 }
 
 /* Mobile optimizations */

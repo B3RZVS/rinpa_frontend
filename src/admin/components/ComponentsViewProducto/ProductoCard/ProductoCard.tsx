@@ -30,7 +30,6 @@ const ProductoCard: React.FC<ProductoCardProps> = ({
     >
       <div className={styles.cardHeader}>
         <div className={styles.productInfo}>
-          <h3 className={styles.productName}>{producto.descripcion}</h3>
           <span className={styles.productType}>{producto.tipoProducto}</span>
         </div>
       </div>
@@ -50,6 +49,12 @@ const ProductoCard: React.FC<ProductoCardProps> = ({
             <span>Medida</span>
           </div>
           <span className={styles.measure}>{producto.medida}</span>
+        </div>
+        <div className={styles.measureSection}>
+          <div className={styles.measureLabel}>
+            <FiPackage className={styles.measureIcon} />
+            <span>Descripcion: {producto.descripcion}</span>
+          </div>
         </div>
       </div>
 

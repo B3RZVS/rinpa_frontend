@@ -9,7 +9,8 @@ import type { ProductoResponseInterface } from "../../interface/producto.interfa
 import { useProducto } from "../../hook/hookContexts/useProducto";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 const ProductoView: React.FC = () => {
-  const { getProductos, productos, loading, registerProducto } = useProducto();
+  const { getProductos, productos, loading, registerProducto, updateProducto } =
+    useProducto();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProducto, setEditingProducto] =
     useState<ProductoResponseInterface | null>(null);
@@ -74,7 +75,9 @@ const ProductoView: React.FC = () => {
         <ProductoModal
           producto={editingProducto}
           onClose={handleCloseModal}
-          onSave={registerProducto}
+          {...(editingProducto
+            ? { onSaveEdit: updateProducto }
+            : { onSave: registerProducto })}
         />
       )}
     </motion.div>

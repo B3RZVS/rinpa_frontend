@@ -1,13 +1,15 @@
+@import "../../../../App.css";
 .card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 350px;
   background: white;
   border: 1px solid var(--color-neutral-medium);
   border-radius: 12px;
   padding: 1.25rem;
   transition: all 0.2s;
   cursor: pointer;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .card:hover {
@@ -38,13 +40,12 @@
 }
 
 .productType {
-  font-size: 0.75rem;
-  color: var(--color-secondary);
+  font-size: 1.1rem;
+  color: var(--color-neutral-light);
   background: var(--color-secondary);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-weight: 500;
-  background: rgba(60, 179, 113, 0.1);
 }
 
 .actions {

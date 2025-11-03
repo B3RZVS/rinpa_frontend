@@ -13,6 +13,7 @@ import styles from "./ProductoModal.module.css";
 import type {
   ProductoResponseInterface,
   CreateProductoInterface,
+  UpdateProductoInterface,
 } from "../../../interface/producto.interface";
 import { useTipoProducto } from "../../../hook/hookContexts/useTipoProducto";
 import { useMedida } from "../../../hook/hookContexts/useMedida";
@@ -20,12 +21,14 @@ interface ProductoModalProps {
   producto?: ProductoResponseInterface | null;
   onClose: () => void;
   onSave?: (producto: CreateProductoInterface) => void;
+  onSaveEdit?: (producto: UpdateProductoInterface) => void;
 }
 
 const ProductoModal: React.FC<ProductoModalProps> = ({
   producto,
   onClose,
   onSave,
+  onSaveEdit,
 }) => {
   const { getTipoProductos, tipoProductos } = useTipoProducto();
   const { getMedidas, medidas } = useMedida();
@@ -52,18 +55,14 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
       setFormData({
         descripcion: producto.descripcion,
         precio: producto.precio.toString(),
-        tipoProductoId: "1", // Mock - debería obtener el ID real
-        medidaId: "1", // Mock - debería obtener el ID real
+        tipoProductoId: String(producto.tipoProductoId),
+        medidaId: String(producto.medidaId),
       });
     }
   }, [producto]);
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-
-    if (!formData.descripcion.trim()) {
-      newErrors.descripcion = "La descripción es requerida";
-    }
 
     if (
       !formData.precio ||
@@ -94,19 +93,19 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
 
     try {
       const productData = {
-        descripcion: formData.descripcion.trim(),
+        descripcion:
+          formData.descripcion !== undefined ? formData.descripcion.trim() : "",
         precio: Number(formData.precio),
         tipoProductoId: Number(formData.tipoProductoId),
         medidaId: Number(formData.medidaId),
       };
 
       if (producto) {
-        // Actualizar producto existente
-        // const updateData: UpdateProductoInterface = {
-        //   id: producto.id,
-        //   ...productData,
-        // };
-        // onSave?.(updateData);
+        const updateData: UpdateProductoInterface = {
+          id: producto.id,
+          ...productData,
+        };
+        onSaveEdit?.(updateData);
       } else {
         // Crear nuevo producto
         const createData: CreateProductoInterface = productData;
@@ -260,7 +259,13 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
                 disabled={loading}
               >
                 <FiSave />
-                {loading ? "Guardando..." : "Guardar"}
+                {producto
+                  ? loading
+                    ? "Actualizando..."
+                    : "Actualizar"
+                  : loading
+                  ? "Guardando..."
+                  : "Guardar"}
               </button>
             </div>
           </form>

@@ -63,7 +63,6 @@ const ProductoList: React.FC<ProductoListProps> = ({
     }
     setIsOpen(false);
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.resultsHeader}>
