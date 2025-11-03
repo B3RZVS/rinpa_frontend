@@ -134,9 +134,6 @@ const DetalleProductoForm: React.FC<DetalleProductoFormProps> = ({
                         onClick={() => handleSelectProducto(producto)}
                       >
                         <span className={styles.productoItemNombre}>
-                          {producto.descripcion}
-                        </span>
-                        <span className={styles.productoItemDetalle}>
                           {producto.tipoProducto} - {producto.medida}
                         </span>
                       </button>
