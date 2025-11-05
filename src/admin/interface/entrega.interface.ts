@@ -2,6 +2,7 @@ import type {
   CreateDetalleProductoInterface,
   DetalleProductoInterfaceResponse,
 } from "./detalle.interface";
+import type { PaginatedData } from "./pagination.interface";
 
 export interface EntregaInterfaceResponse {
   id: number;
@@ -30,3 +31,5 @@ export interface UpdateEntregaInterface {
   litrosGastados: number;
   fecha: Date;
 }
+
+export type EntregasPaginatedResponse = PaginatedData<EntregaInterfaceResponse>;
