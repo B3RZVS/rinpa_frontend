@@ -3,20 +3,21 @@ import type {
   ClienteInterfaceResponse,
   CreateClienteInterface,
 } from "../../interface/cliente.interface";
-import type { PaginationData } from "../../interface/pagination.interface";
 import { useCliente } from "../hookContexts/useCliente";
+import type { PaginationInfo } from "../../interface/pagination.interface";
+import usePaginationParams from "../usePaginateParams";
 
-export function useClienteUI() {
+export const useClienteUI = () => {
   const {
-    clientes,
-    getClientes,
     registerCliente,
     updateCliente,
     deleteCliente,
+    getPaginatedClientes,
+    clientesPaginated,
   } = useCliente();
-  const [filteredClientes, setFilteredClientes] = useState<
-    ClienteInterfaceResponse[]
-  >([]);
+  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
+    null
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
@@ -24,34 +25,32 @@ export function useClienteUI() {
     useState<ClienteInterfaceResponse | null>(null);
   const [clienteToDelete, setClienteToDelete] =
     useState<ClienteInterfaceResponse | null>(null);
-  const [pagination, setPagination] = useState<PaginationData>({
-    currentPage: 1,
-    totalPages: 1,
-    totalItems: 0,
-    itemsPerPage: 10,
-  });
 
-  // Simulación de datos - reemplazar con API real
-  useEffect(() => {
-    getClientes();
-  }, []);
+  const {
+    paginationParams,
+    handlePageChange,
+    handlePageSizeChange,
+    // handleFilter,
+  } = usePaginationParams();
 
   useEffect(() => {
-    const filtered = clientes.filter(
-      (cliente) =>
-        cliente.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        cliente.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        cliente.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        cliente.telefono.toLowerCase().includes(searchTerm.toLowerCase())
+    getPaginatedClientes(paginationParams);
+  }, [paginationParams]);
+
+  useEffect(() => {
+    setPaginationInfo(
+      clientesPaginated
+        ? {
+            currentPage: clientesPaginated.meta.currentPage,
+            totalPages: clientesPaginated.meta.totalPages,
+            page_size: clientesPaginated.meta.page_size,
+            totalItems: clientesPaginated.meta.totalItems,
+            onPageChange: handlePageChange,
+            onPageSizeChange: handlePageSizeChange,
+          }
+        : null
     );
-    setFilteredClientes(filtered);
-    setPagination((prev) => ({
-      ...prev,
-      totalItems: filtered.length,
-      totalPages: Math.ceil(filtered.length / prev.itemsPerPage),
-      currentPage: 1,
-    }));
-  }, [searchTerm, clientes]);
+  }, [clientesPaginated]);
 
   const handleAdd = () => {
     setSelectedCliente(null);
@@ -87,22 +86,12 @@ export function useClienteUI() {
     setIsModalOpen(false);
   };
 
-  const getCurrentPageData = () => {
-    const startIndex = (pagination.currentPage - 1) * pagination.itemsPerPage;
-    const endIndex = startIndex + pagination.itemsPerPage;
-    return filteredClientes.slice(startIndex, endIndex);
-  };
-
   return {
-    clientes,
     isModalOpen,
     isConfirmModalOpen,
     searchTerm,
-    filteredClientes,
-    pagination,
     selectedCliente,
     clienteToDelete,
-    setPagination,
     setSearchTerm,
     setSelectedCliente,
     setClienteToDelete,
@@ -111,8 +100,10 @@ export function useClienteUI() {
     handleDelete,
     confirmDelete,
     handleSave,
-    getCurrentPageData,
     setIsModalOpen,
     setIsConfirmModalOpen,
+    getPaginatedClientes,
+    clientesPaginated,
+    paginationInfo,
   };
-}
+};

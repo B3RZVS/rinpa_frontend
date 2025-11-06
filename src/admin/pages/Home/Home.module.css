@@ -7,16 +7,18 @@
 }
 
 .mainContent {
-  flex: 1;
-  /* Sin margin-left por defecto, mobile-first */
+  /* flex: 1; */
+  width: 100%;
+  overflow: hidden;
   transition: all 0.3s ease;
 }
 
 .content {
+  flex: 1;
   /* Padding optimizado para mobile */
   position: relative;
-  padding: 1rem;
-  min-height: calc(100vh - 140px); /* Ajustado para navbar mobile */
+  overflow: hidden;
+  min-height: 90vh; /* Ajustado para navbar mobile */
 }
 
 /* Desktop styles como enhancement */

@@ -35,11 +35,11 @@ const VerEntregasView = () => {
     getPaginatedEntregas(paginationParams);
   }, [paginationParams]);
 
-  useEffect(() => {
-    if (entregas.length <= 0) {
-      getEntregas();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (entregas.length <= 0) {
+  //     getEntregas();
+  //   }
+  // }, []);
 
   const handleNuevaEntrega = () => {
     navigate("/dashboard/realizar-entrega");

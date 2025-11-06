@@ -9,4 +9,5 @@ export const urls = {
   DetalleEntrega: "/detalle-entrega/",
 
   EntregaPagination: "/entrega/paginated",
+  ClientePagination: "/cliente/paginated",
 };

@@ -6,13 +6,14 @@ import type {
   MedidainterfaceResponse,
 } from "../../../interface/medida.interface";
 import styles from "./MedidasModal.module.css";
-import { useMedida } from "../../../hook/hookContexts/useMedida";
+import type { UnidadInterfaceResponse } from "../../../interface/unidad.interface";
 
 interface MedidasModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (medida: CreateMedidaInterface) => void;
   medida?: MedidainterfaceResponse | null;
+  unidades?: UnidadInterfaceResponse[] | null;
 }
 
 const MedidasModal: React.FC<MedidasModalProps> = ({
@@ -20,17 +21,13 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
   onClose,
   onSave,
   medida,
+  unidades,
 }) => {
   const [formData, setFormData] = useState<CreateMedidaInterface>({
     cantidad: null,
     unidadId: null,
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-  const { unidades, getUnidades } = useMedida();
-
-  useEffect(() => {
-    getUnidades();
-  }, []);
 
   useEffect(() => {
     if (medida) {
@@ -59,6 +56,7 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
       setErrors((prev) => ({ ...prev, [field]: "" }));
     }
   };
+  if (!unidades) return null;
 
   return (
     <AnimatePresence>

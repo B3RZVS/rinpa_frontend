@@ -22,7 +22,7 @@ const TipoProductoTable: React.FC<TipoProductoTableProps> = ({
           <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Acciones</th>
+            <th className={styles.actionsCell}>Acciones</th>
           </tr>
         </thead>
         <tbody>

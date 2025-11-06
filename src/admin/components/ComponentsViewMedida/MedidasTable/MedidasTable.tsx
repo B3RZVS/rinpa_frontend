@@ -1,4 +1,3 @@
-import type React from "react";
 import { motion } from "framer-motion";
 import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import type { MedidainterfaceResponse } from "../../../interface/medida.interface";
@@ -23,7 +22,7 @@ const MedidasTable: React.FC<MedidasTableProps> = ({
             <th style={{ maxWidth: "30px" }}>ID</th>
             <th>Cantidad</th>
             <th>Unidad</th>
-            <th>Acciones</th>
+            <th className={styles.actionsCell}>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +32,9 @@ const MedidasTable: React.FC<MedidasTableProps> = ({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
+              style={{
+                background: index % 2 === 0 ? "rgba(182, 182, 182, 0.21)" : "",
+              }}
             >
               <td style={{ maxWidth: "30px" }}>{medida.id}</td>
               <td>{medida.cantidad}</td>

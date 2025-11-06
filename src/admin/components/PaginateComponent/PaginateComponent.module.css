@@ -1,6 +1,7 @@
 .tableCard {
   background-color: white;
   border-radius: 12px;
+  overflow: hidden;
 }
 .card {
   background: transparent;
@@ -41,4 +42,11 @@
   color: #6b7280;
   font-size: 0.875rem;
   white-space: nowrap;
+}
+
+@media (max-width: 730px) {
+  .tableCard {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
 }

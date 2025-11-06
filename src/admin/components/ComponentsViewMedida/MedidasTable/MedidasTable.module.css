@@ -1,78 +1,81 @@
+.tableContainer {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
 .table {
   width: 100%;
+  min-width: 900px;
   border-collapse: collapse;
-  margin-bottom: 1rem;
 }
-.table tr {
-  display: flex;
-}
-.table th,
-.table td {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  text-align: left;
-  border-bottom: 1px solid var(--color-neutral-medium);
-  border-right: 1px solid rgba(0, 0, 0, 0.282);
-  flex: 1;
+
+.table thead tr {
+  border-bottom: 1px solid var(--border);
+  color: white;
+  background-color: var(--color-primary);
 }
 
 .table th {
-  background-color: var(--color-primary);
-  color: white;
+  padding: 1rem;
+  text-align: left;
+  font-size: 0.875rem;
   font-weight: 600;
-  position: sticky;
-  top: 0;
+  color: var(--foreground);
+}
+
+.table th.actionsHeader {
+  text-align: center;
 }
 
 .table tbody tr {
-  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s;
 }
 
 .table tbody tr:hover {
-  background-color: var(--color-neutral-light);
+  background-color: rgba(112, 112, 112, 0.517) !important;
+}
+
+.table td {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
 }
 
 .actionsCell {
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  justify-content: flex-end;
 }
 
 .actionButton {
+  border-radius: 0.375rem;
   padding: 0.5rem;
+  transition: background-color 0.2s;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  background-color: transparent;
 }
 
 .editButton {
-  background-color: var(--color-accent);
-  color: var(--color-neutral-dark);
+  color: var(--primary);
 }
 
 .editButton:hover {
-  background-color: #e6c200;
-  transform: scale(1.1);
+  background-color: hsl(var(--primary) / 0.1);
 }
 
 .deleteButton {
-  background-color: #dc3545;
-  color: white;
+  color: var(--destructive);
 }
 
 .deleteButton:hover {
-  background-color: #c82333;
-  transform: scale(1.1);
-}
-
-.tableContainer {
-  overflow-x: auto;
-  border-radius: 8px;
-  border: 1px solid var(--color-neutral-medium);
+  background-color: hsl(var(--destructive) / 0.1);
 }
