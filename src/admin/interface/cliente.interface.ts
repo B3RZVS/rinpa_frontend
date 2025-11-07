@@ -1,3 +1,5 @@
+import type { PaginatedData } from "./pagination.interface";
+
 export interface ClienteInterfaceResponse {
   id: number;
   nombre: string;
@@ -25,3 +27,4 @@ export interface UpdateClienteInterface {
   descripcion?: string | null;
   direccion?: string;
 }
+export type ClientesPaginatedResponse = PaginatedData<ClienteInterfaceResponse>;

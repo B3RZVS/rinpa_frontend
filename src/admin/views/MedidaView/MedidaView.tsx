@@ -4,15 +4,15 @@ import MedidasTable from "../../components/ComponentsViewMedida/MedidasTable/Med
 import MedidasModal from "../../components/ComponentsViewMedida/MedidasModal/MedidasModal";
 import ConfirmModal from "../../../shared/components/Common/ConfirmationModal/ConfirmationModal";
 import styles from "./MedidaView.module.css";
-import { useMedida } from "../../hook/hookContexts/useMedida";
 import { useMedidasUI } from "../../hook/hookUI/useMedidasUI";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 
 const MedidasView: React.FC = () => {
-  const { getMedidas, medidas, loading } = useMedida();
-
   const {
     filteredMedidas,
+    loading,
+    medidas,
+    unidades,
     searchTerm,
     setSearchTerm,
     isModalOpen,
@@ -26,7 +26,7 @@ const MedidasView: React.FC = () => {
     handleDelete,
     confirmDelete,
     confirmateAccion,
-  } = useMedidasUI(medidas, getMedidas);
+  } = useMedidasUI();
   if (loading) {
     return <LoadingComponent />;
   }
@@ -117,6 +117,7 @@ const MedidasView: React.FC = () => {
         onClose={() => setIsModalOpen(false)}
         onSave={confirmateAccion}
         medida={selectedMedida}
+        unidades={unidades}
       />
 
       <ConfirmModal

@@ -7,4 +7,7 @@ export const urls = {
   Producto: "/producto/",
   Entrega: "/entrega/",
   DetalleEntrega: "/detalle-entrega/",
+
+  EntregaPagination: "/entrega/paginated",
+  ClientePagination: "/cliente/paginated",
 };

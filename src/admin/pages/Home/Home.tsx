@@ -1,5 +1,4 @@
-import type React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import MobileNavbar from "../../components/MobileNavbar/MobileNavbar";
 import Header from "../../components/Header/Header";
@@ -27,10 +26,20 @@ export type ViewType =
 
 const Home: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
 
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
     <div className={styles.home}>
       <MobileNavbar
+        isMobile={isMobile}
         mobileMenuOpen={mobileMenuOpen}
         onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
       />

@@ -146,6 +146,41 @@
   color: var(--color-primary);
   font-size: 1.25rem;
 }
+.detalleList {
+  max-height: 150px;
+  overflow-y: auto;
+  margin-top: 5px;
+}
+.detalleRow {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--color-neutral-light);
+}
+.detalleProducto {
+  font-size: 1rem;
+  color: var(--color-neutral-dark);
+}
+.detalleSubtotal {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-neutral-dark);
+}
+.toggleButton {
+  background: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  transition: all 0.3s ease-in-out;
+}
+.toggleButton:hover {
+  opacity: 0.8;
+  background-color: rgba(82, 82, 82, 0.457);
+}
 
 /* Tablet */
 @media (min-width: 768px) {

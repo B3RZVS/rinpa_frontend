@@ -1,8 +1,7 @@
-import { useState, type ReactNode } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import { EntregaContext } from "./EntregaContext";
 import type { EntregaContextType } from "./EntregaContext.type";
 import { useToaster } from "../../../shared/hooks/useToaster";
-import { AxiosError } from "axios";
 import { useHandleApiError } from "../../../shared/hooks/useHandleApiError";
 import type {
   CreateEntregaInterface,
@@ -10,6 +9,10 @@ import type {
   UpdateEntregaInterface,
 } from "../../interface/entrega.interface";
 import { EntregaService } from "../../services/entrega.service";
+import type {
+  GetPaginated,
+  PaginatedData,
+} from "../../interface/pagination.interface";
 
 interface EntregaProviderProps {
   children: ReactNode;
@@ -23,7 +26,8 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [entregas, setEntregas] = useState<EntregaInterfaceResponse[]>([]);
   const [entrega, setEntrega] = useState<EntregaInterfaceResponse | null>(null);
-
+  const [entregasPaginated, setEntregaPaginated] =
+    useState<PaginatedData<EntregaInterfaceResponse> | null>(null);
   const getEntregas = async () => {
     setLoading(true);
     try {
@@ -57,7 +61,7 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
         type: "success",
         position: "top-center",
       });
-    } catch (error: AxiosError | any) {
+    } catch (error) {
       console.log(error);
       handleApiError(error, "Error al registrar la Entrega");
     } finally {
@@ -75,7 +79,7 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
         type: "success",
         position: "top-center",
       });
-    } catch (error: AxiosError | any) {
+    } catch (error) {
       handleApiError(error, "Error");
     } finally {
       setLoading(false);
@@ -99,15 +103,31 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
     }
   };
 
+  const getPaginatedEntregas = useCallback(
+    async (params: GetPaginated): Promise<void> => {
+      setLoading(true);
+      try {
+        const response = await EntregaService.getPaginatedEntregasApi(params);
+        setEntregaPaginated(response);
+      } catch (error) {
+        handleApiError(error, "Error al obtener las entregas");
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
   const contextValue: EntregaContextType = {
     loading,
     deleteEntrega,
     entregas,
+    entregasPaginated,
     entrega,
     getEntregas,
     getEntregaById,
     registerEntrega,
     updateEntrega,
+    getPaginatedEntregas,
   };
 
   return (

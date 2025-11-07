@@ -46,7 +46,7 @@ const LoginPage: React.FC = () => {
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            whileHover={{ scale: 1.2 }}
+            whileHover={{ scale: 1.1 }}
             transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
             className={styles.contLogo}
           >

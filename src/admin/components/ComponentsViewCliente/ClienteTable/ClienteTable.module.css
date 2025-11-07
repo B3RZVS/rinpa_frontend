@@ -1,100 +1,110 @@
+@import "../../../../App.css";
 .tableContainer {
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background-color: var(--card);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+}
+
+.tableWrapper {
   overflow-x: auto;
-  border-radius: 8px;
-  border: 1px solid var(--color-neutral-medium);
-  margin-bottom: 1.5rem;
 }
 
 .table {
   width: 100%;
+  min-width: 900px;
   border-collapse: collapse;
-  background-color: white;
+}
+
+.table thead tr {
+  border-bottom: 1px solid var(--border);
+  color: white;
+  background-color: var(--color-primary);
 }
 
 .table th {
-  background-color: var(--color-primary);
-  color: white;
   padding: 1rem;
   text-align: left;
+  font-size: 0.875rem;
   font-weight: 600;
-  border-bottom: 2px solid var(--color-primary-light);
+  color: var(--foreground);
 }
 
-.table td {
-  padding: 1rem;
-  border-bottom: 1px solid var(--color-neutral-medium);
-  color: var(--color-neutral-dark);
+.table th.actionsHeader {
+  text-align: center;
 }
 
 .table tbody tr {
-  transition: background-color 0.2s ease;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.2s;
 }
 
 .table tbody tr:hover {
-  background-color: var(--color-neutral-light);
+  background-color: rgba(112, 112, 112, 0.517) !important;
 }
 
-.table tbody tr:last-child td {
-  border-bottom: none;
+.table td {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+.nombreCell {
+  font-weight: 500;
+  color: var(--foreground);
+}
+
+.apellidoCell {
+  color: var(--foreground);
+}
+
+.emailCell,
+.telefonoCell {
+  color: var(--muted-foreground);
+}
+
+.direccionCell {
+  color: var(--foreground);
+}
+
+.descripcionCell {
+  max-width: 250px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--muted-foreground);
 }
 
 .actionsCell {
   display: flex;
-  gap: 0.5rem;
   align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.actionButton {
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  transition: background-color 0.2s;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
 }
 
 .editButton {
-  background-color: var(--color-accent);
-  color: var(--color-neutral-dark);
-  border: none;
-  padding: 0.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  color: var(--primary);
 }
 
 .editButton:hover {
-  background-color: #e6c200;
-  transform: translateY(-1px);
+  background-color: hsl(var(--primary) / 0.1);
 }
 
 .deleteButton {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  color: var(--destructive);
 }
 
 .deleteButton:hover {
-  background-color: #c82333;
-  transform: translateY(-1px);
-}
-
-.descripcionCell {
-  max-width: 200px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.emailCell {
-  color: var(--color-primary);
-  font-weight: 500;
-}
-
-.telefonoCell {
-  font-family: monospace;
-  font-size: 0.9rem;
+  background-color: hsl(var(--destructive) / 0.1);
 }
 
 @media (max-width: 768px) {

@@ -149,6 +149,8 @@
 @media (max-width: 768px) {
   .card {
     padding: 1rem;
+    min-width: 90%;
+    max-width: 95%;
   }
 
   .productName {

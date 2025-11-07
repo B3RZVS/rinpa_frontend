@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import type { MedidainterfaceResponse } from "../../interface/medida.interface";
 import { useMedida } from "../hookContexts/useMedida";
 
-export function useMedidasUI(
-  medidas: MedidainterfaceResponse[],
-  getMedidas: () => void
-) {
+export const useMedidasUI = () => {
+  const { getMedidas, medidas, loading, getUnidades, unidades } = useMedida();
   const { updateMedida, deleteMedida, registerMedida } = useMedida();
   const [filteredMedidas, setFilteredMedidas] = useState<
     MedidainterfaceResponse[]
@@ -21,6 +19,7 @@ export function useMedidasUI(
   // Cargar medidas al inicio
   useEffect(() => {
     getMedidas();
+    getUnidades();
   }, []);
 
   // Filtrar medidas cuando cambia searchTerm o medidas
@@ -78,5 +77,9 @@ export function useMedidasUI(
     handleDelete,
     confirmDelete,
     confirmateAccion,
+    getMedidas,
+    medidas,
+    unidades,
+    loading,
   };
-}
+};

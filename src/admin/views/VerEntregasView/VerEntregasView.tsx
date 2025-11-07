@@ -6,22 +6,40 @@ import EntregaCard from "../../components/ComponentsViewEntrega/EntregaCard/Entr
 import styles from "./VerEntregasView.module.css";
 import { useEntrega } from "../../hook/hookContexts/useEntrega";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
+import PaginateComponent from "../../components/PaginateComponent/PaginateComponent";
+import type { PaginationInfo } from "../../interface/pagination.interface";
+import usePaginationParams from "../../hook/usePaginateParams";
 
 const VerEntregasView = () => {
   const navigate = useNavigate();
-  const { entregas, getEntregas, loading } = useEntrega();
+  const {
+    entregas,
+    getEntregas,
+    loading,
+    entregasPaginated,
+    getPaginatedEntregas,
+  } = useEntrega();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
+  const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
+    null
+  );
+  const {
+    paginationParams,
+    handlePageChange,
+    handlePageSizeChange,
+    // handleFilter,
+  } = usePaginationParams();
 
   useEffect(() => {
-    if (entregas.length <= 0) {
-      getEntregas();
-    }
-  }, []);
+    getPaginatedEntregas(paginationParams);
+  }, [paginationParams]);
 
-  const filteredEntregas = entregas.filter((entrega) =>
-    entrega.clienteNombre.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // useEffect(() => {
+  //   if (entregas.length <= 0) {
+  //     getEntregas();
+  //   }
+  // }, []);
 
   const handleNuevaEntrega = () => {
     navigate("/dashboard/realizar-entrega");
@@ -30,7 +48,23 @@ const VerEntregasView = () => {
   const handleEditEntrega = (id: number) => {
     navigate(`/dashboard/editar-entrega/${id}`);
   };
-  if (loading) {
+
+  useEffect(() => {
+    setPaginationInfo(
+      entregasPaginated
+        ? {
+            currentPage: entregasPaginated.meta.currentPage,
+            totalPages: entregasPaginated.meta.totalPages,
+            page_size: entregasPaginated.meta.page_size,
+            totalItems: entregasPaginated.meta.totalItems,
+            onPageChange: handlePageChange,
+            onPageSizeChange: handlePageSizeChange,
+          }
+        : null
+    );
+  }, [entregasPaginated]);
+
+  if (loading || !entregasPaginated) {
     return <LoadingComponent />;
   }
   return (
@@ -85,12 +119,12 @@ const VerEntregasView = () => {
 
       {/* Entregas List */}
       <div className={styles.content}>
-        {loading ? (
+        {loading && !paginationInfo ? (
           <div className={styles.loading}>
             <div className={styles.spinner} />
             <p>Cargando entregas...</p>
           </div>
-        ) : filteredEntregas.length === 0 ? (
+        ) : entregasPaginated.data.length === 0 ? (
           <div className={styles.empty}>
             <p>No se encontraron entregas</p>
             <button className={styles.emptyButton} onClick={handleNuevaEntrega}>
@@ -98,16 +132,31 @@ const VerEntregasView = () => {
             </button>
           </div>
         ) : (
-          <div className={styles.entregasList}>
-            {filteredEntregas.map((entrega, index) => (
-              <EntregaCard
-                key={entrega.id}
-                entrega={entrega}
-                index={index}
-                onEdit={handleEditEntrega}
-              />
-            ))}
-          </div>
+          <PaginateComponent
+            background="transparent"
+            backgroundPagination="rgba(255, 255, 255, 0.54)"
+            {...(paginationInfo && {
+              pagination: {
+                currentPage: paginationInfo.currentPage,
+                totalPages: paginationInfo.totalPages,
+                pageSize: paginationInfo.page_size,
+                totalItems: paginationInfo.totalItems,
+                onPageChange: paginationInfo.onPageChange,
+                onPageSizeChange: paginationInfo.onPageSizeChange,
+              },
+            })}
+          >
+            <div className={styles.entregasList}>
+              {entregasPaginated.data.map((entrega, index) => (
+                <EntregaCard
+                  key={entrega.id}
+                  entrega={entrega}
+                  index={index}
+                  onEdit={handleEditEntrega}
+                />
+              ))}
+            </div>
+          </PaginateComponent>
         )}
       </div>
     </motion.div>

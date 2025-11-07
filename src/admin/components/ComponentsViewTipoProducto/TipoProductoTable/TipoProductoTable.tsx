@@ -22,7 +22,7 @@ const TipoProductoTable: React.FC<TipoProductoTableProps> = ({
           <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Acciones</th>
+            <th className={styles.actionsCell}>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +32,9 @@ const TipoProductoTable: React.FC<TipoProductoTableProps> = ({
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.1 }}
+              style={{
+                background: index % 2 === 0 ? "rgba(182, 182, 182, 0.21)" : "",
+              }}
             >
               <td>{tipoProducto.id}</td>
               <td>{tipoProducto.nombre}</td>

@@ -15,8 +15,9 @@ import type { ViewType } from "../../pages/Home/Home";
 import logo from "/logo/RinpaLogo.jpeg";
 import styles from "./MobileNavbar.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
-
+import { useAuth } from "../../../user/hooks/useAuth";
 interface MobileNavbarProps {
+  isMobile: boolean;
   mobileMenuOpen: boolean;
   onToggleMobileMenu: () => void;
 }
@@ -48,14 +49,16 @@ const menuItems = [
 const MobileNavbar: React.FC<MobileNavbarProps> = ({
   mobileMenuOpen,
   onToggleMobileMenu,
+  isMobile,
 }) => {
+  const { logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = (view: string) => location.pathname === `/dashboard/${view}`;
 
-  return (
-    <>
-      {/* Desktop Sidebar */}
+  if (!isMobile) {
+    // 🖥️ Versión Desktop
+    return (
       <motion.aside
         className={styles.desktopSidebar}
         initial={{ x: -280 }}
@@ -89,9 +92,18 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
             </motion.button>
           ))}
         </nav>
-      </motion.aside>
 
-      {/* Mobile Bottom Navigation */}
+        <button className={styles.buttonLogOut} onClick={() => logout()}>
+          Cerrar sesión
+        </button>
+      </motion.aside>
+    );
+  }
+
+  // 📱 Versión Mobile
+  return (
+    <>
+      {/* Bottom Nav */}
       <nav className={styles.mobileBottomNav}>
         {menuItems.slice(0, 4).map((item) => (
           <motion.button
@@ -99,9 +111,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
             className={`${styles.mobileNavItem} ${
               isActive(item.id) ? styles.active : ""
             }`}
-            onClick={() => {
-              navigate(`/dashboard/${item.id}`);
-            }}
+            onClick={() => navigate(`/dashboard/${item.id}`)}
             whileTap={{ scale: 0.9 }}
           >
             <item.icon className={styles.mobileIcon} />
@@ -112,7 +122,7 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
         ))}
       </nav>
 
-      {/* Mobile Overlay Menu */}
+      {/* Overlay Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <>
@@ -158,6 +168,12 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({
                     <span>{item.label}</span>
                   </motion.button>
                 ))}
+                <button
+                  className={styles.buttonLogOut}
+                  onClick={() => logout()}
+                >
+                  Cerrar sesión
+                </button>
               </div>
             </motion.div>
           </>

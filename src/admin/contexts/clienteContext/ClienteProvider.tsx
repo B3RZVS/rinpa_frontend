@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, useCallback } from "react";
 import { ClienteContext } from "./ClienteContext";
 import type { ClienteContextType } from "./ClienteContext.type";
 import type {
@@ -10,7 +10,11 @@ import { ClienteService } from "../../services/cliente.service";
 import { useToaster } from "../../../shared/hooks/useToaster";
 import { AxiosError } from "axios";
 import ConfirmModal from "../../../shared/components/Common/ConfirmationModal/ConfirmationModal";
-
+import type {
+  GetPaginated,
+  PaginatedData,
+} from "../../interface/pagination.interface";
+import { useHandleApiError } from "../../../shared/hooks/useHandleApiError";
 interface ClienteProviderProps {
   children: ReactNode;
 }
@@ -19,11 +23,14 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
   children,
 }) => {
   const { showToast } = useToaster();
+  const { handleApiError } = useHandleApiError();
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [clienteRestore, setClienteRestore] =
     useState<ClienteInterfaceResponse>();
   const [loading, setLoading] = useState<boolean>(false);
   const [clientes, setClientes] = useState<ClienteInterfaceResponse[]>([]);
+  const [clientesPaginated, setClientesPaginated] =
+    useState<PaginatedData<ClienteInterfaceResponse> | null>(null);
 
   const getClientes = async () => {
     setLoading(true);
@@ -84,7 +91,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
         position: "top-center",
       });
     } catch (error: AxiosError | any) {
-      console.error(error);
       errorRegisterCliente(error);
     } finally {
       setLoading(false);
@@ -101,15 +107,8 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
         type: "success",
         position: "top-center",
       });
-    } catch (error: AxiosError | any) {
-      console.error(error);
-      showToast({
-        title: `Error: ${
-          error.response?.data?.message || "al actualizar el cliente."
-        }`,
-        type: "error",
-        position: "top-center",
-      });
+    } catch (error) {
+      handleApiError(error, "Error al editar el cliente");
     } finally {
       setLoading(false);
     }
@@ -125,19 +124,31 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
         position: "top-center",
       });
     } catch (error) {
-      console.error(error);
-      showToast({
-        title: "Error al eliminar el cliente.",
-        type: "error",
-        position: "top-center",
-      });
+      handleApiError(error, "Error al eliminar el cliente");
     } finally {
       setLoading(false);
     }
   };
+
+  const getPaginatedClientes = useCallback(
+    async (params: GetPaginated): Promise<void> => {
+      setLoading(true);
+      try {
+        const response = await ClienteService.getPaginatedClientesApi(params);
+        setClientesPaginated(response);
+      } catch (error) {
+        handleApiError(error, "Error al obtener las entregas");
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
   const contextValue: ClienteContextType = {
     loading,
     clientes,
+    clientesPaginated,
+    getPaginatedClientes,
     getClientes,
     deleteCliente,
     registerCliente,

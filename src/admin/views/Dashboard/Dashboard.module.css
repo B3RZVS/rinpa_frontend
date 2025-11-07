@@ -18,6 +18,10 @@
 }
 
 @media (max-width: 768px) {
+  .dashboard {
+    padding: 1rem;
+    padding-bottom: 90px;
+  }
   .contentGrid {
     grid-template-columns: 1fr;
   }

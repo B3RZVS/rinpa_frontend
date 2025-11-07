@@ -5,10 +5,12 @@ import {
   FiTruck,
   FiEdit,
   FiChevronRight,
+  FiChevronDown,
 } from "react-icons/fi";
 
 import styles from "./EntregaCard.module.css";
 import type { EntregaInterfaceResponse } from "../../../interface/entrega.interface";
+import { useState } from "react";
 
 interface EntregaCardProps {
   entrega: EntregaInterfaceResponse;
@@ -21,6 +23,7 @@ const EntregaCard: React.FC<EntregaCardProps> = ({
   index,
   onEdit,
 }) => {
+  const [openDetalle, setOpenDetalle] = useState(false);
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString("es-AR", {
       day: "2-digit",
@@ -113,8 +116,32 @@ const EntregaCard: React.FC<EntregaCardProps> = ({
           {entrega.detalles.length} producto
           {entrega.detalles.length !== 1 ? "s" : ""}
         </span>
-        <FiChevronRight className={styles.chevron} />
+        <button
+          onClick={() => setOpenDetalle(!openDetalle)}
+          className={styles.toggleButton}
+        >
+          {openDetalle ? (
+            <FiChevronDown className={styles.chevron} />
+          ) : (
+            <FiChevronRight className={styles.chevron} />
+          )}
+        </button>
       </div>
+      {openDetalle && (
+        <div className={styles.detalleList}>
+          {entrega.detalles.map((detalle) => (
+            <div key={detalle.id} className={styles.detalleRow}>
+              <span className={styles.detalleProducto}>
+                {detalle.producto.tipoProducto} {detalle.producto.medida} x{" "}
+                {detalle.cantidad}
+              </span>
+              <span className={styles.detalleSubtotal}>
+                {formatCurrency(detalle.subTotal)}
+              </span>
+            </div>
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 };

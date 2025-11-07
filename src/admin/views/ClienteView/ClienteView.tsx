@@ -1,10 +1,13 @@
 import { motion } from "framer-motion";
-import { FiPlus, FiSearch, FiUsers } from "react-icons/fi";
+import {
+  FiPlus,
+  //  FiSearch,
+  FiUsers,
+} from "react-icons/fi";
 
 import ClienteTable from "../../components/ComponentsViewCliente/ClienteTable/ClienteTable";
 import ClienteModal from "../../components/ComponentsViewCliente/ClienteModal/ClienteModal";
 import ConfirmModal from "../../../shared/components/Common/ConfirmationModal/ConfirmationModal";
-import Pagination from "../../../shared/components/Common/Pagination/Pagination";
 import styles from "./ClienteView.module.css";
 import { useCliente } from "../../hook/hookContexts/useCliente";
 import { useClienteUI } from "../../hook/hookUI/useClienteUI";
@@ -13,15 +16,11 @@ const ClienteView: React.FC = () => {
   const { loading } = useCliente();
   const {
     handleAdd,
-    searchTerm,
-    setSearchTerm,
-    filteredClientes,
-    getCurrentPageData,
+    // searchTerm,
+    // setSearchTerm,
     handleDelete,
     handleEdit,
     handleSave,
-    pagination,
-    setPagination,
     selectedCliente,
     setIsModalOpen,
     setIsConfirmModalOpen,
@@ -29,10 +28,14 @@ const ClienteView: React.FC = () => {
     isModalOpen,
     isConfirmModalOpen,
     confirmDelete,
+    paginationInfo,
+    clientesPaginated,
   } = useClienteUI();
-  if (loading) {
+
+  if (!clientesPaginated || !paginationInfo) {
     return <LoadingComponent />;
   }
+
   return (
     <motion.div
       className={styles.container}
@@ -59,7 +62,7 @@ const ClienteView: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
-        <div className={styles.searchContainer}>
+        {/* <div className={styles.searchContainer}>
           <div style={{ position: "relative", display: "inline-block" }}>
             <FiSearch
               style={{
@@ -79,7 +82,7 @@ const ClienteView: React.FC = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-        </div>
+        </div> */}
 
         {loading ? (
           <div className={styles.loadingContainer}>
@@ -94,7 +97,7 @@ const ClienteView: React.FC = () => {
               <FiUsers size={40} />
             </motion.div>
           </div>
-        ) : filteredClientes.length === 0 ? (
+        ) : clientesPaginated.data.length === 0 ? (
           <motion.div
             className={styles.emptyState}
             initial={{ opacity: 0 }}
@@ -107,15 +110,10 @@ const ClienteView: React.FC = () => {
         ) : (
           <>
             <ClienteTable
-              clientes={getCurrentPageData()}
+              clientes={clientesPaginated.data}
               onEdit={handleEdit}
               onDelete={handleDelete}
-            />
-            <Pagination
-              pagination={pagination}
-              onPageChange={(page) =>
-                setPagination((prev) => ({ ...prev, currentPage: page }))
-              }
+              paginationInfo={paginationInfo}
             />
           </>
         )}
