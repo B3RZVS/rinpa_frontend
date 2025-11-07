@@ -1,9 +1,15 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../user/hooks/useAuth";
 
-export type Role = "admin" | "ROLE_TEACHER" | "estudiante";
+export type Role = "admin" | "repartidor";
 
-const ProtectedRoute = ({ allowedRoles }: { allowedRoles: Role[] }) => {
+const ProtectedRoute = ({
+  allowedRoles,
+  children,
+}: {
+  allowedRoles: Role[];
+  children: React.ReactNode;
+}) => {
   const { isAuthenticated, role } = useAuth();
 
   if (!isAuthenticated) return <Navigate to="/login" replace />;
@@ -11,10 +17,6 @@ const ProtectedRoute = ({ allowedRoles }: { allowedRoles: Role[] }) => {
   if (!allowedRoles.includes(role!))
     return <Navigate to="/unauthorized" replace />;
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <>{children}</>;
 };
 export default ProtectedRoute;

@@ -1,0 +1,233 @@
+.container {
+  padding: 1rem;
+  max-width: 100%;
+  padding-bottom: 5rem;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.backButton {
+  background: white;
+  border: 2px solid var(--color-neutral-medium);
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+
+.backButton:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: white;
+}
+
+.header h2 {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.section {
+  background: white;
+  border-radius: 16px;
+  padding: 1.25rem;
+  border: 2px solid var(--color-neutral-medium);
+}
+
+.sectionTitle {
+  color: var(--color-primary);
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 1rem 0;
+}
+
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.formGroup {
+  padding-bottom: 20px;
+}
+
+.formGroup:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  display: block;
+  color: var(--color-neutral-dark);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 0.9375rem;
+}
+
+.input {
+  width: 80%;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--color-neutral-medium);
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background: white;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(1, 52, 100, 0.1);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1rf 1rf;
+  gap: 1rem;
+}
+
+.addDetalleButton {
+  background: var(--color-secondary);
+  color: white;
+  border: none;
+  padding: 0.625rem 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  font-size: 0.9375rem;
+}
+
+.addDetalleButton:hover {
+  background: var(--color-secondary-dark);
+  transform: translateY(-2px);
+}
+
+.actions {
+  padding: 1rem;
+  z-index: 10;
+  border-radius: 10px;
+}
+
+.saveButton {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-primary), #025a9c);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(1, 52, 100, 0.3);
+}
+
+.saveButton:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(1, 52, 100, 0.4);
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .container {
+    padding: 0.5rem;
+    padding-bottom: 5rem;
+  }
+
+  .header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header h2 {
+    font-size: 1.75rem;
+  }
+
+  .section {
+    padding: 1.5rem;
+  }
+
+  .formRow {
+    display: flex;
+    flex-direction: column;
+  }
+  .input {
+    width: 87%;
+  }
+
+  .actions {
+    position: static;
+    padding: 0;
+    background: transparent;
+    border: none;
+  }
+
+  .saveButton {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .container {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .form {
+    gap: 2rem;
+  }
+
+  .section {
+    padding: 2rem;
+  }
+}

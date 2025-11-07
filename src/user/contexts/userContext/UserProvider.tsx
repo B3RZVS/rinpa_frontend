@@ -4,8 +4,8 @@ import type { UserContextType } from "./UserContext.type";
 import { LoginService } from "../../services/Login/LoginService";
 import type { LoginPayload } from "../../services/Login/LoginService";
 import type { Role } from "../../../utils/ProtectedRoute";
-// import { roleLandingRoutes } from "../../services/roleLandingRoutes";
-import { useToaster } from "../../../hook/useToaster";
+import { roleLandingRoutes } from "../../../utils/roleLandingRoutes";
+import { useToaster } from "../../../shared/hooks/useToaster";
 import AuthService from "../../services/auth/AuthService";
 
 interface UserProviderProps {
@@ -28,17 +28,17 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     setLoading(true);
     try {
       const response = await LoginService.loginApi(data);
-      // const userRole = response.data.user.rol as Role;
+      const userRole = response.user.rol.nombre as Role;
 
       authService.setTokens(response.accessToken, response.refreshToken);
-
       localStorage.setItem("role", response.user.rol.nombre);
       localStorage.setItem("nombreUser", response.user.nombre);
+      localStorage.setItem("idUser", response.user.id);
 
       setIsAuthenticated(true);
       setRole(response.user.rol.nombre);
 
-      return "/home";
+      return roleLandingRoutes[userRole];
     } catch (error) {
       console.error(error);
       showToast({

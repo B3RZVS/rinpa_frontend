@@ -1,5 +1,13 @@
 export const urls = {
-  ingrediente: "/products/ingredients/",
-  packagings: "/products/packagings/",
-  productos: "/products/products/",
+  Medida: "/medida/",
+  Unidad: "/unidad/",
+  TipoProducto: "/tipo-producto/",
+  Cliente: "/cliente/",
+  PrecioNafta: "/precioNafta/",
+  Producto: "/producto/",
+  Entrega: "/entrega/",
+  DetalleEntrega: "/detalle-entrega/",
+
+  EntregaPagination: "/entrega/paginated",
+  ClientePagination: "/cliente/paginated",
 };

@@ -1,0 +1,317 @@
+.container {
+  background: var(--color-neutral-light);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  border: 2px solid var(--color-secondary);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.header h4 {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  padding: 0.25rem;
+  cursor: pointer;
+  color: var(--color-neutral-dark);
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.closeButton:hover {
+  color: var(--color-primary);
+  transform: scale(1.1);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  color: var(--color-neutral-dark);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.searchBar {
+  position: relative;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-neutral-dark);
+  opacity: 0.5;
+  font-size: 1.125rem;
+}
+
+.searchInput {
+  width: 90%;
+  padding: 0.75rem 0.875rem 0.75rem 2.5rem;
+  border: 2px solid var(--color-neutral-medium);
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  transition: border-color 0.2s;
+  background: white;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.productosList {
+  background: white;
+  border: 2px solid var(--color-neutral-medium);
+  border-radius: 10px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+}
+
+.loading,
+.empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--color-neutral-dark);
+  opacity: 0.7;
+  font-size: 0.875rem;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--color-neutral-medium);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.productoItem {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.875rem;
+  background: white;
+  border: none;
+  border-bottom: 1px solid var(--color-neutral-medium);
+  cursor: pointer;
+  transition: background 0.2s;
+  text-align: left;
+}
+
+.productoItem:hover {
+  background: var(--color-neutral-light);
+}
+
+.productoItem:last-child {
+  border-bottom: none;
+}
+
+.productoItemNombre {
+  font-weight: 500;
+  color: var(--color-neutral-dark);
+  font-size: 0.9375rem;
+}
+
+.productoItemDetalle {
+  font-size: 0.8125rem;
+  color: var(--color-neutral-dark);
+  opacity: 0.6;
+}
+
+.selectedProducto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.875rem;
+  background: white;
+  border: 2px solid var(--color-secondary);
+  border-radius: 10px;
+}
+
+.productoInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.productoNombre {
+  font-weight: 600;
+  color: var(--color-neutral-dark);
+  font-size: 0.9375rem;
+}
+
+.productoDetalle {
+  font-size: 0.8125rem;
+  color: var(--color-neutral-dark);
+  opacity: 0.6;
+}
+
+.clearButton {
+  background: var(--color-neutral-light);
+  border: none;
+  padding: 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--color-primary);
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.clearButton:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: scale(1.1);
+}
+
+.input {
+  width: 90%;
+  padding: 0.75rem 0.875rem;
+  border: 2px solid var(--color-neutral-medium);
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  transition: border-color 0.2s;
+  background: white;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.input:disabled {
+  background: var(--color-neutral-light);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem;
+  background: white;
+  border-radius: 10px;
+  border: 2px solid var(--color-accent);
+}
+
+.subtotal span:first-child {
+  color: var(--color-neutral-dark);
+  font-weight: 600;
+}
+
+.subtotalValue {
+  color: var(--color-primary);
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.cancelButton {
+  flex: 1;
+  background: white;
+  color: var(--color-neutral-dark);
+  border: 2px solid var(--color-neutral-medium);
+  padding: 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.cancelButton:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.addButton {
+  flex: 1;
+  background: var(--color-secondary);
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.addButton:hover:not(:disabled) {
+  background: var(--color-secondary-dark);
+  transform: translateY(-2px);
+}
+
+.addButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 730px) {
+  .searchInput {
+    width: 80%;
+  }
+  .formRow {
+    display: flex;
+    flex-direction: column;
+  }
+}
