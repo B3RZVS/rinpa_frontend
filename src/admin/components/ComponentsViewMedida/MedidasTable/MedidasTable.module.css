@@ -1,8 +1,6 @@
 .tableContainer {
   overflow: hidden;
   border-radius: 0.5rem;
-  border: 1px solid var(--border);
-  background-color: var(--card);
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 }
 
@@ -78,4 +76,32 @@
 
 .deleteButton:hover {
   background-color: hsl(var(--destructive) / 0.1);
+}
+
+@media (max-width: 768px) {
+  .tableContainer {
+    width: 100%;
+    overflow: hidden;
+    overflow-x: auto;
+  }
+  .table {
+    width: 100%;
+    min-width: 90%;
+    border-collapse: collapse;
+    overflow-x: auto;
+  }
+  .table th,
+  .table td {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .descripcionCell {
+    max-width: 150px;
+  }
+
+  .actionsCell {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
 }
