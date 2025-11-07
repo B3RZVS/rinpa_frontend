@@ -12,13 +12,7 @@ import usePaginationParams from "../../hook/usePaginateParams";
 
 const VerEntregasView = () => {
   const navigate = useNavigate();
-  const {
-    entregas,
-    getEntregas,
-    loading,
-    entregasPaginated,
-    getPaginatedEntregas,
-  } = useEntrega();
+  const { loading, entregasPaginated, getPaginatedEntregas } = useEntrega();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOpen, setFilterOpen] = useState(false);
   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
