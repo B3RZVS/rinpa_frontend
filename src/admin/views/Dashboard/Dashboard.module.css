@@ -20,6 +20,7 @@
 @media (max-width: 768px) {
   .dashboard {
     padding: 1rem;
+    flex-direction: column-reverse;
     padding-bottom: 90px;
   }
   .contentGrid {
