@@ -10,6 +10,7 @@ import AppShell from "./AppShell";
 import LoginPage from "./user/pages/Login/LoginPage";
 import ScrollToTop from "./shared/components/ScrollToTop/ScrollToTop";
 import Unauthorized from "./shared/components/Unauthorized/Unauthorized";
+import BotonDescarga from "./shared/components/BotonDescarga/BotonDescaga";
 
 const App: React.FC = () => {
   return (
@@ -17,6 +18,7 @@ const App: React.FC = () => {
       <ToasterProvider>
         <UserProvider>
           <div>
+            <BotonDescarga />
             <ScrollToTop />
             <Routes>
               <Route path="/login" element={<LoginPage />} />
