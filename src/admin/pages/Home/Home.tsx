@@ -13,6 +13,7 @@ import PrecioNaftaView from "../../views/PrecioNaftaView/PrecioNaftaView";
 import EditEntregaView from "../../views/RealizarEntregaView/EditEntrega/EditarEntregaView";
 import styles from "./Home.module.css";
 import { Route, Routes } from "react-router-dom";
+import BotonDescarga from "../../../shared/components/BotonDescarga/BotonDescaga";
 export type ViewType =
   | "dashboard"
   | "realizar-entrega"
@@ -43,7 +44,7 @@ const Home: React.FC = () => {
         mobileMenuOpen={mobileMenuOpen}
         onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)}
       />
-
+      <BotonDescarga />
       <div className={styles.mainContent}>
         <Header onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)} />
 
