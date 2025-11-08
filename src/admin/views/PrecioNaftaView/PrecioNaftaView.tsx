@@ -41,7 +41,7 @@ const PrecioNaftaView = () => {
           className={styles.updateButton}
           onClick={() => setIsModalOpen(true)}
         >
-          Actualizar Precio
+          Crear Nuevo Precio
         </button>
       </div>
 

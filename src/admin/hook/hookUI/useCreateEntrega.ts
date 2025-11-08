@@ -4,11 +4,11 @@ import { usePrecioNafta } from "../hookContexts/usePrecioNafta";
 import type { ClienteInterfaceResponse } from "../../interface/cliente.interface";
 import type { CreateDetalleProductoInterface } from "../../interface/detalle.interface";
 import type { CreateEntregaInterface } from "../../interface/entrega.interface";
-
+import { useToaster } from "../../../shared/hooks/useToaster";
 export const useCreateEntrega = () => {
   const { registerEntrega, loading } = useEntrega();
   const { preciosNafta, getPreciosNafta } = usePrecioNafta();
-
+  const { showToast } = useToaster();
   const [selectedCliente, setSelectedCliente] =
     useState<ClienteInterfaceResponse | null>(null);
   const [fecha, setFecha] = useState(
@@ -64,9 +64,14 @@ export const useCreateEntrega = () => {
 
   // Guardar entrega
   const handleGuardar = useCallback(async () => {
-    const error = validarFormulario();
+    const error: string | null = validarFormulario();
     if (error) {
-      alert(error);
+      showToast({
+        title: "Error",
+        message: error,
+        type: "error",
+        position: "top-center",
+      });
       return;
     }
 
