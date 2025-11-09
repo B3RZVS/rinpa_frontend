@@ -12,7 +12,7 @@ export interface EntregaInterfaceResponse {
   usuarioId: number;
   usuarioNombre: string;
   usuarioApellido: string;
-  fecha: Date;
+  fecha: string;
   precioNafta: number;
   litrosGastados: number;
   consumoTotal: number;
@@ -23,7 +23,7 @@ export interface CreateEntregaInterface {
   usuarioId: number;
   precioNaftaId: number;
   litrosGastados: number;
-  fecha: Date;
+  fecha: string;
   detalles: CreateDetalleProductoInterface[];
 }
 export interface UpdateEntregaInterface {

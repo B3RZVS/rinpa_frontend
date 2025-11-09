@@ -24,12 +24,10 @@ const EntregaCard: React.FC<EntregaCardProps> = ({
   onEdit,
 }) => {
   const [openDetalle, setOpenDetalle] = useState(false);
-  const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString("es-AR", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
+  const formatDate = (date: string) => {
+    if (!date) return "";
+    const [year, month, day] = date.split("T")[0].split("-");
+    return `${day}/${month}/${year}`;
   };
 
   const formatCurrency = (amount: number) => {

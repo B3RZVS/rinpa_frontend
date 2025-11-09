@@ -80,7 +80,7 @@ export const useCreateEntrega = () => {
       usuarioId: Number(localStorage.getItem("idUser")),
       precioNaftaId: precioActual!.id,
       litrosGastados: Number(litrosGastados),
-      fecha: new Date(fecha),
+      fecha: fecha,
       detalles,
     };
 
