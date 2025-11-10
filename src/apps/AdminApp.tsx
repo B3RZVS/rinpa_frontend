@@ -11,6 +11,7 @@ import { PrecioNaftaProvider } from "../admin/contexts/precioNaftaContext/Precio
 import { ProductoProvider } from "../admin/contexts/productoContext/ProductoProvider";
 import { EntregaProvider } from "../admin/contexts/entregaContext/EntregaProvider";
 import { DetalleEntregaProvider } from "../admin/contexts/detalleEntregaContext/DetalleEntregaProvider";
+import { EstadisticasProvider } from "../admin/contexts/estadisticasContext/EstadisticasProvider";
 
 function AdminApp() {
   return (
@@ -26,7 +27,9 @@ function AdminApp() {
                     <PrecioNaftaProvider>
                       <EntregaProvider>
                         <DetalleEntregaProvider>
-                          <Home />
+                          <EstadisticasProvider>
+                            <Home />
+                          </EstadisticasProvider>
                         </DetalleEntregaProvider>
                       </EntregaProvider>
                     </PrecioNaftaProvider>

@@ -16,6 +16,7 @@ import logo from "/logo/RinpaLogo.jpeg";
 import styles from "./MobileNavbar.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../../user/hooks/useAuth";
+import { FaArrowTrendUp } from "react-icons/fa6";
 interface MobileNavbarProps {
   isMobile: boolean;
   mobileMenuOpen: boolean;
@@ -44,6 +45,11 @@ const menuItems = [
   },
   { id: "cliente" as ViewType, label: "Gestión de Cliente", icon: FiUsers },
   { id: "medida" as ViewType, label: "Gestión de Medida", icon: FiSettings },
+  {
+    id: "estadisticas" as ViewType,
+    label: "Estadisticas",
+    icon: FaArrowTrendUp,
+  },
 ];
 
 const MobileNavbar: React.FC<MobileNavbarProps> = ({

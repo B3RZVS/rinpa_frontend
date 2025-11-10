@@ -10,4 +10,10 @@ export const urls = {
 
   EntregaPagination: "/entrega/paginated",
   ClientePagination: "/cliente/paginated",
+
+  //Reportes
+  ReporteGeneral: "/estadisticas/reporte-semanal",
+  ReporteEntrega: "/estadisticas/reporte-entregas",
+  ReporteCliente: "/estadisticas/reporte-clientes",
+  EstadisticasHome: "/estadisticas/estadistica-home",
 };
