@@ -137,7 +137,7 @@ const ReporteEntregaView: React.FC = () => {
               <div className={styles.totalRow}>
                 <span>Nafta:</span>
                 <strong>
-                  {reporteEntrega.totalGeneral.litrosNafta}L ($
+                  {reporteEntrega.totalGeneral.litrosNafta.toFixed(2)}L ($
                   {reporteEntrega.totalGeneral.costoNafta.toLocaleString()})
                 </strong>
               </div>
