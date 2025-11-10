@@ -1,0 +1,221 @@
+.container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding-bottom: 5rem;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.backButton {
+  background: white;
+  border: 1px solid var(--color-neutral-medium);
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-primary);
+  transition: all 0.2s ease;
+}
+
+.backButton:hover {
+  background: var(--color-neutral-light);
+  border-color: var(--color-primary);
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.subtitle {
+  font-size: 0.875rem;
+  color: var(--color-neutral-dark);
+  opacity: 0.7;
+  margin: 0.25rem 0 0 0;
+}
+
+.reporteContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.statCard {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-left: 4px solid;
+}
+
+.statIcon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.statInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.statLabel {
+  font-size: 0.75rem;
+  color: var(--color-neutral-dark);
+  opacity: 0.7;
+  margin: 0 0 0.25rem 0;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-neutral-dark);
+  margin: 0;
+  word-break: break-word;
+}
+
+.section {
+  background: white;
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--color-neutral-medium);
+}
+
+.sectionTitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-neutral-dark);
+  margin: 0 0 1rem 0;
+}
+
+.productList,
+.clientesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.productItem,
+.clienteItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: var(--color-neutral-light);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: var(--color-neutral-dark);
+}
+
+.productIcon {
+  color: var(--color-secondary);
+  font-size: 1.125rem;
+  flex-shrink: 0;
+}
+
+.clienteAvatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.periodoInfo {
+  background: var(--color-primary-light);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-light) 0%,
+    var(--color-secondary-light) 100%
+  );
+  border-radius: 12px;
+  padding: 1.25rem;
+  color: var(--color-neutral-dark);
+}
+
+.periodoInfo p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.periodoInfo p:first-child {
+  margin-top: 0;
+}
+
+.periodoInfo p:last-child {
+  margin-bottom: 0;
+}
+
+/* Tablet */
+@media (min-width: 640px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.75rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .statCard {
+    padding: 1.25rem;
+  }
+
+  .section {
+    padding: 1.5rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .container {
+    padding: 2rem;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+
+  .productList,
+  .clientesList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}

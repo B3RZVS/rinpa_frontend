@@ -3,7 +3,7 @@ import styles from "./StatsCard.module.css";
 
 interface StatsCardProps {
   title: string;
-  value: string;
+  value: number;
   change?: string;
   color: "primary" | "secondary" | "accent";
 }

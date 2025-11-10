@@ -11,8 +11,13 @@ import RealizarEntregaView from "../../views/RealizarEntregaView/CreateEntrega/R
 import VerEntregasView from "../../views/VerEntregasView/VerEntregasView";
 import PrecioNaftaView from "../../views/PrecioNaftaView/PrecioNaftaView";
 import EditEntregaView from "../../views/RealizarEntregaView/EditEntrega/EditarEntregaView";
+import ReporteClienteView from "../../views/Reportes/ReporteClienteView/ReporteClienteView";
+import ReporteEntregaView from "../../views/Reportes/ReporteEntregaView/ReporteEntregaView";
+import ReporteGeneralView from "../../views/Reportes/ReporteGeneralView/ReporteGeneralView";
+import EstadisticasView from "../../views/EstadisticasView/EstadisticasView";
 import styles from "./Home.module.css";
 import { Route, Routes } from "react-router-dom";
+
 export type ViewType =
   | "dashboard"
   | "realizar-entrega"
@@ -22,7 +27,8 @@ export type ViewType =
   | "cliente"
   | "producto"
   | "tipo-producto"
-  | "medida";
+  | "medida"
+  | "estadisticas";
 
 const Home: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -63,6 +69,19 @@ const Home: React.FC = () => {
             <Route path="tipo-producto" element={<TipoProductoView />} />
             <Route path="precio-nafta" element={<PrecioNaftaView />} />
             <Route path="medida" element={<MedidasView />} />
+            <Route path="estadisticas" element={<EstadisticasView />} />
+            <Route
+              path="estadisticas/reporte-general"
+              element={<ReporteGeneralView />}
+            />
+            <Route
+              path="estadisticas/reporte-entrega"
+              element={<ReporteEntregaView />}
+            />
+            <Route
+              path="estadisticas/reporte-cliente"
+              element={<ReporteClienteView />}
+            />
           </Routes>
         </motion.main>
       </div>
