@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { FiPlus, FiSearch, FiFilter } from "react-icons/fi";
+import {
+  FiPlus,
+  FiSearch,
+  // FiFilter
+} from "react-icons/fi";
 import EntregaCard from "../../components/ComponentsViewEntrega/EntregaCard/EntregaCard";
 import styles from "./VerEntregasView.module.css";
 import { useEntrega } from "../../hook/hookContexts/useEntrega";
@@ -14,7 +18,7 @@ const VerEntregasView = () => {
   const navigate = useNavigate();
   const { loading, entregasPaginated, getPaginatedEntregas } = useEntrega();
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterOpen, setFilterOpen] = useState(false);
+  // const [filterOpen, setFilterOpen] = useState(false);
   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
     null
   );
@@ -89,18 +93,18 @@ const VerEntregasView = () => {
             className={styles.searchInput}
           />
         </div>
-        <button
+        {/* <button
           className={`${styles.filterButton} ${
             filterOpen ? styles.active : ""
           }`}
           onClick={() => setFilterOpen(!filterOpen)}
         >
           <FiFilter />
-        </button>
+        </button> */}
       </div>
 
       {/* Filter Panel */}
-      {filterOpen && (
+      {/* {filterOpen && (
         <motion.div
           className={styles.filterPanel}
           initial={{ height: 0, opacity: 0 }}
@@ -109,7 +113,7 @@ const VerEntregasView = () => {
         >
           <p>Filtros adicionales (por implementar)</p>
         </motion.div>
-      )}
+      )} */}
 
       {/* Entregas List */}
       <div className={styles.content}>

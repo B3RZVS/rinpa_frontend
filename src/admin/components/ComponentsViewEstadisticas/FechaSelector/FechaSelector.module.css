@@ -92,19 +92,9 @@
 }
 
 /* Tablet y Desktop */
-@media (min-width: 640px) {
+@media (max-width: 640px) {
   .container {
     padding: 1.5rem;
-  }
-
-  .dateInputs {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.25rem;
-  }
-
-  .button {
-    max-width: 200px;
-    margin-left: auto;
   }
 }
 
