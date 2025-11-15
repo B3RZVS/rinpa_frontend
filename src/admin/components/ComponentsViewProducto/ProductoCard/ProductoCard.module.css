@@ -7,6 +7,7 @@
   background: white;
   border: 1px solid var(--color-neutral-medium);
   border-radius: 12px;
+  box-sizing: border-box; /*Evita que el pading se le sume al width*/
   padding: 1.25rem;
   transition: all 0.2s;
   cursor: pointer;
@@ -148,9 +149,9 @@
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .card {
-    padding: 1rem;
-    min-width: 90%;
-    max-width: 95%;
+    flex-shrink: 0; /*Evita que se achique*/
+    padding: 0.8rem;
+    width: 100%;
   }
 
   .productName {
