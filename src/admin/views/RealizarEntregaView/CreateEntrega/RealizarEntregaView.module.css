@@ -83,7 +83,8 @@
 }
 
 .input {
-  width: 80%;
+  width: 100%;
+  box-sizing: border-box;
   padding: 0.875rem 1rem;
   border: 2px solid var(--color-neutral-medium);
   border-radius: 12px;
