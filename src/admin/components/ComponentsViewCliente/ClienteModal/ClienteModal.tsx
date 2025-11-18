@@ -232,11 +232,15 @@ const ClienteModal: React.FC<ClienteModalProps> = ({
                 <textarea
                   className={styles.textarea}
                   value={formData.descripcion || ""}
+                  maxLength={200}
                   onChange={(e) =>
                     handleInputChange("descripcion", e.target.value)
                   }
                   placeholder="Descripción adicional del cliente (opcional)"
                 />
+                <label className={styles.labelMax}>
+                  {formData.descripcion?.length}/200
+                </label>
               </div>
 
               <div className={styles.actions}>

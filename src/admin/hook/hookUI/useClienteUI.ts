@@ -67,23 +67,25 @@ export const useClienteUI = () => {
     setIsConfirmModalOpen(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (clienteToDelete) {
-      deleteCliente(clienteToDelete.id);
+      await deleteCliente(clienteToDelete.id);
+      await getPaginatedClientes(paginationParams);
       setIsConfirmModalOpen(false);
     }
   };
 
-  const handleSave = (clienteData: CreateClienteInterface) => {
+  const handleSave = async (clienteData: CreateClienteInterface) => {
     if (selectedCliente) {
       // Editar
       const dataUpdate = { ...clienteData, id: selectedCliente.id };
-      updateCliente(dataUpdate);
+      await updateCliente(dataUpdate);
     } else {
       // Crear
-      registerCliente(clienteData);
+      await registerCliente(clienteData);
     }
     setIsModalOpen(false);
+    await getPaginatedClientes(paginationParams);
   };
 
   return {
