@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown Render</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #2c3e50;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        h1 { border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        h2 { border-bottom: 1px solid #bdc3c7; padding-bottom: 5px; }
+        code {
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9em;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+        pre code {
+            background: none;
+            padding: 0;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            margin: 1em 0;
+            padding-left: 1em;
+            color: #555;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1em 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .mermaid {
+            text-align: center;
+            margin: 2em 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .pz-root { position: relative; overflow: hidden; background: transparent; }
+        .pz-viewport { transform-origin: 0 0; will-change: transform; display: inline-block; }
+        .pz-wrapper { display: inline-block; }
+        .zoom-controls {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 8px;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 6px;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .zoom-controls button {
+            background: #2c3e50;
+            color: #ffffff;
+            border: 0;
+            border-radius: 4px;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        .zoom-controls button:hover { 
+            background: #34495e; 
+        }
+        .zoom-controls button:active { 
+            background: #1a252f; 
+            transform: scale(0.95);
+        }
+        ul, ol {
+            margin: 1em 0;
+            padding-left: 2em;
+        }
+        li {
+            margin: 0.5em 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #bdc3c7;
+            margin: 2em 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Diagrama de Componentes (Frontend Rinpa)</h1>
+<div class="mermaid">%%{init: {'theme': 'neutral'}}%%
+flowchart TD
+    %% Nivel raíz
+    A[App\nBrowserRouter] --> B[ToasterProvider]
+    B --> C[UserProvider]
+    C --> D[Routes]
+    C --> H[BotonDescarga]
+    C --> I[ScrollToTop]
+
+    D -->|/login| E[LoginPage]
+    D -->|/unauthorized| F[Unauthorized]
+    D -->|/*| G[AppShell]
+
+    %% Shell por rol
+    G --> J{useAuth.role}
+    J -->|admin| K[AdminApp]
+    J -->|repartidor| L[RepartidorApp]
+    J -->|otro| F
+
+    %% Admin Shell
+    subgraph Admin
+        K --> M[ProtectedRoute(admin)]
+        M --> N[Providers de dominio\nMedida·TipoProducto·Cliente·Producto·PrecioNafta·Entrega·DetalleEntrega·Estadisticas]
+        N --> O[Home (layout + animaciones)]
+        O --> P[Router Dashboard]
+        O --> Q[Header + MobileNavbar]
+
+        P --> P1[Dashboard (QuickActions, StatsCard)]
+        P --> P2[RealizarEntregaView · EditarEntregaView · VerEntregasView]
+        P --> P3[ClienteView]
+        P --> P4[ProductoView]
+        P --> P5[TipoProductoView]
+        P --> P6[MedidasView]
+        P --> P7[PrecioNaftaView]
+        P --> P8[EstadisticasView + Reportes (Cliente/Entrega/General)]
+    end
+
+    %% Repartidor Shell
+    subgraph Repartidor
+        L --> R[ProtectedRoute(repartidor)]
+        R --> S[HomePageRepartidor]
+    end
+
+    %% Servicios y estado
+    subgraph Infra
+        T[AuthService\nmanejo tokens/refresh + callbacks] -.-> C
+        T -.-> M
+        T -.-> R
+        U[api.ts\naxios + interceptor JWT] --> V[Servicios de dominio\nadmin/services/*]
+        V --> W[(Backend API)]
+        T -.-> U
+
+        X[roleLandingRoutes] -.-> C
+        Y[ProtectedRoute] -.-> M
+        Y -.-> R
+    end
+
+    %% Shared
+    subgraph Shared
+        B --> Z[ToasterContext/useToaster\nToaster component]
+        AA[useHandleApiError · usePaginateParams] -.-> P2
+        AA -.-> P3
+        AA -.-> P4
+        AA -.-> P5
+        AA -.-> P6
+        AA -.-> P7
+        AA -.-> P8
+    end</div><h2>Estructura y responsabilidades</h2>
+<ul>
+<li>Enrutado raíz (<code>App.tsx</code>): orquesta <code>Router</code>, <code>ToasterProvider</code>, <code>UserProvider</code> y rutas públicas (<code>/login</code>, <code>/unauthorized</code>) delegando el resto a <code>AppShell</code>.</li>
+<li>Shell por rol (<code>AppShell.tsx</code>): evalúa autenticación/rol y enruta a <code>AdminApp</code> o <code>RepartidorApp</code>; casos no permitidos se redirigen a <code>Unauthorized</code>.</li>
+<li>Seguridad (<code>ProtectedRoute.tsx</code>): valida sesión y rol antes de montar las rutas internas.</li>
+<li>Estado transversal:
+<ul>
+<li><code>UserProvider</code> (auth, rol, landing por rol, logout, callbacks de sesión expirada).</li>
+<li><code>ToasterProvider</code> (gestión centralizada de toasts y concurrencia por posición).</li>
+</ul>
+</li>
+<li>Dominio Admin:
+<ul>
+<li>Providers por módulo (<code>medida</code>, <code>tipoProducto</code>, <code>cliente</code>, <code>producto</code>, <code>precioNafta</code>, <code>entrega</code>, <code>detalleEntrega</code>, <code>estadisticas</code>) encapsulan estado/API por dominio.</li>
+<li><code>Home</code> compone layout responsive (Header, MobileNavbar) y router interno del dashboard.</li>
+<li>Vistas especializadas (entregas, clientes, productos, reportes, estadísticas) consumen sus contextos y servicios.</li>
+</ul>
+</li>
+<li>Dominio Repartidor: <code>HomePageRepartidor</code> protegido por rol, listo para vistas específicas del repartidor.</li>
+<li>Servicios y utilidades:
+<ul>
+<li><code>api.ts</code> define axios con interceptor que inyecta tokens válidos desde <code>AuthService</code>.</li>
+<li><code>AuthService</code> centraliza login/refresh/logout y callbacks de expiración.</li>
+<li><code>roleLandingRoutes</code> define la ruta de aterrizaje por rol.</li>
+<li>Hooks utilitarios (<code>useHandleApiError</code>, <code>usePaginateParams</code>) estandarizan manejo de errores y paginación.</li>
+</ul>
+</li>
+<li>Shared UI: componentes comunes (modales, tablas, botones, scroll, confirmaciones) reutilizados en las vistas.</li>
+</ul>
+<h2>Ventajas de la estructura</h2>
+<ul>
+<li><strong>Aislamiento por rol:</strong> <code>AdminApp</code> y <code>RepartidorApp</code> separan rutas, estado y vistas, reduciendo riesgos de fuga de permisos.</li>
+<li><strong>Capas de estado por dominio:</strong> cada provider encapsula datos y mutaciones de su módulo, evitando prop drilling y facilitando pruebas/refactor.</li>
+<li><strong>Seguridad centralizada:</strong> <code>ProtectedRoute</code> y <code>AppShell</code> concentran las verificaciones de autenticación/roles y redirecciones coherentes.</li>
+<li><strong>Cliente HTTP único:</strong> <code>api.ts</code> + interceptor JWT minimizan duplicación de configuración y simplifican futuros cross-cutting (logging, retry).</li>
+<li><strong>Layout desacoplado:</strong> <code>Home</code> maneja layout/responsividad y routing interno; las vistas pueden evolucionar sin romper el armazón.</li>
+<li><strong>UX consistente:</strong> <code>ToasterProvider</code> ofrece notificaciones uniformes con control de concurrencia; hooks compartidos normalizan manejo de errores y paginación.</li>
+<li><strong>Escalabilidad modular:</strong> la estructura por carpetas (admin/repartidor/shared/utils) permite añadir módulos o roles sin reestructurar la base.</li>
+</ul>
+
+    </div>
+
+    <!-- Mermaid.js + svg-pan-zoom -->
+    <script type="module">
+        import mermaid from 'https://cdn.skypack.dev/mermaid@10.6.1';
+
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            fontFamily: 'arial',
+            fontSize: 14
+        });
+
+        // Renderizar todos los diagramas Mermaid y habilitar pan/zoom con svg-pan-zoom
+        document.addEventListener('DOMContentLoaded', function() {
+            mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+
+            // Cargar svg-pan-zoom (UMD) desde CDN
+            function loadSvgPanZoom() {
+                return new Promise(function(resolve, reject) {
+                    if (window.svgPanZoom) return resolve();
+                    const s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.1/dist/svg-pan-zoom.min.js';
+                    s.onload = () => resolve();
+                    s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+            }
+
+            // Función para añadir controles DESPUÉS de que Mermaid termine completamente
+            function setupPanZoomOnce() {
+                document.querySelectorAll('.mermaid svg').forEach(function(svg) {
+                    // Verificar si ya tiene controles o ya fue procesado
+                    var container = svg.closest('.mermaid');
+                    if (!container) return;
+                    
+                    if (svg.dataset.panZoomEnabled === 'complete') return;
+                    
+                    // Verificar que el SVG tenga contenido completo (no solo placeholder)
+                    if (svg.querySelector('g.root') || svg.querySelector('g.nodes')) {
+                        loadSvgPanZoom().then(function() {
+                            if (svg.dataset.panZoomEnabled === 'complete') return;
+                            try {
+                                // Ajustes básicos de tamaño
+                                svg.removeAttribute('width');
+                                svg.removeAttribute('height');
+                                svg.style.width = '100%';
+                                svg.style.minHeight = '400px';
+                                svg.style.height = 'auto';
+
+                                // Inicializar svg-pan-zoom (sin controles nativos para evitar duplicados)
+                                var panZoomInstance = window.svgPanZoom(svg, {
+                                    zoomEnabled: true,
+                                    controlIconsEnabled: false,
+                                    fit: true,
+                                    center: true,
+                                    minZoom: 0.2,
+                                    maxZoom: 10,
+                                    dblClickZoomEnabled: true,
+                                });
+                                // Guardar la instancia en el SVG para acceso posterior
+                                svg._panZoomInstance = panZoomInstance;
+                                svg.dataset.panZoomEnabled = 'complete';
+                                ensureControls(container, svg); // añade nuestros +/-/reset por consistencia
+                            } catch (e) {
+                                console.error('svg-pan-zoom init error:', e);
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Usar MutationObserver para detectar cuando Mermaid termina de renderizar
+            var processedContainers = new Set();
+            var observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (mutation.type === 'childList') {
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeType === 1 && node.tagName === 'SVG') {
+                                var container = node.closest('.mermaid');
+                                if (container && !processedContainers.has(container)) {
+                                    processedContainers.add(container);
+                                    setTimeout(function() {
+                                        if (!node.dataset.panZoomEnabled || node.dataset.panZoomEnabled !== 'complete') {
+                                            loadSvgPanZoom().then(function(){
+                                                try {
+                                                    node.removeAttribute('width');
+                                                    node.removeAttribute('height');
+                                                    node.style.width = '100%';
+                                                    node.style.minHeight = '400px';
+                                                    node.style.height = 'auto';
+                                                    var panZoomInstance = window.svgPanZoom(node, {
+                                                        zoomEnabled: true,
+                                                        controlIconsEnabled: false,
+                                                        fit: true,
+                                                        center: true,
+                                                        minZoom: 0.2,
+                                                        maxZoom: 10,
+                                                        dblClickZoomEnabled: true
+                                                    });
+                                                    // Guardar la instancia en el SVG para acceso posterior
+                                                    node._panZoomInstance = panZoomInstance;
+                                                    node.dataset.panZoomEnabled = 'complete';
+                                                    ensureControls(node.closest('.mermaid'), node);
+                                                } catch (e) {
+                                                    console.error('svg-pan-zoom init error:', e);
+                                                }
+                                            });
+                                        }
+                                    }, 200);
+                                }
+                            }
+                        });
+                    }
+                });
+                setupPanZoomOnce();
+            });
+            
+            // Observar todos los contenedores
+            document.querySelectorAll('.mermaid').forEach(function(container) {
+                observer.observe(container, { 
+                    childList: true, 
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['data-processed']
+                });
+            });
+            
+            // Intentos periódicos para casos donde el observer no detecte
+            var attempts = 0;
+            var interval = setInterval(function() {
+                attempts++;
+                setupPanZoomOnce();
+                if (attempts > 20 || document.querySelectorAll('.mermaid svg').length > 0) {
+                    clearInterval(interval);
+                }
+            }, 200);
+            
+            // Limpiar después de 5 segundos
+            setTimeout(function() {
+                clearInterval(interval);
+                observer.disconnect();
+                setupPanZoomOnce();
+            }, 5000);
+        });
+
+        // Función para crear/actualizar controles (usará svg-pan-zoom internamente)
+        function ensureControls(container, svg) {
+                var existingControls = container.querySelector('.zoom-controls');
+                if (existingControls) return existingControls;
+                
+                var controls = document.createElement('div');
+                controls.className = 'zoom-controls';
+                controls.setAttribute('data-zoom-controls', 'true');
+                controls.innerHTML = '<button data-act="in" title="Zoom In">+</button><button data-act="out" title="Zoom Out">−</button><button data-act="reset" title="Reset Zoom">⟲</button>';
+                container.style.position = 'relative';
+                container.appendChild(controls);
+
+                controls.addEventListener('click', function(ev) {
+                    var act = ev.target.getAttribute('data-act');
+                    if (!act) return;
+                    // Usar la instancia guardada en el SVG
+                    var api = svg && svg._panZoomInstance ? svg._panZoomInstance : null;
+                    if (!api) {
+                        console.warn('PanZoom API no disponible');
+                        return;
+                    }
+                    if (act === 'in') api.zoomIn();
+                    if (act === 'out') api.zoomOut();
+                    if (act === 'reset') { 
+                        api.resetZoom();
+                        api.center();
+                        api.fit();
+                    }
+                });
+                
+                return controls;
+            }
+            
+            // Nota: los controles se añaden durante la inicialización del pan/zoom
+            // (sin acciones adicionales)
+    </script>
+</body>
+</html>
