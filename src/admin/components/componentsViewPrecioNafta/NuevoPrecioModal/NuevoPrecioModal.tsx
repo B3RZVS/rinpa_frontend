@@ -64,7 +64,7 @@ const NuevoPrecioModal = ({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={onClose}
+          onClick={() => onClose()}
         >
           <motion.div
             className={styles.modal}
@@ -72,6 +72,7 @@ const NuevoPrecioModal = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            onClick={(e) => e.stopPropagation()}
           >
             <div className={styles.header}>
               <h3 className={styles.title}>Actualizar Precio de Nafta</h3>
