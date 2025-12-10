@@ -75,9 +75,9 @@ const ClienteModal: React.FC<ClienteModalProps> = ({
       newErrors.telefono = "El teléfono es requerido";
     }
 
-    // if (!formData.direccion.trim()) {
-    //   newErrors.direccion = "La dirección es requerida";
-    // }
+    if (!formData.direccion.trim()) {
+      newErrors.direccion = "La dirección es requerida";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;

@@ -80,12 +80,13 @@ export const useClienteUI = () => {
       // Editar
       const dataUpdate = { ...clienteData, id: selectedCliente.id };
       await updateCliente(dataUpdate);
+      await getPaginatedClientes(paginationParams);
     } else {
       // Crear
       await registerCliente(clienteData);
+      await getPaginatedClientes(paginationParams);
     }
     setIsModalOpen(false);
-    await getPaginatedClientes(paginationParams);
   };
 
   return {

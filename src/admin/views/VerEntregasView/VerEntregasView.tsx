@@ -13,12 +13,18 @@ import LoadingComponent from "../../components/LoadingComponent/LoadingComponent
 import PaginateComponent from "../../components/PaginateComponent/PaginateComponent";
 import type { PaginationInfo } from "../../interface/pagination.interface";
 import usePaginationParams from "../../hook/usePaginateParams";
+import type { EntregaInterfaceResponse } from "../../interface/entrega.interface";
+import ConfirmationModal from "../../../shared/components/ConfirmationModal/ConfirmationModal";
 
 const VerEntregasView = () => {
   const navigate = useNavigate();
-  const { loading, entregasPaginated, getPaginatedEntregas } = useEntrega();
+  const { loading, entregasPaginated, getPaginatedEntregas, deleteEntrega } =
+    useEntrega();
   const [searchTerm, setSearchTerm] = useState("");
   // const [filterOpen, setFilterOpen] = useState(false);
+  const [entregaDelete, setEntregaDelete] =
+    useState<EntregaInterfaceResponse | null>(null);
+  const [openDelete, setOpenDelete] = useState(false);
   const [paginationInfo, setPaginationInfo] = useState<PaginationInfo | null>(
     null
   );
@@ -46,7 +52,15 @@ const VerEntregasView = () => {
   const handleEditEntrega = (id: number) => {
     navigate(`/dashboard/editar-entrega/${id}`);
   };
-
+  const handleDelete = (entrega: EntregaInterfaceResponse) => {
+    setEntregaDelete(entrega);
+    setOpenDelete(true);
+  };
+  const handleConfirmDelete = async () => {
+    if (entregaDelete) await deleteEntrega(entregaDelete.id);
+    await getPaginatedEntregas(paginationParams);
+    setOpenDelete(false);
+  };
   useEffect(() => {
     setPaginationInfo(
       entregasPaginated
@@ -151,12 +165,20 @@ const VerEntregasView = () => {
                   entrega={entrega}
                   index={index}
                   onEdit={handleEditEntrega}
+                  onDelete={handleDelete}
                 />
               ))}
             </div>
           </PaginateComponent>
         )}
       </div>
+      <ConfirmationModal
+        title="Eliminar Entrega"
+        message="¿Esta seguro de eliminar esta entrega?"
+        isOpen={openDelete}
+        onConfirm={handleConfirmDelete}
+        onClose={() => setOpenDelete(false)}
+      />
     </motion.div>
   );
 };

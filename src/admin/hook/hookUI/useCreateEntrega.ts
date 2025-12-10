@@ -5,7 +5,9 @@ import type { ClienteInterfaceResponse } from "../../interface/cliente.interface
 import type { CreateDetalleProductoInterface } from "../../interface/detalle.interface";
 import type { CreateEntregaInterface } from "../../interface/entrega.interface";
 import { useToaster } from "../../../shared/hooks/useToaster";
+import { useCliente } from "../hookContexts/useCliente";
 export const useCreateEntrega = () => {
+  const { getClientes } = useCliente();
   const { registerEntrega, loading } = useEntrega();
   const { preciosNafta, getPreciosNafta } = usePrecioNafta();
   const { showToast } = useToaster();
@@ -24,6 +26,9 @@ export const useCreateEntrega = () => {
   useEffect(() => {
     if (preciosNafta.length === 0) getPreciosNafta();
   }, [preciosNafta, getPreciosNafta]);
+  useEffect(() => {
+    getClientes();
+  }, []);
 
   // Precio de nafta actual
   const precioActual = useMemo(

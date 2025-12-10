@@ -163,6 +163,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
                 className={`${styles.select} ${
                   errors.tipoProductoId ? styles.inputError : ""
                 }`}
+                disabled={producto ? true : false}
               >
                 <option value="">Seleccionar tipo</option>
                 {tipoProductos.map((tipo) => (
@@ -189,6 +190,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
                 className={`${styles.select} ${
                   errors.medidaId ? styles.inputError : ""
                 }`}
+                disabled={producto ? true : false}
               >
                 <option value="">Seleccionar medida</option>
                 {medidas.map((medida) => (
