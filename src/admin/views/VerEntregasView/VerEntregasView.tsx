@@ -73,6 +73,7 @@ const VerEntregasView = () => {
         ) : (
           meta && (
             <PaginateComponent
+              loading={loading}
               background="transparent"
               backgroundPagination="rgba(255, 255, 255, 0.54)"
               {...(pagination.params && {
