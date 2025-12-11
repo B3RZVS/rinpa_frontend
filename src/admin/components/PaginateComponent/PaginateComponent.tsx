@@ -13,7 +13,7 @@ export interface PaginateComponentProps {
     pageSize: number;
     totalItems: number;
     onPageChange: (page: number) => void;
-    onPageSizeChange: (pageSize: number) => void;
+    onPageSizeChange?: (pageSize: number) => void;
   };
   background?: string;
   backgroundPagination?: string;
@@ -49,7 +49,7 @@ const PaginateComponent = ({
             pageSize={pagination.pageSize}
             totalItems={pagination.totalItems}
             onPageChange={pagination.onPageChange}
-            onPageSizeChange={pagination.onPageSizeChange}
+            // onPageSizeChange={pagination.onPageSizeChange}
             background={backgroundPagination}
           />
         )}

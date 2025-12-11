@@ -14,7 +14,7 @@ export interface PaginationProps {
   pageSize: number;
   totalItems: number;
   onPageChange: (page: number) => void;
-  onPageSizeChange: (pageSize: number) => void;
+  onPageSizeChange?: (pageSize: number) => void;
   pageSizeOptions?: number[];
   showPageSizeSelector?: boolean;
   showInfo?: boolean;
@@ -81,7 +81,7 @@ const PaginationComponent: React.FC<PaginationProps> = ({
   };
 
   const handlePageSizeChange = (newPageSize: number) => {
-    if (newPageSize !== pageSize) {
+    if (newPageSize !== pageSize && onPageSizeChange) {
       onPageSizeChange(newPageSize);
     }
   };
