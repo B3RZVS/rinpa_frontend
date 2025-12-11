@@ -25,7 +25,7 @@ export const DetalleEntregaProvider: React.FC<EntregaProviderProps> = ({
     try {
       await DetalleEntregaService.createDetalleEntrega(data, idEntrega);
       showToast({
-        title: "Entrega registrada con éxito.",
+        title: "Producto agregado con éxito.",
         type: "success",
       });
     } catch (error: AxiosError | any) {
