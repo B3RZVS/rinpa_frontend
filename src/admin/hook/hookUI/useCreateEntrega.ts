@@ -75,7 +75,6 @@ export const useCreateEntrega = () => {
         title: "Error",
         message: error,
         type: "error",
-        position: "top-center",
       });
       return;
     }

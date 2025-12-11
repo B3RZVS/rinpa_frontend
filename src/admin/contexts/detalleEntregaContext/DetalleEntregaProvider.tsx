@@ -27,7 +27,6 @@ export const DetalleEntregaProvider: React.FC<EntregaProviderProps> = ({
       showToast({
         title: "Entrega registrada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       console.log(error);
@@ -44,7 +43,6 @@ export const DetalleEntregaProvider: React.FC<EntregaProviderProps> = ({
       showToast({
         title: "Entrega modificada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       handleApiError(error, "Error");
@@ -60,7 +58,6 @@ export const DetalleEntregaProvider: React.FC<EntregaProviderProps> = ({
       showToast({
         title: "El detalle de la entrega ha sido eliminado con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error");

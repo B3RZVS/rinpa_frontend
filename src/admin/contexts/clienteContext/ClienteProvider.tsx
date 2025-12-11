@@ -50,7 +50,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
       showToast({
         title: "Error al obtener los clientes.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -66,7 +65,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
       showToast({
         title: "Cliente restaurado con éxito.",
         type: "success",
-        position: "top-center",
       });
     }
   };
@@ -82,7 +80,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
           error.response?.data?.message || "al crear el cliente."
         }`,
         type: "error",
-        position: "top-center",
       });
     }
   };
@@ -95,7 +92,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
       showToast({
         title: "Cliente registrada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       errorRegisterCliente(error);
@@ -111,7 +107,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
       showToast({
         title: "Cliente modificada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error al editar el cliente");
@@ -126,7 +121,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
       showToast({
         title: "Cliente eliminada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error al eliminar el cliente");

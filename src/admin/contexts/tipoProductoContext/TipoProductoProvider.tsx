@@ -33,7 +33,6 @@ export const TipoProductoProvider: React.FC<TipoProductoProviderProps> = ({
       showToast({
         title: "Error al obtener los tipo productos.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -48,7 +47,6 @@ export const TipoProductoProvider: React.FC<TipoProductoProviderProps> = ({
       showToast({
         title: "Tipo producto registrada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       showToast({
@@ -56,7 +54,6 @@ export const TipoProductoProvider: React.FC<TipoProductoProviderProps> = ({
           error.response?.data?.message || "al crear tipo producto."
         }`,
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -71,7 +68,6 @@ export const TipoProductoProvider: React.FC<TipoProductoProviderProps> = ({
       showToast({
         title: "Tipo Producto modificada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       console.error(error);
@@ -80,7 +76,6 @@ export const TipoProductoProvider: React.FC<TipoProductoProviderProps> = ({
           error.response?.data?.message || "al actualizar el tipo producto."
         }`,
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -95,14 +90,12 @@ export const TipoProductoProvider: React.FC<TipoProductoProviderProps> = ({
       showToast({
         title: "Tipo producto eliminado con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       console.error(error);
       showToast({
         title: "Error al eliminar el Tipo producto.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);

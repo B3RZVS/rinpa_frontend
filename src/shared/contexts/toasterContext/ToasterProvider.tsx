@@ -26,7 +26,7 @@ export const ToasterProvider: React.FC<ToasterProviderProps> = ({
 
   const showToast = useCallback((config: ToastConfig): string => {
     const id = config.id || generateId();
-    const position = config.position || "top-right";
+    const position = config.position || "bottom-right";
     const duration =
       config.duration !== undefined
         ? config.duration

@@ -32,7 +32,6 @@ export const MedidaProvider: React.FC<MedidaProviderProps> = ({ children }) => {
       showToast({
         title: "Error al obtener las medidas.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -48,7 +47,6 @@ export const MedidaProvider: React.FC<MedidaProviderProps> = ({ children }) => {
       showToast({
         title: "Error al obtener las unidades.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -62,7 +60,6 @@ export const MedidaProvider: React.FC<MedidaProviderProps> = ({ children }) => {
       showToast({
         title: "Medida registrada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       console.error(error);
@@ -71,7 +68,6 @@ export const MedidaProvider: React.FC<MedidaProviderProps> = ({ children }) => {
           error.response?.data?.message || "al crear la medida."
         }`,
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -86,7 +82,6 @@ export const MedidaProvider: React.FC<MedidaProviderProps> = ({ children }) => {
       showToast({
         title: "Medida modificada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       console.error(error);
@@ -95,7 +90,6 @@ export const MedidaProvider: React.FC<MedidaProviderProps> = ({ children }) => {
           error.response?.data?.message || "al actualizar la medida."
         }`,
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -109,14 +103,12 @@ export const MedidaProvider: React.FC<MedidaProviderProps> = ({ children }) => {
       showToast({
         title: "Medida eliminada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       console.error(error);
       showToast({
         title: "Error al eliminar la medida.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);

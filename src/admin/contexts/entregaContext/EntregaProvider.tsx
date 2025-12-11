@@ -59,7 +59,6 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
       showToast({
         title: "Entrega registrada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       console.log(error);
@@ -77,7 +76,6 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
       showToast({
         title: "Entrega modificada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error");
@@ -94,7 +92,6 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
       showToast({
         title: "Entrega eliminado con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error");
