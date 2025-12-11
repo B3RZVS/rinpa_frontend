@@ -51,7 +51,9 @@
   background-color: var(--color-neutral-light);
   transform: scale(1.1);
 }
-
+.required {
+  color: #dc3545;
+}
 .form {
   display: flex;
   flex-direction: column;

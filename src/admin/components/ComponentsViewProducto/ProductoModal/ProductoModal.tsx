@@ -153,7 +153,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 <FiType className={styles.labelIcon} />
-                Tipo de Producto
+                Tipo de Producto<span className={styles.required}>*</span>
               </label>
               <select
                 value={formData.tipoProductoId}
@@ -182,7 +182,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 <FiPackage className={styles.labelIcon} />
-                Medida
+                Medida<span className={styles.required}>*</span>
               </label>
               <select
                 value={formData.medidaId}
@@ -207,7 +207,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 <FiDollarSign className={styles.labelIcon} />
-                Precio
+                Precio<span className={styles.required}>*</span>
               </label>
               <input
                 type="number"

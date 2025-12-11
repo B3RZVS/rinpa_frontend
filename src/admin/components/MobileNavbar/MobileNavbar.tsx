@@ -37,13 +37,14 @@ const menuItems = [
     // icon: FiFuel,
     icon: FiTruck,
   },
+  { id: "cliente" as ViewType, label: "Gestión de Cliente", icon: FiUsers },
   { id: "producto" as ViewType, label: "Gestión de Producto", icon: FiBox },
   {
     id: "tipo-producto" as ViewType,
     label: "Gestión de Tipo Producto",
     icon: FiPackage,
   },
-  { id: "cliente" as ViewType, label: "Gestión de Cliente", icon: FiUsers },
+
   { id: "medida" as ViewType, label: "Gestión de Medida", icon: FiSettings },
   {
     id: "estadisticas" as ViewType,
