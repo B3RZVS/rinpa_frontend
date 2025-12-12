@@ -86,7 +86,9 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
 
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.formGroup}>
-                <label className={styles.label}>Cantidad</label>
+                <label className={styles.label}>
+                  Cantidad <span className={styles.required}>*</span>
+                </label>
                 <input
                   type="number"
                   className={styles.input}
@@ -104,7 +106,9 @@ const MedidasModal: React.FC<MedidasModalProps> = ({
               </div>
 
               <div className={styles.formGroup}>
-                <label className={styles.label}>Unidad</label>
+                <label className={styles.label}>
+                  Unidad <span className={styles.required}>*</span>
+                </label>
                 <select
                   className={styles.input}
                   value={formData.unidadId ?? ""}

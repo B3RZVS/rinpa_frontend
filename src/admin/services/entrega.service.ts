@@ -1,13 +1,14 @@
 import api from "../../utils/api";
-import { buildCleanPaginatedParams } from "../../utils/buildCleanPaginatedParams";
 import { urls } from "../../utils/urls";
 import type {
   CreateEntregaInterface,
-  EntregasPaginatedResponse,
   UpdateEntregaInterface,
 } from "../interface/entrega.interface";
-import qs from "qs";
-import type { GetPaginated } from "../interface/pagination.interface";
+import {
+  buildPaginationQuery,
+  type PaginatedResponse,
+  type PaginationParams,
+} from "../../shared/pagination";
 
 const entregaGetAll = async () => {
   const response = await api.get(urls.Entrega);
@@ -33,18 +34,11 @@ const deleteEntrega = async (id: number) => {
 };
 
 const getPaginatedEntregasApi = async (
-  params: GetPaginated
-): Promise<EntregasPaginatedResponse> => {
-  const cleanParams = {
-    ...buildCleanPaginatedParams(params),
-    filters: params.filters?.join(","),
-    filtersValues: params.filtersValues?.join(","),
-  };
-  const response = await api.get(urls.EntregaPagination, {
-    params: cleanParams,
-    paramsSerializer: (params) =>
-      qs.stringify(params, { arrayFormat: "repeat" }),
-  });
+  params: PaginationParams
+): Promise<PaginatedResponse<any>> => {
+  const queryString = buildPaginationQuery(params);
+
+  const response = await api.get(`${urls.EntregaPagination}?${queryString}`);
   return response.data;
 };
 

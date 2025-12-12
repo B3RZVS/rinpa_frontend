@@ -9,6 +9,7 @@
   border-radius: 8px;
   font-size: 1rem;
   transition: border-color 0.3s ease;
+  box-sizing: border-box;
 }
 
 .searchInput:focus {
@@ -25,7 +26,7 @@
 /* Mobile optimizations */
 @media (max-width: 768px) {
   .searchInputWrapper {
-    max-width: 100%;
+    width: 100%;
   }
 
   .searchInput {

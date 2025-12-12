@@ -96,7 +96,9 @@ const TipoProductoModal: React.FC<TipoProductoModalProps> = ({
 
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.formGroup}>
-                <label className={styles.label}>Nombre</label>
+                <label className={styles.label}>
+                  Nombre <span className={styles.required}>*</span>
+                </label>
                 <input
                   type="text"
                   className={styles.input}

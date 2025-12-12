@@ -8,16 +8,26 @@ import SearchBar from "../../components/ComponentsViewProducto/SearchBar/SearchB
 import type { ProductoResponseInterface } from "../../interface/producto.interface";
 import { useProducto } from "../../hook/hookContexts/useProducto";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
+import { FiltroProductos } from "../../components/ComponentsViewProducto/FiltroProducto/FiltroProducto";
+import { useMedida } from "../../hook/hookContexts/useMedida";
+import { useTipoProducto } from "../../hook/hookContexts/useTipoProducto";
 const ProductoView: React.FC = () => {
   const { getProductos, productos, loading, registerProducto, updateProducto } =
     useProducto();
+  const { medidas, getMedidas } = useMedida();
+  const { tipoProductos, getTipoProductos } = useTipoProducto();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProducto, setEditingProducto] =
     useState<ProductoResponseInterface | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [productosFiltrados, setProductosFiltrados] = useState<
+    ProductoResponseInterface[]
+  >([]);
 
   useEffect(() => {
     getProductos();
+    getMedidas();
+    getTipoProductos();
   }, []);
   const handleAddProducto = () => {
     setEditingProducto(null);
@@ -58,12 +68,18 @@ const ProductoView: React.FC = () => {
       {/* Search and Filters */}
       <div className={styles.searchSection}>
         <SearchBar searchTerm={searchTerm} onSearchChange={setSearchTerm} />
+        <FiltroProductos
+          medidas={medidas}
+          productos={productos}
+          tipos={tipoProductos}
+          onFiltrar={(lista) => setProductosFiltrados(lista)}
+        />
       </div>
 
       {/* Content */}
       <div className={styles.content}>
         <ProductoList
-          productos={productos}
+          productos={productosFiltrados}
           loading={loading}
           searchTerm={searchTerm}
           onEditProducto={handleEditProducto}

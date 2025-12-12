@@ -9,10 +9,11 @@ import type {
   UpdateEntregaInterface,
 } from "../../interface/entrega.interface";
 import { EntregaService } from "../../services/entrega.service";
+
 import type {
-  GetPaginated,
-  PaginatedData,
-} from "../../interface/pagination.interface";
+  PaginatedResponse,
+  PaginationParams,
+} from "../../../shared/pagination";
 
 interface EntregaProviderProps {
   children: ReactNode;
@@ -25,9 +26,14 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
   const { showToast } = useToaster();
   const [loading, setLoading] = useState<boolean>(false);
   const [entregas, setEntregas] = useState<EntregaInterfaceResponse[]>([]);
+  const [meta, setMeta] = useState<
+    PaginatedResponse<EntregaInterfaceResponse>["meta"] | null
+  >(null);
   const [entrega, setEntrega] = useState<EntregaInterfaceResponse | null>(null);
-  const [entregasPaginated, setEntregaPaginated] =
-    useState<PaginatedData<EntregaInterfaceResponse> | null>(null);
+  const [entregasPaginated, setEntregaPaginated] = useState<
+    EntregaInterfaceResponse[]
+  >([]);
+
   const getEntregas = async () => {
     setLoading(true);
     try {
@@ -55,14 +61,12 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
     setLoading(true);
     try {
       await EntregaService.createEntrega(data);
-      await getEntregas();
+      // await getEntregas();
       showToast({
         title: "Entrega registrada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
-      console.log(error);
       handleApiError(error, "Error al registrar la Entrega");
     } finally {
       setLoading(false);
@@ -73,11 +77,10 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
     setLoading(true);
     try {
       await EntregaService.updateEntrega(id, data);
-      await getEntregas();
+      // await getEntregas();
       showToast({
         title: "Entrega modificada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error");
@@ -90,11 +93,10 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
     setLoading(true);
     try {
       await EntregaService.deleteEntrega(id);
-      await getEntregas();
+      // await getEntregas();
       showToast({
         title: "Entrega eliminado con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error");
@@ -104,11 +106,13 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
   };
 
   const getPaginatedEntregas = useCallback(
-    async (params: GetPaginated): Promise<void> => {
+    async (params: PaginationParams): Promise<void> => {
       setLoading(true);
       try {
         const response = await EntregaService.getPaginatedEntregasApi(params);
-        setEntregaPaginated(response);
+
+        setEntregaPaginated(response.data);
+        setMeta(response.meta);
       } catch (error) {
         handleApiError(error, "Error al obtener las entregas");
       } finally {
@@ -121,6 +125,7 @@ export const EntregaProvider: React.FC<EntregaProviderProps> = ({
     loading,
     deleteEntrega,
     entregas,
+    meta,
     entregasPaginated,
     entrega,
     getEntregas,

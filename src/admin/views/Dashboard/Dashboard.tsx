@@ -12,7 +12,7 @@ const Dashboard: React.FC = () => {
     if (preciosNafta.length <= 0) getPreciosNafta();
     getEstadisticasHome();
   }, []);
-
+  console.log(estadisticaHome);
   const precioActual = preciosNafta.find((p) => p.fechaFin === null);
   return (
     <motion.div

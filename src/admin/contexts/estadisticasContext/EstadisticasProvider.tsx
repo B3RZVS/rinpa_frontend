@@ -37,7 +37,6 @@ export const EstadisticasProvider: React.FC<EstadisticasProviderProps> = ({
       showToast({
         title: "Error al obtener las estadisticas.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -55,7 +54,6 @@ export const EstadisticasProvider: React.FC<EstadisticasProviderProps> = ({
       showToast({
         title: "Error al obtener el reporte general.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -73,7 +71,6 @@ export const EstadisticasProvider: React.FC<EstadisticasProviderProps> = ({
       showToast({
         title: "Error al obtener el reporte de entregas.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -91,7 +88,6 @@ export const EstadisticasProvider: React.FC<EstadisticasProviderProps> = ({
       showToast({
         title: "Error al obtener el reporte de clientes.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);

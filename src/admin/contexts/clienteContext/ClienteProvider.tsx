@@ -31,7 +31,15 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
   const [clientes, setClientes] = useState<ClienteInterfaceResponse[]>([]);
   const [clientesPaginated, setClientesPaginated] =
     useState<PaginatedData<ClienteInterfaceResponse> | null>(null);
-
+  const [paginationParams] = useState<GetPaginated>({
+    page: 1,
+    page_size: 10,
+    order_by: "id",
+    order_type: "asc",
+    search: "",
+    filters: [],
+    filtersValues: [],
+  });
   const getClientes = async () => {
     setLoading(true);
     try {
@@ -42,7 +50,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
       showToast({
         title: "Error al obtener los clientes.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -53,12 +60,11 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
   const restaurarCliente = async () => {
     if (clienteRestore) {
       await ClienteService.restoreCliente(clienteRestore.id);
-      await getClientes();
+      await getPaginatedClientes(paginationParams);
       setIsOpenModal(false);
       showToast({
         title: "Cliente restaurado con éxito.",
         type: "success",
-        position: "top-center",
       });
     }
   };
@@ -74,7 +80,6 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
           error.response?.data?.message || "al crear el cliente."
         }`,
         type: "error",
-        position: "top-center",
       });
     }
   };
@@ -84,11 +89,9 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
     setLoading(true);
     try {
       await ClienteService.createCliente(data);
-      await getClientes();
       showToast({
         title: "Cliente registrada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       errorRegisterCliente(error);
@@ -101,11 +104,9 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
     setLoading(true);
     try {
       await ClienteService.updateCliente(data);
-      await getClientes();
       showToast({
         title: "Cliente modificada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error al editar el cliente");
@@ -117,11 +118,9 @@ export const ClienteProvider: React.FC<ClienteProviderProps> = ({
     setLoading(true);
     try {
       await ClienteService.deleteCliente(id);
-      await getClientes();
       showToast({
         title: "Cliente eliminada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error al eliminar el cliente");

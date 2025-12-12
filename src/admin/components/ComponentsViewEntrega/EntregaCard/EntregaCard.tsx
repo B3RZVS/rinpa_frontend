@@ -11,17 +11,20 @@ import {
 import styles from "./EntregaCard.module.css";
 import type { EntregaInterfaceResponse } from "../../../interface/entrega.interface";
 import { useState } from "react";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface EntregaCardProps {
   entrega: EntregaInterfaceResponse;
   index: number;
   onEdit: (id: number) => void;
+  onDelete: (entrega: EntregaInterfaceResponse) => void;
 }
 
 const EntregaCard: React.FC<EntregaCardProps> = ({
   entrega,
   index,
   onEdit,
+  onDelete,
 }) => {
   const [openDetalle, setOpenDetalle] = useState(false);
   const formatDate = (date: string) => {
@@ -68,6 +71,12 @@ const EntregaCard: React.FC<EntregaCardProps> = ({
           onClick={() => onEdit(entrega.id)}
         >
           <FiEdit />
+        </button>
+        <button
+          className={styles.deleteButton}
+          onClick={() => onDelete(entrega)}
+        >
+          <MdDeleteOutline />
         </button>
       </div>
 

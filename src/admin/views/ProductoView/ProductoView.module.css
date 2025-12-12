@@ -53,6 +53,9 @@
 }
 
 .searchSection {
+  display: flex;
+  justify-content: start;
+  gap: 1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -87,6 +90,7 @@
   }
   .searchSection {
     display: flex;
+    flex-direction: column;
     margin-bottom: 0;
   }
 }

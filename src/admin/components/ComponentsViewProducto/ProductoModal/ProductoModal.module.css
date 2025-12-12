@@ -57,7 +57,9 @@
 .closeButton:hover {
   background: var(--color-neutral-medium);
 }
-
+.required {
+  color: #dc3545;
+}
 .form {
   display: flex;
   flex-direction: column;

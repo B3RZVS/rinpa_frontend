@@ -153,7 +153,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 <FiType className={styles.labelIcon} />
-                Tipo de Producto
+                Tipo de Producto<span className={styles.required}>*</span>
               </label>
               <select
                 value={formData.tipoProductoId}
@@ -163,6 +163,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
                 className={`${styles.select} ${
                   errors.tipoProductoId ? styles.inputError : ""
                 }`}
+                disabled={producto ? true : false}
               >
                 <option value="">Seleccionar tipo</option>
                 {tipoProductos.map((tipo) => (
@@ -181,7 +182,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 <FiPackage className={styles.labelIcon} />
-                Medida
+                Medida<span className={styles.required}>*</span>
               </label>
               <select
                 value={formData.medidaId}
@@ -189,6 +190,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
                 className={`${styles.select} ${
                   errors.medidaId ? styles.inputError : ""
                 }`}
+                disabled={producto ? true : false}
               >
                 <option value="">Seleccionar medida</option>
                 {medidas.map((medida) => (
@@ -205,7 +207,7 @@ const ProductoModal: React.FC<ProductoModalProps> = ({
             <div className={styles.formGroup}>
               <label className={styles.label}>
                 <FiDollarSign className={styles.labelIcon} />
-                Precio
+                Precio<span className={styles.required}>*</span>
               </label>
               <input
                 type="number"

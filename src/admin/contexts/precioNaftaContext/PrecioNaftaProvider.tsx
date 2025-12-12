@@ -33,7 +33,6 @@ export const PrecioNaftaProvider: React.FC<PrecioNaftaProviderProps> = ({
       showToast({
         title: "Error al obtener los precios de nafta.",
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);
@@ -48,7 +47,6 @@ export const PrecioNaftaProvider: React.FC<PrecioNaftaProviderProps> = ({
       showToast({
         title: "Precio de nafta registrado con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       console.error(error);
@@ -57,7 +55,6 @@ export const PrecioNaftaProvider: React.FC<PrecioNaftaProviderProps> = ({
           error.response?.data?.message || "al crear el precio de nafta."
         }`,
         type: "error",
-        position: "top-center",
       });
     } finally {
       setLoading(false);

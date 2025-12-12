@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  gap: 1rem;
+}
+.select {
+  border-radius: 8px;
+  border: 2px solid var(--color-neutral-medium);
+  background: transparent;
+  padding: 0.5rem 1rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 730px) {
+  .container {
+    flex-direction: column;
+  }
+}

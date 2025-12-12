@@ -43,7 +43,6 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({
       showToast({
         title: "Producto registrada con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       console.log(error);
@@ -61,7 +60,6 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({
       showToast({
         title: " Producto modificado con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error: AxiosError | any) {
       handleApiError(error, "Error");
@@ -78,7 +76,6 @@ export const ProductoProvider: React.FC<ProductoProviderProps> = ({
       showToast({
         title: "Producto eliminado con éxito.",
         type: "success",
-        position: "top-center",
       });
     } catch (error) {
       handleApiError(error, "Error");
