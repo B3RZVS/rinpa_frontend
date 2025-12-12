@@ -60,7 +60,7 @@ export const useCreateEntrega = () => {
   // Validaciones de formulario
   const validarFormulario = (): string | null => {
     if (!selectedCliente) return "Debe seleccionar un cliente.";
-    if (!litrosGastados || Number(litrosGastados) <= 0)
+    if (!litrosGastados || Number(litrosGastados) < 0)
       return "Debe ingresar los litros gastados.";
     if (detalles.length === 0) return "Debe agregar al menos un producto.";
     if (!precioActual) return "No hay precio de nafta actual disponible.";
