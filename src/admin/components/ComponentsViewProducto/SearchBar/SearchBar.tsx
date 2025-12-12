@@ -12,7 +12,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <div className={styles.searchContainer}>
-      <div style={{ position: "relative", display: "inline-block" }}>
+      <div style={{ position: "relative" }}>
         <FiSearch
           style={{
             position: "absolute",

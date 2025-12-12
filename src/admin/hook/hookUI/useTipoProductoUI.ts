@@ -11,6 +11,7 @@ export function useTipoProductoUI() {
     deleteTipoProducto,
     registerTipoProducto,
     updateTipoProducto,
+    loading,
   } = useTipoProducto();
 
   const [filteredTipoProductos, setFilteredTipoProductos] = useState<
@@ -82,5 +83,6 @@ export function useTipoProductoUI() {
     confirmDelete,
     handleSave,
     tipoProductoToDelete,
+    loading,
   };
 }

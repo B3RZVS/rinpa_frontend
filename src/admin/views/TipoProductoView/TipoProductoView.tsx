@@ -5,12 +5,9 @@ import TipoProductoTable from "../../components/ComponentsViewTipoProducto/TipoP
 import TipoProductoModal from "../../components/ComponentsViewTipoProducto/TipoProductoModal/TipoProductoModal";
 import ConfirmModal from "../../../shared/components/Common/ConfirmationModal/ConfirmationModal";
 import styles from "./TipoProductoView.module.css";
-import { useTipoProducto } from "../../hook/hookContexts/useTipoProducto";
 import { useTipoProductoUI } from "../../hook/hookUI/useTipoProductoUI";
 import LoadingComponent from "../../components/LoadingComponent/LoadingComponent";
 const TipoProductoView: React.FC = () => {
-  const { tipoProductos, loading } = useTipoProducto();
-
   const {
     confirmDelete,
     filteredTipoProductos,
@@ -26,6 +23,7 @@ const TipoProductoView: React.FC = () => {
     setIsModalOpen,
     setSearchTerm,
     tipoProductoToDelete,
+    loading,
   } = useTipoProductoUI();
   if (loading) {
     return <LoadingComponent />;
@@ -57,7 +55,7 @@ const TipoProductoView: React.FC = () => {
         transition={{ delay: 0.2, duration: 0.5 }}
       >
         <div className={styles.searchContainer}>
-          <div style={{ position: "relative", display: "inline-block" }}>
+          <div style={{ position: "relative" }}>
             <FiSearch
               style={{
                 position: "absolute",
@@ -104,7 +102,7 @@ const TipoProductoView: React.FC = () => {
         ) : (
           <>
             <TipoProductoTable
-              tipoProductos={tipoProductos}
+              tipoProductos={filteredTipoProductos}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />

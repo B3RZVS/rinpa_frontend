@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FiPlus, FiSearch, FiPackage } from "react-icons/fi";
+import { FiPlus, FiPackage } from "react-icons/fi";
 import MedidasTable from "../../components/ComponentsViewMedida/MedidasTable/MedidasTable";
 import MedidasModal from "../../components/ComponentsViewMedida/MedidasModal/MedidasModal";
 import ConfirmModal from "../../../shared/components/Common/ConfirmationModal/ConfirmationModal";
@@ -13,8 +13,7 @@ const MedidasView: React.FC = () => {
     loading,
     medidas,
     unidades,
-    searchTerm,
-    setSearchTerm,
+
     isModalOpen,
     setIsModalOpen,
     isConfirmModalOpen,
@@ -56,28 +55,6 @@ const MedidasView: React.FC = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
-        <div className={styles.searchContainer}>
-          <div style={{ position: "relative", display: "inline-block" }}>
-            <FiSearch
-              style={{
-                position: "absolute",
-                left: "12px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "var(--color-neutral-dark)",
-              }}
-            />
-            <input
-              type="text"
-              placeholder="Buscar medidas..."
-              className={styles.searchInput}
-              style={{ paddingLeft: "40px" }}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-        </div>
-
         {loading ? (
           <div className={styles.loadingContainer}>
             <motion.div
